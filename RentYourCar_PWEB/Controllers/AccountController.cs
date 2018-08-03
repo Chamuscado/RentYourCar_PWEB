@@ -18,8 +18,11 @@ namespace RentYourCar_PWEB.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
+        private ApplicationDbContext _context;
+
         public AccountController()
         {
+            _context = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -139,6 +142,7 @@ namespace RentYourCar_PWEB.Controllers
         [AllowAnonymous]
         public ActionResult Register()
         {
+            ViewBag.RoleList = new SelectList(_context.Roles.Where(u => !u.Name.Contains(RoleNames.Admin)).ToList(), "Name", "Name");
             return View();
         }
 
@@ -151,10 +155,12 @@ namespace RentYourCar_PWEB.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Morada = model.Morada,Nome = model.Nome};
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Morada = model.Morada,Nome = model.Nome, Telefone = model.Telefone, Aprovado = false};
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    await UserManager.AddToRoleAsync(user.Id, model.UserRole);
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
@@ -165,6 +171,8 @@ namespace RentYourCar_PWEB.Controllers
 
                     return RedirectToAction("Index", "Home");
                 }
+                ViewBag.RoleList = new SelectList(_context.Roles.Where(u => !u.Name.Contains(RoleNames.Admin)).ToList(), "Name", "Name");
+
                 AddErrors(result);
             }
 

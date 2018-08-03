@@ -40,7 +40,8 @@ namespace RentYourCar_PWEB
                 {
                     Nome = "Admin",
                     Email = "admin@rentyourcar.com",
-                    UserName = "admin@rentyourcar.com"
+                    UserName = "admin@rentyourcar.com",
+                    Aprovado = true
                 };
 
                 string password = "_Password123";

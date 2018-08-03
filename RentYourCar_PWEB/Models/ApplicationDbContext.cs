@@ -5,6 +5,8 @@ namespace RentYourCar_PWEB.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Veiculo> Veiculoes { get; set; }
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -14,7 +16,5 @@ namespace RentYourCar_PWEB.Models
         {
             return new ApplicationDbContext();
         }
-
-        public System.Data.Entity.DbSet<RentYourCar_PWEB.Models.Veiculo> Veiculoes { get; set; }
     }
 }

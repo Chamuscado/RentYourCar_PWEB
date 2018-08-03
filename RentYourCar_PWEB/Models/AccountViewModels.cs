@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace RentYourCar_PWEB.Models
@@ -87,8 +88,17 @@ namespace RentYourCar_PWEB.Models
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 10)]
+        [DataType(DataType.MultilineText)]
         [Display(Name = "Morada")]
         public string Morada { get; set; }
+
+        [Required]
+        [RegularExpression("^[0-9]{9}$", ErrorMessage = "Indique um número com 9 dígitos.")]
+        public string Telefone { get; set; }
+
+        [Required]
+        [Display(Name = "Tipo de Registo")]
+        public string UserRole { get; set; }
     }
 
     public class ResetPasswordViewModel
