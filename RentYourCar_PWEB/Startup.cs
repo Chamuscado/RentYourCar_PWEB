@@ -6,6 +6,7 @@ using Owin;
 using RentYourCar_PWEB.Models;
 
 [assembly: OwinStartupAttribute(typeof(RentYourCar_PWEB.Startup))]
+
 namespace RentYourCar_PWEB
 {
     public partial class Startup
@@ -37,8 +38,9 @@ namespace RentYourCar_PWEB
                 //Criar o utilizador Admin
                 var user = new ApplicationUser
                 {
-                    UserName = "Admin",
-                    Email = "admin@rentyourcar.com"
+                    Nome = "Admin",
+                    Email = "admin@rentyourcar.com",
+                    UserName = "admin@rentyourcar.com"
                 };
 
                 string password = "_Password123";
@@ -49,7 +51,6 @@ namespace RentYourCar_PWEB
                 if (createResult.Succeeded)
                 {
                     var result = userManager.AddToRole(user.Id, RoleNames.Admin);
-
                 }
             }
 
@@ -61,7 +62,6 @@ namespace RentYourCar_PWEB
                     Name = RoleNames.Profissional
                 };
                 roleManager.Create(role);
-
             }
 
             //Criar o Role "Particular"   
@@ -72,7 +72,6 @@ namespace RentYourCar_PWEB
                     Name = RoleNames.Particular
                 };
                 roleManager.Create(role);
-
             }
         }
     }

@@ -19,6 +19,7 @@ namespace RentYourCar_PWEB.Models
         }
 
         public string Morada { get; set; }
+        public string Nome { get; set; }
         public virtual ICollection<Veiculo> Veiculos { get; set; }
     }
 

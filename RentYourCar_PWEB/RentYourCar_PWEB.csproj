@@ -228,6 +228,10 @@
     <Compile Include="Migrations\201808031357525_MudaNomeTabelVeiculos.Designer.cs">
       <DependentUpon>201808031357525_MudaNomeTabelVeiculos.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808031455068_AddNomeUser.cs" />
+    <Compile Include="Migrations\201808031455068_AddNomeUser.Designer.cs">
+      <DependentUpon>201808031455068_AddNomeUser.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Categoria.cs" />
@@ -335,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808031357525_MudaNomeTabelVeiculos.resx">
       <DependentUpon>201808031357525_MudaNomeTabelVeiculos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031455068_AddNomeUser.resx">
+      <DependentUpon>201808031455068_AddNomeUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
