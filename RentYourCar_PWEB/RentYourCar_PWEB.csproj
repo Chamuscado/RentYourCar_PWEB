@@ -208,8 +208,29 @@
     <Compile Include="Migrations\201808031338285_Combustivel.Designer.cs">
       <DependentUpon>201808031338285_Combustivel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808031345514_CombutiveisPOP.cs" />
+    <Compile Include="Migrations\201808031345514_CombutiveisPOP.Designer.cs">
+      <DependentUpon>201808031345514_CombutiveisPOP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808031347360_CombustiveisPOP2.cs" />
+    <Compile Include="Migrations\201808031347360_CombustiveisPOP2.Designer.cs">
+      <DependentUpon>201808031347360_CombustiveisPOP2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808031353116_CategoriaAdd.cs" />
+    <Compile Include="Migrations\201808031353116_CategoriaAdd.Designer.cs">
+      <DependentUpon>201808031353116_CategoriaAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808031353497_CategoriaPOP.cs" />
+    <Compile Include="Migrations\201808031353497_CategoriaPOP.Designer.cs">
+      <DependentUpon>201808031353497_CategoriaPOP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808031357525_MudaNomeTabelVeiculos.cs" />
+    <Compile Include="Migrations\201808031357525_MudaNomeTabelVeiculos.Designer.cs">
+      <DependentUpon>201808031357525_MudaNomeTabelVeiculos.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -298,6 +319,21 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808031338285_Combustivel.resx">
       <DependentUpon>201808031338285_Combustivel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031345514_CombutiveisPOP.resx">
+      <DependentUpon>201808031345514_CombutiveisPOP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031347360_CombustiveisPOP2.resx">
+      <DependentUpon>201808031347360_CombustiveisPOP2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031353116_CategoriaAdd.resx">
+      <DependentUpon>201808031353116_CategoriaAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031353497_CategoriaPOP.resx">
+      <DependentUpon>201808031353497_CategoriaPOP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808031357525_MudaNomeTabelVeiculos.resx">
+      <DependentUpon>201808031357525_MudaNomeTabelVeiculos.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
