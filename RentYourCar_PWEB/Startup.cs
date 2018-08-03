@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using System;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.Owin;
 using Owin;
@@ -12,6 +13,7 @@ namespace RentYourCar_PWEB
         public void Configuration(IAppBuilder app)
         {
             ConfigureAuth(app);
+            CreateRoles();
         }
 
         private void CreateRoles()
