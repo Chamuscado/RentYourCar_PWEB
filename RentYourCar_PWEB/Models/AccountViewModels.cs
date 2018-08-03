@@ -65,6 +65,11 @@ namespace RentYourCar_PWEB.Models
     public class RegisterViewModel
     {
         [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 10)]
+        [Display(Name = "Nome")]
+        public string Nome { get; set; }
+
+        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
@@ -79,6 +84,11 @@ namespace RentYourCar_PWEB.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        [Required]
+        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 10)]
+        [Display(Name = "Morada")]
+        public string Morada { get; set; }
     }
 
     public class ResetPasswordViewModel

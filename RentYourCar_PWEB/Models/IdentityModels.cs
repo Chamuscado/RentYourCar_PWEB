@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,9 @@ namespace RentYourCar_PWEB.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public string Morada { get; set; }
+        public virtual ICollection<Veiculo> Veiculos { get; set; }
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
