@@ -12,7 +12,7 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength: 32, MinimumLength = 2)]
         public string Marca { get; set; }
 
-        public Combustivel Combustivel { get; set; }
+        public virtual Combustivel Combustivel { get; set; }
         public byte Lutacao { get; set; }
         public byte NPortas { get; set; }
         public float PrecoDiario { get; set; }
@@ -28,12 +28,4 @@ namespace RentYourCar_PWEB.Models
         //public List<Image> Fotografias { get; set; }
     }
 
-    public enum Combustivel
-    {
-        Gasolina,
-        Disel,
-        Eletrico,
-        Hibrido,
-        Gas
-    }
 }
