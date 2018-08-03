@@ -14,5 +14,7 @@ namespace RentYourCar_PWEB.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<RentYourCar_PWEB.Models.Veiculo> Veiculoes { get; set; }
     }
 }
