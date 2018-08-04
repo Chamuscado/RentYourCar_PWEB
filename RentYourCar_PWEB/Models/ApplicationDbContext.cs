@@ -5,10 +5,11 @@ namespace RentYourCar_PWEB.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Veiculo> Veiculoes { get; set; }
+        public DbSet<Veiculo> Veiculos { get; set; }
+        public DbSet<Combustivel> Combustiveis { get; set; }
+        public DbSet<Categoria> Categorias { get; set; }
 
-        public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+        public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
         }
 

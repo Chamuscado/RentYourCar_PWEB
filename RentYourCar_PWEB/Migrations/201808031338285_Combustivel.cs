@@ -16,18 +16,18 @@ namespace RentYourCar_PWEB.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            AddColumn("dbo.Veiculoes", "Combustivel_Id", c => c.Byte());
-            CreateIndex("dbo.Veiculoes", "Combustivel_Id");
-            AddForeignKey("dbo.Veiculoes", "Combustivel_Id", "dbo.Combustivels", "Id");
-            DropColumn("dbo.Veiculoes", "Combustivel");
+            AddColumn("dbo.Veiculos", "Combustivel_Id", c => c.Byte());
+            CreateIndex("dbo.Veiculos", "Combustivel_Id");
+            AddForeignKey("dbo.Veiculos", "Combustivel_Id", "dbo.Combustivels", "Id");
+            DropColumn("dbo.Veiculos", "Combustivel");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Veiculoes", "Combustivel", c => c.Int(nullable: false));
-            DropForeignKey("dbo.Veiculoes", "Combustivel_Id", "dbo.Combustivels");
-            DropIndex("dbo.Veiculoes", new[] { "Combustivel_Id" });
-            DropColumn("dbo.Veiculoes", "Combustivel_Id");
+            AddColumn("dbo.Veiculos", "Combustivel", c => c.Int(nullable: false));
+            DropForeignKey("dbo.Veiculos", "Combustivel_Id", "dbo.Combustivels");
+            DropIndex("dbo.Veiculos", new[] { "Combustivel_Id" });
+            DropColumn("dbo.Veiculos", "Combustivel_Id");
             DropTable("dbo.Combustivels");
         }
     }

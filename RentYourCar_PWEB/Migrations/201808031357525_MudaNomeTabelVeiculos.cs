@@ -7,12 +7,12 @@ namespace RentYourCar_PWEB.Migrations
     {
         public override void Up()
         {
-            RenameTable(name: "dbo.Veiculoes", newName: "Veiculos");
+            RenameTable(name: "dbo.Veiculos", newName: "Veiculos");
         }
         
         public override void Down()
         {
-            RenameTable(name: "dbo.Veiculos", newName: "Veiculoes");
+            RenameTable(name: "dbo.Veiculos", newName: "Veiculos");
         }
     }
 }

@@ -241,6 +241,14 @@
     <Compile Include="Migrations\201808031634460_AprovadoAdicionadoApplicationUser.Designer.cs">
       <DependentUpon>201808031634460_AprovadoAdicionadoApplicationUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808040955298_CorrecaoNomeCombustiveis.cs" />
+    <Compile Include="Migrations\201808040955298_CorrecaoNomeCombustiveis.Designer.cs">
+      <DependentUpon>201808040955298_CorrecaoNomeCombustiveis.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808041045110_RequiredVeiculo.cs" />
+    <Compile Include="Migrations\201808041045110_RequiredVeiculo.Designer.cs">
+      <DependentUpon>201808041045110_RequiredVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -363,6 +371,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808031634460_AprovadoAdicionadoApplicationUser.resx">
       <DependentUpon>201808031634460_AprovadoAdicionadoApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808040955298_CorrecaoNomeCombustiveis.resx">
+      <DependentUpon>201808040955298_CorrecaoNomeCombustiveis.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808041045110_RequiredVeiculo.resx">
+      <DependentUpon>201808041045110_RequiredVeiculo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

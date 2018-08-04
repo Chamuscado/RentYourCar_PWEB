@@ -1,5 +1,8 @@
-﻿namespace RentYourCar_PWEB.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace RentYourCar_PWEB.Models
 {
+    [Table("Combustiveis")]
     public class Combustivel
     {
         public byte Id { get; set; }

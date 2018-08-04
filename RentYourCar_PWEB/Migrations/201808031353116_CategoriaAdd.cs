@@ -16,18 +16,18 @@ namespace RentYourCar_PWEB.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            AddColumn("dbo.Veiculoes", "Categoria_Id", c => c.Byte());
-            CreateIndex("dbo.Veiculoes", "Categoria_Id");
-            AddForeignKey("dbo.Veiculoes", "Categoria_Id", "dbo.Categorias", "Id");
-            DropColumn("dbo.Veiculoes", "Categoria");
+            AddColumn("dbo.Veiculos", "Categoria_Id", c => c.Byte());
+            CreateIndex("dbo.Veiculos", "Categoria_Id");
+            AddForeignKey("dbo.Veiculos", "Categoria_Id", "dbo.Categorias", "Id");
+            DropColumn("dbo.Veiculos", "Categoria");
         }
         
         public override void Down()
         {
-            AddColumn("dbo.Veiculoes", "Categoria", c => c.String(maxLength: 32));
-            DropForeignKey("dbo.Veiculoes", "Categoria_Id", "dbo.Categorias");
-            DropIndex("dbo.Veiculoes", new[] { "Categoria_Id" });
-            DropColumn("dbo.Veiculoes", "Categoria_Id");
+            AddColumn("dbo.Veiculos", "Categoria", c => c.String(maxLength: 32));
+            DropForeignKey("dbo.Veiculos", "Categoria_Id", "dbo.Categorias");
+            DropIndex("dbo.Veiculos", new[] { "Categoria_Id" });
+            DropColumn("dbo.Veiculos", "Categoria_Id");
             DropTable("dbo.Categorias");
         }
     }

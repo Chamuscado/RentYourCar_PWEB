@@ -77,7 +77,7 @@ namespace RentYourCar_PWEB.Migrations
                 .Index(t => t.UserId);
             
             CreateTable(
-                "dbo.Veiculoes",
+                "dbo.Veiculos",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
@@ -101,19 +101,19 @@ namespace RentYourCar_PWEB.Migrations
         
         public override void Down()
         {
-            DropForeignKey("dbo.Veiculoes", "ApplicationUser_Id", "dbo.AspNetUsers");
+            DropForeignKey("dbo.Veiculos", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropIndex("dbo.Veiculoes", new[] { "ApplicationUser_Id" });
+            DropIndex("dbo.Veiculos", new[] { "ApplicationUser_Id" });
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
-            DropTable("dbo.Veiculoes");
+            DropTable("dbo.Veiculos");
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
