@@ -249,6 +249,10 @@
     <Compile Include="Migrations\201808041045110_RequiredVeiculo.Designer.cs">
       <DependentUpon>201808041045110_RequiredVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808041351455_RemocaodoRequiredCombustivelECategoria.cs" />
+    <Compile Include="Migrations\201808041351455_RemocaodoRequiredCombustivelECategoria.Designer.cs">
+      <DependentUpon>201808041351455_RemocaodoRequiredCombustivelECategoria.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -377,6 +381,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808041045110_RequiredVeiculo.resx">
       <DependentUpon>201808041045110_RequiredVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808041351455_RemocaodoRequiredCombustivelECategoria.resx">
+      <DependentUpon>201808041351455_RemocaodoRequiredCombustivelECategoria.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

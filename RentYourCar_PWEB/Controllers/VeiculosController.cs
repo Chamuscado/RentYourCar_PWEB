@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
@@ -50,18 +51,25 @@ namespace RentYourCar_PWEB.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include =
-                "Id,Modelo,Marca,Combustivel,Lutacao,NPortas,PrecoDiario,PrecoMensal,Categoria,CondicoesArrendamento")]
-            Veiculo veiculo)
+                "Id,Modelo,Marca,Lutacao,NPortas,PrecoDiario,PrecoMensal,categoria,CondicoesArrendamento")]
+            Veiculo veiculo, byte? combustivel, byte? categoria)
         {
+            if (combustivel != null)
+                veiculo.Combustivel = db.Combustiveis.First(i => i.Id == combustivel);
+            if (categoria != null)
+                veiculo.Categoria = db.Categorias.First(i => i.Id == categoria);
+            if (veiculo.Combustivel != null && veiculo.Categoria != null)
+                if (ModelState.IsValid)
+                {
+                    db.Veiculos.Add(veiculo);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }
+
             ViewData["Combustiveis"] = db.Combustiveis.ToList();
             ViewData["Categorias"] = db.Categorias.ToList();
+            ;
 
-            if (ModelState.IsValid)
-            {
-                db.Veiculos.Add(veiculo);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
 
             return View(veiculo);
         }
