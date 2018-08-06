@@ -6,11 +6,12 @@ namespace RentYourCar_PWEB.Models.VeiculosView
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            if (true) //TODO -> invocar DLL
+            var veiculo = (Veiculo) validationContext.ObjectInstance;
+            if (Matricula.Matricula.IsValid(veiculo.Matricula)) //TODO -> invocar DLL
                 return ValidationResult.Success;
             else
             {
-                return new ValidationResult("Formatos Primitidos: ");//TODO -> invocar Formatos
+                return new ValidationResult("Formatos Primitidos: "+Matricula.Matricula.GetValidMatriculas());
             }
         }
     }
