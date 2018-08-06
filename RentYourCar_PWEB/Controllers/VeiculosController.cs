@@ -58,8 +58,6 @@ namespace RentYourCar_PWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Veiculo veiculo)
         {
-
-            if (veiculo.Combustivel != null && veiculo.Categoria != null)
                 if (ModelState.IsValid)
                 {
                     db.Veiculos.Add(veiculo);

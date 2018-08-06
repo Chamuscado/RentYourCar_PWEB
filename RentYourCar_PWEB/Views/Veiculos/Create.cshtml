@@ -50,17 +50,17 @@
 
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Veiculo.Combustivel, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Veiculo.Combustivel_id, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Veiculo.Combustivel, new SelectList(Model.Combustivels, "id", "Nome"), "", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Veiculo.Combustivel, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Veiculo.Combustivel_id, new SelectList(Model.Combustivels, "id", "Nome"), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Veiculo.Combustivel_id, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Veiculo.Categoria, htmlAttributes: new {@class = "control-label col-md-2"})
+            @Html.LabelFor(model => model.Veiculo.Categoria_id, htmlAttributes: new {@class = "control-label col-md-2"})
             <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Veiculo.Categoria, new SelectList(Model.Categorias, "id", "Nome"), "", new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Veiculo.Categoria, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.Veiculo.Categoria_id, new SelectList(Model.Categorias, "id", "Nome"), "", new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Veiculo.Categoria_id, "", new { @class = "text-danger" })
             </div>
         </div>
 
