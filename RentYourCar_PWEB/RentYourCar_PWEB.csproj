@@ -260,6 +260,10 @@
     <Compile Include="Migrations\201808061428567_AdicionarRoleNameApplicationUser.Designer.cs">
       <DependentUpon>201808061428567_AdicionarRoleNameApplicationUser.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808061742587_VeiculosUpdate.cs" />
+    <Compile Include="Migrations\201808061742587_VeiculosUpdate.Designer.cs">
+      <DependentUpon>201808061742587_VeiculosUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -269,6 +273,7 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\Veiculo.cs" />
+    <Compile Include="Models\VeiculosView\CreateVeiculoViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -569,6 +574,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808061428567_AdicionarRoleNameApplicationUser.resx">
       <DependentUpon>201808061428567_AdicionarRoleNameApplicationUser.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808061742587_VeiculosUpdate.resx">
+      <DependentUpon>201808061742587_VeiculosUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

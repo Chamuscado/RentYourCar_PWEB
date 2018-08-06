@@ -17,14 +17,14 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength: 32, MinimumLength = 2)]
         public string Marca { get; set; }
 
-        //[Required]
+        [Required]
         public virtual Combustivel Combustivel { get; set; }
         [Required] public byte Lutacao { get; set; }
         [Required] public byte NPortas { get; set; }
         [Required] public float PrecoDiario { get; set; }
         [Required] public float PrecoMensal { get; set; }
         public bool Aprovado { get; set; } = false;
-        //[Required]
+        [Required]
         public virtual Categoria Categoria { get; set; } //pesado, ligeiro, ligeiro de mecadorias, etc
 
         [StringLength(maximumLength: 2048, MinimumLength = 0)]

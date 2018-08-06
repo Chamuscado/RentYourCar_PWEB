@@ -7,6 +7,7 @@ using System.Net;
 using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
 using RentYourCar_PWEB.Models;
+using RentYourCar_PWEB.Models.VeiculosView;
 
 namespace RentYourCar_PWEB.Controllers
 {
@@ -40,9 +41,14 @@ namespace RentYourCar_PWEB.Controllers
         // GET: Veiculos/Create
         public ActionResult Create()
         {
-            ViewData["Combustiveis"] = db.Combustiveis.ToList();
-            ViewData["Categorias"] = db.Categorias.ToList();
-            return View();
+            var combustiveis = db.Combustiveis.ToList();
+            var categorias = db.Categorias.ToList();
+            var createVeiculo = new CreateVeiculoViewModel()
+            {
+                Combustivels = combustiveis,
+                Categorias = categorias
+            };
+            return View(createVeiculo);
         }
 
         // POST: Veiculos/Create
@@ -50,14 +56,9 @@ namespace RentYourCar_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include =
-                "Id,Modelo,Marca,Lutacao,NPortas,PrecoDiario,PrecoMensal,categoria,CondicoesArrendamento")]
-            Veiculo veiculo, byte? combustivel, byte? categoria)
+        public ActionResult Create(Veiculo veiculo)
         {
-            if (combustivel != null)
-                veiculo.Combustivel = db.Combustiveis.First(i => i.Id == combustivel);
-            if (categoria != null)
-                veiculo.Categoria = db.Categorias.First(i => i.Id == categoria);
+
             if (veiculo.Combustivel != null && veiculo.Categoria != null)
                 if (ModelState.IsValid)
                 {
@@ -66,12 +67,16 @@ namespace RentYourCar_PWEB.Controllers
                     return RedirectToAction("Index");
                 }
 
-            ViewData["Combustiveis"] = db.Combustiveis.ToList();
-            ViewData["Categorias"] = db.Categorias.ToList();
-            ;
+            var combustiveis = db.Combustiveis.ToList();
+            var categorias = db.Categorias.ToList();
+            var createVeiculo = new CreateVeiculoViewModel()
+            {
+                Combustivels = combustiveis,
+                Categorias = categorias,
+                Veiculo = veiculo
+            };
 
-
-            return View(veiculo);
+            return View(createVeiculo);
         }
 
         // GET: Veiculos/Edit/5
