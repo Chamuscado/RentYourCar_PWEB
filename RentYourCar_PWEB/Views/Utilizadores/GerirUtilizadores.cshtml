@@ -1,0 +1,54 @@
+﻿@model IEnumerable<RentYourCar_PWEB.Models.ApplicationUser>
+@{
+    ViewBag.Title = "Utilizadores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Gerir Utilizadores</h2>
+<p></p>
+<table id="users" class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Nome</td>
+                <td>@user.Email</td>
+                @if (user.Aprovado)
+                {
+                    <td>Aprovado</td>
+                }
+                else
+                {
+                    <td><button class="btn btn-link js-aprovar" data-user-id="@user.Id">Não Aprovado</button></td>
+                }
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section scripts
+{
+    <script>
+        $("#users").on("click", ".js-aprovar", function () {
+            var button = $(this);
+
+            if (confirm("Tem a certeza que pretende aprovar este utilizador?")) {
+                $.ajax({
+                    url: "/Utilizadores/Aprovar/" + button.attr("data-user-id"),
+                    method: 'POST',
+                    success: function() {
+                        console.log("Utilizador aprovado");
+                        button.replaceWith("Aprovado");
+                    }
+                });
+            }
+        });
+    </script>
+}

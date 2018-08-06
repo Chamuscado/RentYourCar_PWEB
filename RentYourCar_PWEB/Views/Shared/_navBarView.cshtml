@@ -1,4 +1,5 @@
-﻿<div class="navbar navbar-inverse navbar-fixed-top">
+﻿@using RentYourCar_PWEB.Models
+<div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -6,13 +7,27 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            @Html.ActionLink("RentYourCar", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li>@Html.ActionLink("Início", "Index", "Home")</li>
+                <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
+                <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
+                @if (User.IsInRole(RoleNames.Admin))
+                {
+                    <li class="dropdown">
+                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                                Administração
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li>@Html.ActionLink("Gerir Utilizadores", "GerirUtilizadores", "Utilizadores")</li>
+                                <li><a href="#">Gerir Veículos</a></li>
+                                <li><a href="#">(em construção)</a></li>
+                            </ul>
+                    </li>
+                }
             </ul>
             @Html.Partial("_LoginPartial")
         </div>
