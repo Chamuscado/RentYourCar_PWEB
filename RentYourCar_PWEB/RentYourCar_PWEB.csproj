@@ -272,6 +272,14 @@
     <Compile Include="Migrations\201808061930431_VeiculosObjToBytes.Designer.cs">
       <DependentUpon>201808061930431_VeiculosObjToBytes.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808062015519_AdicaoMatricula.cs" />
+    <Compile Include="Migrations\201808062015519_AdicaoMatricula.Designer.cs">
+      <DependentUpon>201808062015519_AdicaoMatricula.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808062019016_AdicaoMatricula2.cs" />
+    <Compile Include="Migrations\201808062019016_AdicaoMatricula2.Designer.cs">
+      <DependentUpon>201808062019016_AdicaoMatricula2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -281,9 +289,8 @@
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\Veiculo.cs" />
-    <Compile Include="Models\VeiculosView\CategoriaVerfication.cs" />
-    <Compile Include="Models\VeiculosView\CombustivelVerfication.cs" />
     <Compile Include="Models\VeiculosView\CreateVeiculoViewModel.cs" />
+    <Compile Include="Models\VeiculosView\MatriculaValidationAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -593,6 +600,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808061930431_VeiculosObjToBytes.resx">
       <DependentUpon>201808061930431_VeiculosObjToBytes.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808062015519_AdicaoMatricula.resx">
+      <DependentUpon>201808062015519_AdicaoMatricula.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808062019016_AdicaoMatricula2.resx">
+      <DependentUpon>201808062019016_AdicaoMatricula2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

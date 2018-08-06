@@ -35,6 +35,11 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength: 2048, MinimumLength = 0)]
         public string CondicoesArrendamento { get; set; } // a ser avaliado
 
+        [MatriculaValidationAttribute]
+       // [Required(ErrorMessage = "Insira a Matricula Formato: \"AA-00-00\", \"00-AA-00\" ou \"00-00-AA\" ")]
+        [StringLength(maximumLength: 8, MinimumLength = 8)]
+        public string Matricula { get; set; }
+
         //public List<Image> Fotografias { get; set; }
     }
 }
