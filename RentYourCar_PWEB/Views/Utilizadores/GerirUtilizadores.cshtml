@@ -4,22 +4,26 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Gerir Utilizadores</h2>
-<p></p>
-<table id="users" class="table">
+<h2 class="title">Gerir Utilizadores</h2>
+
+<table id="users" class="table table-bordered table-hover">
     <thead>
         <tr>
             <th>Nome</th>
             <th>Email</th>
+            <th>Tipo</th>
             <th>Estado</th>
+            <th>Editar</th>
+            <th>Remover</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.Nome</td>
+                <td>@Html.ActionLink(user.Nome, "Detalhes", new { id = user.Id }, new { @class = "btn btn-link" })</td>
                 <td>@user.Email</td>
+                <td>@user.RoleName</td>
                 @if (user.Aprovado)
                 {
                     <td>Aprovado</td>
@@ -28,6 +32,13 @@
                 {
                     <td><button class="btn btn-link js-aprovar" data-user-id="@user.Id">Não Aprovado</button></td>
                 }
+
+                <td>
+                    @Html.ActionLink("Editar", "Editar", new { id = user.Id }, new { @class = "btn btn-link" })
+                </td>
+                <td>
+                    @Html.ActionLink("Remover", "Remover", new { id = user.Id }, new { @class = "btn btn-link" })
+                </td>
             </tr>
         }
     </tbody>
@@ -36,19 +47,39 @@
 @section scripts
 {
     <script>
-        $("#users").on("click", ".js-aprovar", function () {
-            var button = $(this);
-
-            if (confirm("Tem a certeza que pretende aprovar este utilizador?")) {
-                $.ajax({
-                    url: "/Utilizadores/Aprovar/" + button.attr("data-user-id"),
-                    method: 'POST',
-                    success: function() {
-                        console.log("Utilizador aprovado");
-                        button.replaceWith("Aprovado");
+        $(document).ready(function () {
+            var table = $("#users").DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registos por página",
+                    "zeroRecords": "Não foram encontrados registos",
+                    "info": "A mostrar a página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Não existem registos disponíveis",
+                    "infoFiltered": "(filtrado de _MAX_ registos no total)",
+                    "search": "Pesquisar: ",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Última",
+                        "next": "Próxima",
+                        "previous": "Anterior"
                     }
-                });
-            }
+                }
+            });
+
+            table.on("click", ".js-aprovar", function () {
+                var button = $(this);
+
+                if (confirm("Tem a certeza que pretende aprovar este utilizador?")) {
+                    $.ajax({
+                        url: "/Utilizadores/Aprovar/" + button.attr("data-user-id"),
+                        method: 'POST',
+                        success: function () {
+                            //console.log("Utilizador aprovado");
+                            table.cell(button.parents("td")).data("Aprovado").draw();
+                        }
+                    });
+                }
+            });
         });
+
     </script>
 }

@@ -41,7 +41,8 @@ namespace RentYourCar_PWEB
                     Nome = "Admin",
                     Email = "admin@rentyourcar.com",
                     UserName = "admin@rentyourcar.com",
-                    Aprovado = true
+                    Aprovado = true,
+                    RoleName = RoleNames.Admin
                 };
 
                 string password = "_Password123";

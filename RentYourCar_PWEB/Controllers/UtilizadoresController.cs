@@ -37,6 +37,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Aprovar(string id)
         {
             var user = _context.Users.SingleOrDefault(u => u.Id == id);
@@ -48,6 +49,50 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             return RedirectToAction("GerirUtilizadores");
+        }
+
+
+        //TODO: Lídia -> implementar corretamente as vistas/ações a seguir
+        public ActionResult Detalhes(string id)
+        {
+            var user = _context.Users.SingleOrDefault(u => u.Id == id);
+            if (user == null)
+            {
+                return Content("O utilizador não foi encontrado");
+            }
+            return Content("Detalhes do utilizador: " + user.Nome);
+        }
+
+
+        [Authorize(Roles = RoleNames.Admin)]
+        public ActionResult Remover(string id)
+        {
+            var userToRemove = _context.Users.SingleOrDefault(u => u.Id == id);
+            if (userToRemove == null)
+            {
+                return Content("O utilizador que pretende remover não foi encontrado");
+            }
+            return Content("Remover o utilizador: " + userToRemove.Nome);
+        }
+
+        public ActionResult Editar(string id)
+        {
+            var currentUserId = User.Identity.GetUserId();
+            var currentUser = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
+
+            //Não permitir a edição do utilizador, a não ser pelo administrador ou pelo próprio utilizador
+            if (currentUser == null || !currentUser.Aprovado || (!User.IsInRole(RoleNames.Admin) && User.Identity.GetUserId() != id))
+            {
+                return new HttpUnauthorizedResult("Operação não autorizada");
+            }
+
+            var userToEdit = _context.Users.SingleOrDefault(u => u.Id == id);
+            if (userToEdit == null)
+            {
+                return Content("O utilizador que pretende editar não foi encontrado");
+            }
+
+            return Content("Editar o utilizador: " + userToEdit.Nome);
         }
     }
 }

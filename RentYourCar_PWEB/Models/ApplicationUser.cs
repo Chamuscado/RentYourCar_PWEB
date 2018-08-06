@@ -13,6 +13,7 @@ namespace RentYourCar_PWEB.Models
         public string Nome { get; set; }
         public string Telefone { get; set; }
         public bool Aprovado { get; set; }
+        public string RoleName { get; set; }
         public virtual ICollection<Veiculo> Veiculos { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
