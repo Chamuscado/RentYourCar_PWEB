@@ -2,11 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using RentYourCar_PWEB.Models;
+using RentYourCar_PWEB.Models.UsersViewModels;
 
 namespace RentYourCar_PWEB.Controllers
 {
@@ -21,7 +23,12 @@ namespace RentYourCar_PWEB.Controllers
 
         protected override void Dispose(bool disposing)
         {
-            _context.Dispose();
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+
+            base.Dispose(disposing);
         }
 
         // GET: Admin/GerirUtilizadores
@@ -77,7 +84,7 @@ namespace RentYourCar_PWEB.Controllers
             {
                 return HttpNotFound("O utilizador que pretende remover não foi encontrado.");
             }
-            
+
             _context.Users.Remove(userToRemove);
             _context.SaveChanges();
 
@@ -99,10 +106,49 @@ namespace RentYourCar_PWEB.Controllers
             var userToEdit = _context.Users.SingleOrDefault(u => u.Id == id);
             if (userToEdit == null)
             {
-                return Content("O utilizador que pretende editar não foi encontrado");
+                return HttpNotFound("O utilizador que pretende editar não foi encontrado");
             }
 
-            return Content("Editar o utilizador: " + userToEdit.Nome);
+            var viewModel = new EditUserViewModel
+            {
+                Id = userToEdit.Id,
+                Nome = userToEdit.Nome,
+                Telefone = userToEdit.Telefone,
+                Morada = userToEdit.Morada,
+                Email = userToEdit.Email
+            };
+
+            return View("Editar", viewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Editar(EditUserViewModel userViewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Editar", userViewModel);
+            }
+
+            //var userInDb = _context.Users.Single(u => u.Id == userViewModel.Id);
+            var userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(_context));
+            var userInDb = await userManager.FindByIdAsync(userViewModel.Id);
+
+            userInDb.Nome = userViewModel.Nome;
+            userInDb.Telefone = userViewModel.Telefone;
+            userInDb.Morada = userInDb.Morada;
+            userInDb.Email = userViewModel.Email;
+            userInDb.UserName = userViewModel.Email;
+
+            //_context.SaveChanges();
+            await userManager.UpdateAsync(userInDb);
+
+            if (User.IsInRole(RoleNames.Admin))
+            {
+                return RedirectToAction("GerirUtilizadores");
+            }
+
+            return RedirectToAction("Index", "Manage", User.Identity.GetUserId());
         }
     }
 }

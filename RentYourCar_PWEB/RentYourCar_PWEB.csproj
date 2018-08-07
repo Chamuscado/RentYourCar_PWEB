@@ -293,6 +293,7 @@
     <Compile Include="Models\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
+    <Compile Include="Models\UsersViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\Veiculo.cs" />
     <Compile Include="Models\VeiculosView\CreateVeiculoViewModel.cs" />
     <Compile Include="Models\VeiculosView\MatriculaValidationAttribute.cs" />
@@ -538,6 +539,7 @@
     <Content Include="Views\Veiculos\Index.cshtml" />
     <Content Include="Views\Utilizadores\GerirUtilizadores.cshtml" />
     <Content Include="Views\Utilizadores\Detalhes.cshtml" />
+    <Content Include="Views\Utilizadores\Editar.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
