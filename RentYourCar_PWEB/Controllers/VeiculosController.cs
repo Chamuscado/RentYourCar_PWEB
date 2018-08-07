@@ -18,6 +18,7 @@ namespace RentYourCar_PWEB.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Veiculos
+        [Authorize]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -39,6 +40,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -65,6 +67,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Create
+        [Authorize]
         public ActionResult Create()
         {
             var combustiveis = db.Combustiveis.ToList();
@@ -80,6 +83,7 @@ namespace RentYourCar_PWEB.Controllers
         // POST: Veiculos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Veiculo veiculo)
@@ -106,6 +110,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -136,6 +141,7 @@ namespace RentYourCar_PWEB.Controllers
         // POST: Veiculos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Veiculo veiculo)
@@ -171,6 +177,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -189,6 +196,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // POST: Veiculos/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
