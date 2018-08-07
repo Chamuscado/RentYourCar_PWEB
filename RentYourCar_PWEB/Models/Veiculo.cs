@@ -58,6 +58,8 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength: 2048, MinimumLength = 0)]
         public string CondicoesArrendamento { get; set; } // a ser avaliado
 
+        public string UserId { get; set; }
+
 
         //public List<Image> Fotografias { get; set; }
     }

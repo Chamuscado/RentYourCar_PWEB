@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
 using RentYourCar_PWEB.Models.VeiculosView;
 
@@ -19,8 +20,8 @@ namespace RentYourCar_PWEB.Controllers
         // GET: Veiculos
         public ActionResult Index()
         {
-            // var Veiculos = db.Veiculos.Where(); //Todo -> iserir o id do user
-            var veiculos = db.Veiculos.ToList();
+            var userId = User.Identity.GetUserId();
+            var veiculos = new List<Veiculo>(db.Veiculos.Where(v => v.UserId == userId));
 
             var detailsVeiculos = new List<DetailsVeiculoViewModel>(veiculos.Count);
             foreach (var veiculo in veiculos)
@@ -46,7 +47,8 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }
@@ -84,6 +86,7 @@ namespace RentYourCar_PWEB.Controllers
         {
             if (ModelState.IsValid)
             {
+                veiculo.UserId = User.Identity.GetUserId();
                 veiculo.Matricula = veiculo.Matricula.ToUpper();
                 db.Veiculos.Add(veiculo);
                 db.SaveChanges();
@@ -111,7 +114,8 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }
@@ -136,7 +140,8 @@ namespace RentYourCar_PWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Veiculo veiculo)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 try
                 {
@@ -174,7 +179,8 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }

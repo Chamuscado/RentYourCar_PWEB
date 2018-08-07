@@ -280,6 +280,10 @@
     <Compile Include="Migrations\201808062019016_AdicaoMatricula2.Designer.cs">
       <DependentUpon>201808062019016_AdicaoMatricula2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808071008197_UserIdVeiculo.cs" />
+    <Compile Include="Migrations\201808071008197_UserIdVeiculo.Designer.cs">
+      <DependentUpon>201808071008197_UserIdVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -607,6 +611,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808062019016_AdicaoMatricula2.resx">
       <DependentUpon>201808062019016_AdicaoMatricula2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808071008197_UserIdVeiculo.resx">
+      <DependentUpon>201808071008197_UserIdVeiculo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
