@@ -57,8 +57,6 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("GerirUtilizadores");
         }
 
-
-        //TODO: Lídia -> implementar corretamente as vistas/ações a seguir
         public ActionResult Detalhes(string id)
         {
             var user = _context.Users.SingleOrDefault(u => u.Id == id);
@@ -79,14 +77,14 @@ namespace RentYourCar_PWEB.Controllers
             {
                 return HttpNotFound("O utilizador que pretende remover não foi encontrado.");
             }
-
-            //TODO: descomentar as linhas a seguir quando se puder alterar a base de dados
-            //_context.Users.Remove(userToRemove);
-            //_context.SaveChanges();
+            
+            _context.Users.Remove(userToRemove);
+            _context.SaveChanges();
 
             return RedirectToAction("GerirUtilizadores");
         }
 
+        //TODO: Lídia -> implementar corretamente as vistas/ações a seguir
         public ActionResult Editar(string id)
         {
             var currentUserId = User.Identity.GetUserId();

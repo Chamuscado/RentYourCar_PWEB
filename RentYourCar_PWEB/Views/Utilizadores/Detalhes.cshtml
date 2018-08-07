@@ -4,20 +4,55 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>@Model.Nome</h2>
+<h2 class="page-header">@Model.Nome</h2>
 
 <p class="lead">Utilizador @Model.RoleName</p>
 
-<h4>Contactos</h4>
-<ul>
-    <li><strong>Email: </strong><a href="mailto:@Model.Email">@Model.Email</a></li>
-    <li><strong>Telefone: </strong>@Model.Telefone</li>
-    <li><strong>Morada:</strong><br><span class="morada">@Model.Morada</span></li>
-</ul>
-
-<div class="well">
-    <form class="form-horizontal" action="mailto:@Model.Email">
-
-    </form>
+<div class="row">
+    <div class="col-lg-6">
+        <h3>Contactos</h3>
+        <ul>
+            <li><strong>Email: </strong><a href="mailto:@Model.Email">@Model.Email</a></li>
+            <li><strong>Telefone: </strong>@Model.Telefone</li>
+            <li><strong>Morada: </strong>@Model.Morada</li>
+        </ul>
+    </div>
 </div>
 
+<div class="row">
+    <div class="col-lg-6">
+        <div class="well">
+            <form class="form-horizontal" id="contact-user" name="contact-user" action="mailto:@Model.Email" method="post">
+                <fieldset>
+                    <legend>Envie uma mensagem a este utilizador</legend>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="inputNome">Nome</label>
+                        <div class="col-lg-10">
+                            <input type="text" id="inputNome" class="form-control" placeholder="Nome" required="required" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="inputEmail">Email</label>
+                        <div class="col-lg-10">
+                            <input type="email" id="inputEmail" class="form-control" placeholder="Email" required="required" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label" for="inputMensagem">Mensagem</label>
+                        <div class="col-lg-10">
+                            <textarea id="inputMensagem" class="form-control" placeholder="Mensagem" required="required"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            <input type="submit" name="enviar" value="Enviar" class="btn btn-primary" />
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>
+
+@*TODO: inserir formulário de avaliação e área onde as avaliações são visíveis*@
