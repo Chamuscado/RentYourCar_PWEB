@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="title">Gerir Utilizadores</h2>
+<h2>Gerir Utilizadores</h2>
 
 <table id="users" class="table table-bordered table-hover">
     <thead>
@@ -30,14 +30,14 @@
                 }
                 else
                 {
-                    <td><button class="btn btn-link js-aprovar" data-user-id="@user.Id">Não Aprovado</button></td>
+                    <td><button class="btn btn-link js-aprovar" data-user-id="@user.Id" data-user-name="@user.Nome">Não Aprovado</button></td>
                 }
 
                 <td>
                     @Html.ActionLink("Editar", "Editar", new { id = user.Id }, new { @class = "btn btn-link" })
                 </td>
                 <td>
-                    @Html.ActionLink("Remover", "Remover", new { id = user.Id }, new { @class = "btn btn-link" })
+                    <button class="btn btn-link js-remover" data-user-id="@user.Id" data-user-name="@user.Nome">Remover</button>
                 </td>
             </tr>
         }
@@ -68,13 +68,30 @@
             table.on("click", ".js-aprovar", function () {
                 var button = $(this);
 
-                if (confirm("Tem a certeza que pretende aprovar este utilizador?")) {
+                var confirmMessage = "Tem a certeza que pretende aprovar o utilizador " + button.attr("data-user-name") + "?";
+                if (confirm(confirmMessage)) {
                     $.ajax({
                         url: "/Utilizadores/Aprovar/" + button.attr("data-user-id"),
                         method: 'POST',
                         success: function () {
                             //console.log("Utilizador aprovado");
                             table.cell(button.parents("td")).data("Aprovado").draw();
+                        }
+                    });
+                }
+            });
+
+            table.on("click", ".js-remover", function() {
+                var button = $(this);
+
+                var confirmMessage = "Tem a certeza que pretende eliminar o utilizador " + button.attr("data-user-name") + "?";
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "/Utilizadores/Remover/" + button.attr("data-user-id"),
+                        method: 'POST',
+                        success: function () {
+                            console.log("Utilizador removido");
+                            table.row(button.parents("tr")).remove().draw();
                         }
                     });
                 }

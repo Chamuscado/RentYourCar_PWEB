@@ -532,6 +532,7 @@
     <Content Include="Views\Veiculos\Edit.cshtml" />
     <Content Include="Views\Veiculos\Index.cshtml" />
     <Content Include="Views\Utilizadores\GerirUtilizadores.cshtml" />
+    <Content Include="Views\Utilizadores\Detalhes.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

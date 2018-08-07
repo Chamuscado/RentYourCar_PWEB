@@ -76,6 +76,18 @@ namespace RentYourCar_PWEB.Controllers
                 return View(model);
             }
 
+            //Impedir um utilizador ainda não aprovado pelo Administrador de fazer login
+            ApplicationUser user = await SignInManager.UserManager.FindByNameAsync(model.Email);
+            if (user != null)
+            {
+                if (user.Aprovado == false)
+                {
+                    ModelState.AddModelError("", "Login inválido: a sua conta ainda não foi aprovada pelo Administrador.");
+
+                    return View(model);
+                }
+            }
+
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
@@ -89,7 +101,7 @@ namespace RentYourCar_PWEB.Controllers
                     return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
                 case SignInStatus.Failure:
                 default:
-                    ModelState.AddModelError("", "Invalid login attempt.");
+                    ModelState.AddModelError("", "Tentativa de login inválida.");
                     return View(model);
             }
         }
@@ -171,7 +183,8 @@ namespace RentYourCar_PWEB.Controllers
                 {
                     await UserManager.AddToRoleAsync(user.Id, model.UserRole);
 
-                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                    //NOTES: Deixar linha seguinte comentada, para não haver login automático depois do registo
+                    //await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link

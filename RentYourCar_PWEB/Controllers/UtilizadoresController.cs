@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -16,6 +17,11 @@ namespace RentYourCar_PWEB.Controllers
         public UtilizadoresController()
         {
             _context = new ApplicationDbContext();
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            _context.Dispose();
         }
 
         // GET: Admin/GerirUtilizadores
@@ -58,21 +64,27 @@ namespace RentYourCar_PWEB.Controllers
             var user = _context.Users.SingleOrDefault(u => u.Id == id);
             if (user == null)
             {
-                return Content("O utilizador não foi encontrado");
+                return HttpNotFound("O utilizador não foi encontrado");
             }
-            return Content("Detalhes do utilizador: " + user.Nome);
+            return View(user);
         }
 
 
+        [HttpPost]
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Remover(string id)
         {
             var userToRemove = _context.Users.SingleOrDefault(u => u.Id == id);
             if (userToRemove == null)
             {
-                return Content("O utilizador que pretende remover não foi encontrado");
+                return HttpNotFound("O utilizador que pretende remover não foi encontrado.");
             }
-            return Content("Remover o utilizador: " + userToRemove.Nome);
+
+            //TODO: descomentar as linhas a seguir quando se puder alterar a base de dados
+            //_context.Users.Remove(userToRemove);
+            //_context.SaveChanges();
+
+            return RedirectToAction("GerirUtilizadores");
         }
 
         public ActionResult Editar(string id)
@@ -81,9 +93,9 @@ namespace RentYourCar_PWEB.Controllers
             var currentUser = _context.Users.SingleOrDefault(u => u.Id == currentUserId);
 
             //Não permitir a edição do utilizador, a não ser pelo administrador ou pelo próprio utilizador
-            if (currentUser == null || !currentUser.Aprovado || (!User.IsInRole(RoleNames.Admin) && User.Identity.GetUserId() != id))
+            if (currentUser == null || (!User.IsInRole(RoleNames.Admin) && currentUserId != id))
             {
-                return new HttpUnauthorizedResult("Operação não autorizada");
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Operação não autorizada.");
             }
 
             var userToEdit = _context.Users.SingleOrDefault(u => u.Id == id);

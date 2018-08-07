@@ -1,0 +1,23 @@
+﻿@model RentYourCar_PWEB.Models.ApplicationUser
+@{
+    ViewBag.Title = "Detalhes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>@Model.Nome</h2>
+
+<p class="lead">Utilizador @Model.RoleName</p>
+
+<h4>Contactos</h4>
+<ul>
+    <li><strong>Email: </strong><a href="mailto:@Model.Email">@Model.Email</a></li>
+    <li><strong>Telefone: </strong>@Model.Telefone</li>
+    <li><strong>Morada:</strong><br><span class="morada">@Model.Morada</span></li>
+</ul>
+
+<div class="well">
+    <form class="form-horizontal" action="mailto:@Model.Email">
+
+    </form>
+</div>
+

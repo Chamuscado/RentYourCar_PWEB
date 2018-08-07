@@ -31,3 +31,9 @@ td>.btn.btn-link {
 h2 {
     margin-bottom: 20px;
 }
+
+.morada {
+    white-space: pre;
+    margin-left: 40px;
+    background-color: black;
+}
