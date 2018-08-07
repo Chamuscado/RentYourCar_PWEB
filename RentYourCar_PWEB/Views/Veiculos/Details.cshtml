@@ -1,4 +1,4 @@
-﻿@model RentYourCar_PWEB.Models.Veiculo
+﻿@model RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel
 
 @{
     ViewBag.Title = "Details";
@@ -9,75 +9,96 @@
 
 <div>
     <h4>Veiculo</h4>
-    <hr />
+    <hr/>
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.Modelo)
+            @Html.DisplayNameFor(model => model.Veiculo.Modelo)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Modelo)
+            @Html.DisplayFor(model => model.Veiculo.Modelo)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Marca)
+            @Html.DisplayNameFor(model => model.Veiculo.Marca)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Marca)
+            @Html.DisplayFor(model => model.Veiculo.Marca)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Lutacao)
+            @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Lutacao)
+            @Html.DisplayFor(model => model.Veiculo.Lutacao)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.NPortas)
+            @Html.DisplayNameFor(model => model.Veiculo.NPortas)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.NPortas)
+            @Html.DisplayFor(model => model.Veiculo.NPortas)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Veiculo.Matricula)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Veiculo.Matricula)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Combustivel)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categoria)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PrecoDiario)
+            @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrecoDiario)
+            @Html.DisplayFor(model => model.Veiculo.PrecoDiario)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.PrecoMensal)
+            @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrecoMensal)
+            @Html.DisplayFor(model => model.Veiculo.PrecoMensal)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Aprovado)
+            @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Aprovado)
+            @Html.DisplayFor(model => model.Veiculo.Aprovado)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CondicoesArrendamento)
+            @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CondicoesArrendamento)
+            @Html.DisplayFor(model => model.Veiculo.CondicoesArrendamento)
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Edit", "Edit", new {id = Model.Veiculo.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>

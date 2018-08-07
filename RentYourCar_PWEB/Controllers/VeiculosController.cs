@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.SqlClient;
@@ -6,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Contexts;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
 using RentYourCar_PWEB.Models.VeiculosView;
 
@@ -16,12 +18,29 @@ namespace RentYourCar_PWEB.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Veiculos
+        [Authorize]
         public ActionResult Index()
         {
-            return View(db.Veiculos.ToList());
+            var userId = User.Identity.GetUserId();
+            var veiculos = new List<Veiculo>(db.Veiculos.Where(v => v.UserId == userId));
+
+            var detailsVeiculos = new List<DetailsVeiculoViewModel>(veiculos.Count);
+            foreach (var veiculo in veiculos)
+            {
+                detailsVeiculos.Add(new DetailsVeiculoViewModel()
+                {
+                    Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
+                    Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
+                    Veiculo = veiculo
+                });
+            }
+
+
+            return View(detailsVeiculos);
         }
 
         // GET: Veiculos/Details/5
+        [Authorize]
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -30,15 +49,25 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }
 
-            return View(veiculo);
+            var detailsVeiculo = new DetailsVeiculoViewModel()
+            {
+                Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
+                Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
+                Veiculo = veiculo
+            };
+
+
+            return View(detailsVeiculo);
         }
 
         // GET: Veiculos/Create
+        [Authorize]
         public ActionResult Create()
         {
             var combustiveis = db.Combustiveis.ToList();
@@ -54,16 +83,19 @@ namespace RentYourCar_PWEB.Controllers
         // POST: Veiculos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Veiculo veiculo)
         {
-                if (ModelState.IsValid)
-                {
-                    db.Veiculos.Add(veiculo);
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }
+            if (ModelState.IsValid)
+            {
+                veiculo.UserId = User.Identity.GetUserId();
+                veiculo.Matricula = veiculo.Matricula.ToUpper();
+                db.Veiculos.Add(veiculo);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
 
             var combustiveis = db.Combustiveis.ToList();
             var categorias = db.Categorias.ToList();
@@ -78,6 +110,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Edit/5
+        [Authorize]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -86,34 +119,65 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }
 
-            return View(veiculo);
+            var combustiveis = db.Combustiveis.ToList();
+            var categorias = db.Categorias.ToList();
+            var createVeiculo = new CreateVeiculoViewModel()
+            {
+                Combustivels = combustiveis,
+                Categorias = categorias,
+                Veiculo = veiculo
+            };
+
+
+            return View(createVeiculo);
         }
 
         // POST: Veiculos/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include =
-                "Id,Modelo,Marca,Lutacao,NPortas,PrecoDiario,PrecoMensal,Aprovado,CondicoesArrendamento")]
-            Veiculo veiculo)
+        public ActionResult Edit(Veiculo veiculo)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
-                db.Entry(veiculo).State = EntityState.Modified;
-                db.SaveChanges();
+                try
+                {
+                    veiculo.Matricula = veiculo.Matricula.ToUpper();
+                    db.Entry(veiculo).State = EntityState.Modified;
+                    db.SaveChanges();
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+
                 return RedirectToAction("Index");
             }
 
-            return View(veiculo);
+            var combustiveis = db.Combustiveis.ToList();
+            var categorias = db.Categorias.ToList();
+            var createVeiculo = new CreateVeiculoViewModel()
+            {
+                Combustivels = combustiveis,
+                Categorias = categorias,
+                Veiculo = veiculo
+            };
+
+            return View(createVeiculo);
         }
 
         // GET: Veiculos/Delete/5
+        [Authorize]
         public ActionResult Delete(int? id)
         {
             if (id == null)
@@ -122,7 +186,8 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null)
+            if (veiculo == null ||
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
             {
                 return HttpNotFound();
             }
@@ -131,6 +196,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // POST: Veiculos/Delete/5
+        [Authorize]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<RentYourCar_PWEB.Models.Veiculo>
+﻿@model IEnumerable<RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel>
 
 @{
     ViewBag.Title = "Index";
@@ -13,64 +13,87 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Modelo)
+            @Html.DisplayNameFor(model => model.Veiculo.Modelo)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Marca)
+            @Html.DisplayNameFor(model => model.Veiculo.Marca)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lutacao)
+            @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.NPortas)
+            @Html.DisplayNameFor(model => model.Veiculo.NPortas)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrecoDiario)
+            @Html.DisplayNameFor(model => model.Veiculo.Matricula)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.PrecoMensal)
+            @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Aprovado)
+            @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.CondicoesArrendamento)
+            @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
         </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
+        </th>
+        @*
+        <th>
+            @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
+        </th>
+        *@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+    @foreach (var item in Model)
+    {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Modelo)
+            @Html.DisplayFor(modelItem => item.Veiculo.Modelo)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Marca)
+            @Html.DisplayFor(modelItem => item.Veiculo.Marca)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lutacao)
+            @Html.DisplayFor(modelItem => item.Veiculo.Lutacao)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.NPortas)
+            @Html.DisplayFor(modelItem => item.Veiculo.NPortas)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrecoDiario)
+            @Html.DisplayFor(modelItem => item.Veiculo.Matricula)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PrecoMensal)
+            @Html.DisplayFor(modelItem => item.Combustivel)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Aprovado)
+            @Html.DisplayFor(modelItem => item.Categoria)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.CondicoesArrendamento)
+            @Html.DisplayFor(modelItem => item.Veiculo.PrecoDiario)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.DisplayFor(modelItem => item.Veiculo.PrecoMensal)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Veiculo.Aprovado)
+        </td>
+        @*
+        <td>
+            @Html.DisplayFor(modelItem => item.Veiculo.CondicoesArrendamento)
+        </td>
+        *@
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Veiculo.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Veiculo.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Veiculo.Id })
         </td>
     </tr>
-}
+    }
 
 </table>
