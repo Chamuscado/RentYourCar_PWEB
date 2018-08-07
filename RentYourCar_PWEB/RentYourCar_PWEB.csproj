@@ -286,6 +286,7 @@
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\Veiculo.cs" />
