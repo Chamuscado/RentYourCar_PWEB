@@ -1,99 +1,139 @@
 ﻿@model IEnumerable<RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Os meus veículos";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="page-header">Os meus veículos</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Modelo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Marca)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.NPortas)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Matricula)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
-        </th>
-        @*
-        <th>
-            @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
-        </th>
-        *@
-        <th></th>
-    </tr>
+<table id="veiculosUtilizador" class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Matricula)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Modelo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.NPortas)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
+            </th>
+            <th>Editar</th>
+            <th>Remover</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        @foreach (var item in Model)
+        {
+            var aprovado = item.Veiculo.Aprovado ? "Sim" : "Não";
 
-    @foreach (var item in Model)
-    {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.Modelo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.Marca)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.Lutacao)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.NPortas)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.Matricula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Combustivel)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.PrecoDiario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.PrecoMensal)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.Aprovado)
-        </td>
-        @*
-        <td>
-            @Html.DisplayFor(modelItem => item.Veiculo.CondicoesArrendamento)
-        </td>
-        *@
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id = item.Veiculo.Id }) |
-            @Html.ActionLink("Details", "Details", new { id = item.Veiculo.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id = item.Veiculo.Id })
-        </td>
-    </tr>
-    }
+            <tr>
+                <td>
+                    @Html.ActionLink(item.Veiculo.Matricula, "Details", new { id = item.Veiculo.Id }, new { @class = "btn btn-link" })
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.Marca)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.Modelo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.Lutacao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.NPortas)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Combustivel)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Categoria)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.PrecoDiario)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Veiculo.PrecoMensal)
+                </td>
+                <td>@aprovado</td>
+                <td>
+                    @Html.ActionLink("Editar", "Edit", new { id = item.Veiculo.Id }, new { @class = "btn btn-link" })
+                </td>
+
+                <td>
+                    <button class="btn btn-link js-remover" data-veiculo-id="@item.Veiculo.Id" data-veiculo-matricula="@item.Veiculo.Matricula">
+                        Remover
+                    </button>
+                </td>
+            </tr>
+        }
+    </tbody>
 
 </table>
+
+<p>
+    @Html.ActionLink("Criar novo", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var table = $("#veiculosUtilizador").DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registos por página",
+                    "zeroRecords": "Não foram encontrados registos",
+                    "info": "A mostrar a página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Não existem registos disponíveis",
+                    "infoFiltered": "(filtrado de _MAX_ registos no total)",
+                    "search": "Pesquisar: ",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Última",
+                        "next": "Próxima",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+            table.on("click", ".js-remover", function () {
+                var button = $(this);
+
+                var confirmMessage = "Tem a certeza que pretende eliminar o veículo com matrícula " + button.attr("data-veiculo-matricula") + "?";
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "/Veiculos/Delete/" + button.attr("data-veiculo-id"),
+                        method: 'GET',
+                        success: function () {
+                            //console.log("Veiculo removido");
+                            table.row(button.parents("tr")).remove().draw();
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

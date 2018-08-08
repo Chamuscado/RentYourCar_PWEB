@@ -62,11 +62,48 @@ namespace RentYourCar_PWEB.Controllers
                 });
             }
 
-            return View(lista);
+            return View("ListaTodosVeiculos", lista);
+        }
+
+        [AllowAnonymous]
+        public ActionResult ListaVeiculos()
+        {
+            if (User.IsInRole(RoleNames.Admin))
+            {
+                return RedirectToAction("GerirVeiculos");
+            }
+
+            var veiculos = new List<Veiculo>(db.Veiculos.ToList());
+
+            var lista = new List<DetailsVeiculoViewModel>();
+
+            foreach (var veiculo in veiculos)
+            {
+                if (!User.Identity.IsAuthenticated ||
+                    string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+                {
+                    if (veiculo.Aprovado)
+                    {
+                        var proprietario = db.Users.SingleOrDefault(u =>
+                            string.Compare(veiculo.UserId, u.Id, StringComparison.Ordinal) == 0);
+                        var nomeProprietario = proprietario == null ? "(sem proprietário)" : proprietario.Nome;
+
+                        lista.Add(new DetailsVeiculoViewModel
+                        {
+                            Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
+                            Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
+                            Veiculo = veiculo,
+                            Proprietario = nomeProprietario
+                        });
+                    }
+                }
+            }
+
+            return View("ListaTodosVeiculosReadOnly", lista);
         }
 
         // GET: Veiculos/Details/5
-        [Authorize]
+        [AllowAnonymous]
         public ActionResult Details(int? id)
         {
             if (id == null)

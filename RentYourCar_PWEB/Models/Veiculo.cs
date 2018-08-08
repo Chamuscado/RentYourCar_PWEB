@@ -21,7 +21,7 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength: 32, MinimumLength = 2)]
         public string Marca { get; set; }
 
-        [Display(Name = "Lutação", Description = "Lutação do veículo")]
+        [Display(Name = "Lotação", Description = "Lotação do veículo")]
         [Required]
         public byte Lutacao { get; set; }
 
@@ -43,7 +43,7 @@ namespace RentYourCar_PWEB.Models
         [Required(ErrorMessage = "Escolha a Categoria")]
         public byte Categoria_id { get; set; } //pesado, ligeiro, ligeiro de mecadorias, etc
 
-        [Display(Name = "Preço Diario", Description = "Valor cobrado por cada dia de utilização do veículo")]
+        [Display(Name = "Preço Diário", Description = "Valor cobrado por cada dia de utilização do veículo")]
         [Required]
         public float PrecoDiario { get; set; }
 
@@ -54,7 +54,7 @@ namespace RentYourCar_PWEB.Models
         [Display(Name = "Aprovado", Description = "O veículo deve ser aprovado por um administrador")]
         public bool Aprovado { get; set; } = false;
 
-        [Display(Name = "Condicoes de Arrendamento")]
+        [Display(Name = "Condições de Arrendamento")]
         [StringLength(maximumLength: 2048, MinimumLength = 0)]
         public string CondicoesArrendamento { get; set; } // a ser avaliado
 

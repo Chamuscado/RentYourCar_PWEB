@@ -64,6 +64,7 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("GerirUtilizadores");
         }
 
+        [AllowAnonymous]
         public ActionResult Detalhes(string id)
         {
             var user = _context.Users.SingleOrDefault(u => u.Id == id);

@@ -17,7 +17,7 @@
 
                 @if (!User.IsInRole(RoleNames.Admin) && !User.IsInRole(RoleNames.Profissional))
                 {
-                    <li><a href="#">Alugar Veículos (em construção)</a></li>
+                    <li>@Html.ActionLink("Alugar Veículos", "ListaVeiculos", "Veiculos")</li>
                 }
 
                 @if (User.IsInRole(RoleNames.Admin))

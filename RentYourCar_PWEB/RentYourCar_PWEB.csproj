@@ -540,7 +540,8 @@
     <Content Include="Views\Utilizadores\GerirUtilizadores.cshtml" />
     <Content Include="Views\Utilizadores\Detalhes.cshtml" />
     <Content Include="Views\Utilizadores\Editar.cshtml" />
-    <Content Include="Views\Veiculos\GerirVeiculos.cshtml" />
+    <Content Include="Views\Veiculos\ListaTodosVeiculos.cshtml" />
+    <Content Include="Views\Veiculos\ListaTodosVeiculosReadOnly.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
