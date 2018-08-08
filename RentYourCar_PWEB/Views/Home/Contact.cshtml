@@ -1,17 +1,26 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "Contactos";
 }
-<h2>@ViewBag.Title.</h2>
+<h2 class="page-header">@ViewBag.Title</h2>
 <h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
-
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="row" style="margin-top: 40px;">
+    <div class="col-md-4 text-center">
+        <div class="glyphicon glyphicon-map-marker lead"></div>
+        <p class="lead">Morada</p>
+        Rua Pedro Nunes<br/>
+        Quinta da Nora<br/>
+        3030-199 COIMBRA<br/>
+        Portugal<br/><br/>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="glyphicon glyphicon-phone-alt lead"></div>
+        <p class="lead">Telefone</p>
+        239 555 555<br/><br/>
+    </div>
+    <div class="col-md-4 text-center">
+        <div class="glyphicon glyphicon-envelope lead"></div>
+        <p class="lead">Email</p>
+        <a href="mailto:geral@rentyourcar.com">geral@rentyourcar.com</a><br/><br/>
+    </div>
+</div>

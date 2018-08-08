@@ -23,7 +23,7 @@ namespace RentYourCar_PWEB.Controllers
 
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "Entre em contacto connosco.";
 
             return View();
         }
