@@ -1,22 +1,21 @@
 ﻿@model RentYourCar_PWEB.Models.VeiculosView.CreateVeiculoViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Veículo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2 class="page-header">Editar Veículo</h2>
 
 @using (Html.BeginForm("Edit", "Veiculos"))
 {
     @Html.AntiForgeryToken()
     
 <div class="form-horizontal">
-    <h4>Veiculo</h4>
-    <hr />
     
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.Veiculo.Id)
+    @Html.HiddenFor(model => model.Veiculo.UserId)
 <div class="form-group">
         @Html.LabelFor(model => model.Veiculo.Modelo, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -91,7 +90,7 @@
     <div class="form-group">
         @Html.LabelFor(model => model.Veiculo.CondicoesArrendamento, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Veiculo.CondicoesArrendamento, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.TextAreaFor(model => model.Veiculo.CondicoesArrendamento, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.Veiculo.CondicoesArrendamento, "", new { @class = "text-danger" })
         </div>
     </div>
@@ -101,12 +100,12 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-default" />
+            <input type="submit" value="Concluir" class="btn btn-default" />
         </div>
     </div>
 </div>
 }
 
-<div>
+@*<div>
     @Html.ActionLink("Back to List", "Index")
-</div>
+</div>*@

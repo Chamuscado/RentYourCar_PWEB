@@ -6,6 +6,7 @@ using System.Web.Mvc;
 
 namespace RentYourCar_PWEB.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         public ActionResult Index()

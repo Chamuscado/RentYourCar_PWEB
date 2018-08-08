@@ -11,20 +11,56 @@
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Início", "Index", "Home")</li>
+                @*<li>@Html.ActionLink("Início", "Index", "Home")</li>*@
                 <li>@Html.ActionLink("Sobre Nós", "About", "Home")</li>
                 <li>@Html.ActionLink("Contactos", "Contact", "Home")</li>
+
+                @if (!User.IsInRole(RoleNames.Admin) && !User.IsInRole(RoleNames.Profissional))
+                {
+                    <li><a href="#">Alugar Veículos (em construção)</a></li>
+                }
+
                 @if (User.IsInRole(RoleNames.Admin))
                 {
                     <li class="dropdown">
-                            <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
-                                Administração
-                                <span class="caret"></span>
-                            </a>
-                            <ul class="dropdown-menu" role="menu">
-                                <li>@Html.ActionLink("Gerir Utilizadores", "GerirUtilizadores", "Utilizadores")</li>
-                                <li><a href="#">Gerir Veículos (em construção)</a></li>
-                            </ul>
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Administração
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Gerir Utilizadores", "GerirUtilizadores", "Utilizadores")</li>
+                            <li>@Html.ActionLink("Gerir Veículos", "GerirVeiculos", "Veiculos")</li>
+                        </ul>
+                    </li>
+                }
+
+                @if (User.IsInRole(RoleNames.Particular))
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Clientes
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="#">Alugueres (em construção)</a></li>
+                            <li><a href="#">Minhas Avaliações (em construção)</a></li>
+                        </ul>
+                    </li>
+                }
+
+                @if (User.IsInRole(RoleNames.Profissional) || User.IsInRole(RoleNames.Particular))
+                {
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Prestadores de Serviço
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>@Html.ActionLink("Gerir Veículos", "Index", "Veiculos")</li>
+                            <li><a href="#">Gerir Alugueres (em construção)</a></li>
+                            <li><a href="#">Minhas Avaliações (em construção)</a></li>
+                            <li><a href="#">Avaliações dos meus Veículos (em construção)</a></li>
+                        </ul>
                     </li>
                 }
             </ul>

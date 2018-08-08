@@ -18,7 +18,7 @@ namespace RentYourCar_PWEB.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Veiculos
-        [Authorize]
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
         public ActionResult Index()
         {
             var userId = User.Identity.GetUserId();
@@ -31,12 +31,38 @@ namespace RentYourCar_PWEB.Controllers
                 {
                     Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
                     Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
-                    Veiculo = veiculo
+                    Veiculo = veiculo,
+                    Proprietario = db.Users.Single(u => string.Compare(userId, u.Id, StringComparison.Ordinal) == 0).Nome
                 });
             }
 
 
             return View(detailsVeiculos);
+        }
+
+        [Authorize(Roles = RoleNames.Admin)]
+        public ActionResult GerirVeiculos()
+        {
+            var veiculos = new List<Veiculo>(db.Veiculos.ToList());
+
+            var lista = new List<DetailsVeiculoViewModel>();
+
+            foreach (var veiculo in veiculos)
+            {
+                var proprietario = db.Users.SingleOrDefault(u =>
+                    string.Compare(veiculo.UserId, u.Id, StringComparison.Ordinal) == 0);
+                var nomeProprietario = proprietario == null ? "(sem proprietário)" : proprietario.Nome;
+
+                lista.Add(new DetailsVeiculoViewModel
+                {
+                    Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
+                    Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
+                    Veiculo = veiculo,
+                    Proprietario = nomeProprietario
+                });
+            }
+
+            return View(lista);
         }
 
         // GET: Veiculos/Details/5
@@ -49,17 +75,21 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null ||
-                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+            if (veiculo == null /*|| string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0*/)
             {
                 return HttpNotFound();
             }
+
+            var proprietario = db.Users.SingleOrDefault(u =>
+                string.Compare(veiculo.UserId, u.Id, StringComparison.Ordinal) == 0);
+            var nomeProprietario = proprietario == null ? "(sem proprietário)" : proprietario.Nome;
 
             var detailsVeiculo = new DetailsVeiculoViewModel()
             {
                 Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
                 Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
-                Veiculo = veiculo
+                Veiculo = veiculo,
+                Proprietario = nomeProprietario
             };
 
 
@@ -67,7 +97,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: Veiculos/Create
-        [Authorize]
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
         public ActionResult Create()
         {
             var combustiveis = db.Combustiveis.ToList();
@@ -83,7 +113,7 @@ namespace RentYourCar_PWEB.Controllers
         // POST: Veiculos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize]
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(Veiculo veiculo)
@@ -120,7 +150,8 @@ namespace RentYourCar_PWEB.Controllers
 
             Veiculo veiculo = db.Veiculos.Find(id);
             if (veiculo == null ||
-                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+                (string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0 &&
+                 !User.IsInRole(RoleNames.Admin)))
             {
                 return HttpNotFound();
             }
@@ -146,8 +177,9 @@ namespace RentYourCar_PWEB.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(Veiculo veiculo)
         {
-            if (ModelState.IsValid ||
-                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+            if (ModelState.IsValid &&
+                (User.IsInRole(RoleNames.Admin) ||
+                    string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) == 0))
             {
                 try
                 {
@@ -159,6 +191,11 @@ namespace RentYourCar_PWEB.Controllers
                 {
                     Console.WriteLine(e);
                     throw;
+                }
+
+                if (User.IsInRole(RoleNames.Admin))
+                {
+                    return RedirectToAction("GerirVeiculos");
                 }
 
                 return RedirectToAction("Index");

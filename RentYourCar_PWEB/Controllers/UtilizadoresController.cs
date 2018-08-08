@@ -91,7 +91,6 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("GerirUtilizadores");
         }
 
-        //TODO: Lídia -> implementar corretamente as vistas/ações a seguir
         public ActionResult Editar(string id)
         {
             var currentUserId = User.Identity.GetUserId();

@@ -290,7 +290,7 @@
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\DetailsVeiculoViewModel.cs" />
+    <Compile Include="Models\VeiculosView\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\UsersViewModels\EditUserViewModel.cs" />
@@ -540,6 +540,7 @@
     <Content Include="Views\Utilizadores\GerirUtilizadores.cshtml" />
     <Content Include="Views\Utilizadores\Detalhes.cshtml" />
     <Content Include="Views\Utilizadores\Editar.cshtml" />
+    <Content Include="Views\Veiculos\GerirVeiculos.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
