@@ -90,7 +90,7 @@
                         url: "/Utilizadores/Remover/" + button.attr("data-user-id"),
                         method: 'POST',
                         success: function () {
-                            console.log("Utilizador removido");
+                            //console.log("Utilizador removido");
                             table.row(button.parents("tr")).remove().draw();
                         }
                     });

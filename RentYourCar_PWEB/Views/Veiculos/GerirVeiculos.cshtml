@@ -79,6 +79,38 @@
                     }
                 }
             });
+
+            table.on("click", ".js-aprovar", function () {
+                var button = $(this);
+
+                var confirmMessage = "Tem a certeza que pretende aprovar o veículo com matrícula " + button.attr("data-veiculo-matricula") + "?";
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "/Veiculos/Aprovar/" + button.attr("data-veiculo-id"),
+                        method: 'POST',
+                        success: function () {
+                            //console.log("Veiculo aprovado");
+                            table.cell(button.parents("td")).data("Aprovado").draw();
+                        }
+                    });
+                }
+            });
+
+            table.on("click", ".js-remover", function () {
+                var button = $(this);
+
+                var confirmMessage = "Tem a certeza que pretende eliminar o veículo com matrícula " + button.attr("data-veiculo-matricula") + "?";
+                if (confirm(confirmMessage)) {
+                    $.ajax({
+                        url: "/Veiculos/Delete/" + button.attr("data-veiculo-id"),
+                        method: 'GET',
+                        success: function () {
+                            //console.log("Veiculo removido");
+                            table.row(button.parents("tr")).remove().draw();
+                        }
+                    });
+                }
+            });
         });
     </script>
 }

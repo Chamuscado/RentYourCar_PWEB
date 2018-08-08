@@ -223,26 +223,63 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null ||
-                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+            if (veiculo == null)
             {
                 return HttpNotFound();
             }
 
-            return View(veiculo);
+            if (!User.IsInRole(RoleNames.Admin) &&
+                string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            //return View(veiculo);
+            db.Veiculos.Remove(veiculo);
+            db.SaveChanges();
+
+            if (User.IsInRole(RoleNames.Admin))
+            {
+                return RedirectToAction("GerirVeiculos");
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        [Authorize(Roles = RoleNames.Admin)]
+        [HttpPost]
+        public ActionResult Aprovar(int id)
+        {
+            var veiculo = db.Veiculos.SingleOrDefault(u => u.Id == id);
+
+            if (veiculo == null)
+            {
+                return HttpNotFound();
+            }
+
+            veiculo.Aprovado = true;
+            db.SaveChanges();
+
+            return RedirectToAction("GerirVeiculos");
         }
 
         // POST: Veiculos/Delete/5
-        [Authorize]
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            Veiculo veiculo = db.Veiculos.Find(id);
-            db.Veiculos.Remove(veiculo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //[Authorize]
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    Veiculo veiculo = db.Veiculos.Find(id);
+        //    db.Veiculos.Remove(veiculo);
+        //    db.SaveChanges();
+
+        //    if (User.IsInRole(RoleNames.Admin))
+        //    {
+        //        return RedirectToAction("GerirVeiculos");
+        //    }
+
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {
