@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Web;
 using System.Web.Mvc;
 using RentYourCar_PWEB.Models.VeiculosView;
 
@@ -60,6 +61,7 @@ namespace RentYourCar_PWEB.Models
 
         public string UserId { get; set; }
 
+        [NotMapped] public HttpPostedFileBase[] files { get; set; }
 
         //public List<Image> Fotografias { get; set; }
     }

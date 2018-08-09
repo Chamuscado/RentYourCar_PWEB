@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Runtime.Remoting.Contexts;
+using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages;
 using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
 using RentYourCar_PWEB.Models.VeiculosView;
@@ -32,7 +35,8 @@ namespace RentYourCar_PWEB.Controllers
                     Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
                     Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
                     Veiculo = veiculo,
-                    Proprietario = db.Users.Single(u => string.Compare(userId, u.Id, StringComparison.Ordinal) == 0).Nome
+                    Proprietario = db.Users.Single(u => string.Compare(userId, u.Id, StringComparison.Ordinal) == 0)
+                        .Nome
                 });
             }
 
@@ -75,7 +79,9 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             Veiculo veiculo = db.Veiculos.Find(id);
-            if (veiculo == null /*|| string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0*/)
+            if (
+                veiculo == null /*|| string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0*/
+            )
             {
                 return HttpNotFound();
             }
@@ -179,7 +185,7 @@ namespace RentYourCar_PWEB.Controllers
         {
             if (ModelState.IsValid &&
                 (User.IsInRole(RoleNames.Admin) ||
-                    string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) == 0))
+                 string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) == 0))
             {
                 try
                 {
@@ -212,6 +218,38 @@ namespace RentYourCar_PWEB.Controllers
 
             return View(createVeiculo);
         }
+
+
+        public PartialViewResult UploadFiles()
+        {
+            return PartialView();
+        }
+
+        [HttpPost]
+        public PartialViewResult UploadFiles(HttpPostedFileBase[] files)
+        {
+            //Ensure model state is valid  
+            if (ModelState.IsValid)
+            {
+                //iterating through multiple file collection   
+                foreach (HttpPostedFileBase file in files)
+                {
+                    //Checking file is available to save.  
+                    if (file != null)
+                    {
+                        var InputFileName = Path.GetFileName(file.FileName);
+                        var ServerSavePath = Path.Combine(Server.MapPath("~/UploadedFiles/") + InputFileName);
+                        //Save file to server folder  
+                        file.SaveAs(ServerSavePath);
+                        //assigning file uploaded status to ViewBag for showing message to user.  
+                        ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
+                    }
+                }
+            }
+
+            return PartialView();
+        }
+
 
         // GET: Veiculos/Delete/5
         [Authorize]
@@ -252,6 +290,59 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             base.Dispose(disposing);
+        } // POST: Veiculos/Delete/5
+
+
+        public JsonResult ImageUpload(ProductViewModel model)
+        {
+            var file = model.ImageFile;
+
+            if (file != null)
+            {
+                var fileName = Path.GetFileName(file.FileName);
+                var extention = Path.GetExtension(file.FileName);
+                var filenamewithoutextension = Path.GetFileNameWithoutExtension(file.FileName);
+                var relativeDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
+                relativeDir = Server.MapPath(relativeDir);
+                if (Directory.Exists(relativeDir))
+                    relativeDir += Directory.GetFiles(relativeDir, "*").Length;
+                else
+                {
+                    Directory.CreateDirectory(relativeDir);
+                    relativeDir += "0";
+                }
+
+                relativeDir += "-" + fileName;
+                file.SaveAs(relativeDir);
+            }
+
+            return Json(file.FileName, JsonRequestBehavior.AllowGet);
+        }
+
+        public JsonResult DeleteImage(string fileName)
+        {
+            if (fileName != null && !fileName.IsEmpty())
+            {
+                var extention = Path.GetExtension(fileName);
+                var filenamewithoutextension = Path.GetFileNameWithoutExtension(fileName);
+                var relativeDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
+                relativeDir = Server.MapPath(relativeDir);
+
+                if (Directory.Exists(relativeDir))
+                {
+                    var fileList = Directory.GetFiles(relativeDir, "*");
+                    foreach (var file in fileList)
+                    {
+                        var localFileName = Path.GetFileNameWithoutExtension(file);
+                        var localfilenamewithoutextension = localFileName.Substring(localFileName.IndexOf('-') + 1);
+                        if (string.Compare(filenamewithoutextension, localfilenamewithoutextension,
+                                StringComparison.Ordinal) == 0)
+                            System.IO.File.Delete(file);
+                    }
+                }
+            }
+
+            return Json("", JsonRequestBehavior.AllowGet);
         }
     }
 }

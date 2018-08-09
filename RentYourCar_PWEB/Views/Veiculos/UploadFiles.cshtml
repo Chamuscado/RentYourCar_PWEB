@@ -1,0 +1,171 @@
+﻿@model RentYourCar_PWEB.Models.VeiculosView.ProductViewModel
+
+<h2>UploadFiles</h2>
+@*
+
+    @using (Html.BeginForm("UploadFiles", "Veiculos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <div class="form-horizontal">
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.files, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(model => model.files, "", new { @type = "file", @multiple = "multiple" })
+                    @Html.ValidationMessageFor(model => model.files, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Upload" class="btn btn-primary" />
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-success">
+                    @ViewBag.UploadStatus
+                </div>
+            </div>
+
+        </div>
+    }
+
+
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }
+
+*@
+
+<div class="panel panel-body" style="min-height: 256px">
+
+    @*<div class="col-md-3">
+
+            @{ Html.RenderAction("SideMenu", "Test");}
+
+        </div>*@
+    <div class="col-md-9">
+
+        <div class="col-md-5 thumbnail" id="uploadedImage" style="min-width: 500px">
+
+
+        </div>
+        <br/>
+        <div>
+            <div class="btn btn-primary">
+                <input type="file" id="imageBrowes"/>
+            </div>
+            <hr/>
+
+            <div id="imgPreview" class="thumbnail" style="display: none">
+                <img class="img-responsive" id="targetImg"/>
+                <div class="caption">
+                    <a href="#" onclick="ClearPreview()">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                    <span id="description"></span>
+                </div>
+                <a href="#" class="btn btn-default" onclick="Uploadimage()">Upload</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function() {
+
+        $("#imageBrowes").change(function() {
+
+            var file = this.files;
+
+            if (file && file[0]) {
+                ReadImage(file[0]);
+            }
+
+        });
+
+    });
+
+
+    var ReadImage = function(file) {
+
+        var reader = new FileReader;
+        var image = new Image;
+
+        reader.readAsDataURL(file);
+        reader.onload = function(file) {
+
+            image.src = file.target.result;
+            image.onload = function() {
+
+                var maxHeight = 100;
+                var height = this.height;
+                var width = this.width;
+                var type = file.type;
+                var size = ~~(file.size / 1024) + "KB";
+
+                $("#targetImg").attr('src', file.target.result);
+                $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                $("#imgPreview").show();
+
+            }
+
+        }
+
+    }
+
+    var ClearPreview = function() {
+        $("#imageBrowes").val('');
+        $("#description").text('');
+        $("#imgPreview").hide();
+
+    }
+
+    var Uploadimage = function() {
+
+        var file = $("#imageBrowes").get(0).files;
+
+        var data = new FormData;
+        data.append("ImageFile", file[0]);
+        data.append("ProductName", "SamsungA8");
+
+        $.ajax({
+            type: "Post",
+            url: "/Veiculos/ImageUpload",
+            data: data,
+            contentType: false,
+            processData: false,
+            success: function(response) {
+                ClearPreview();
+
+                $("#uploadedImage")
+                    .append('<img src="/UploadedFiles/' +
+                        response +
+                        '" class="img-responsive thumbnail img-wrap" style="max-height: 250px; float: left" onclick="deleteImage(\'' +response +
+                    '\')"/>');
+
+
+            }
+
+        });
+    }
+
+
+    function deleteImage(path) {
+        $.ajax({
+            url: "/Veiculos/DeleteImage",
+            type: "POST",
+            data: { 'fileName': path },
+            success: function(data) {
+                $("#targetLayer").html('<div class="no-image">No Image</div>');
+            },
+            error: function() {}
+        });
+    }
+
+
+</script>
