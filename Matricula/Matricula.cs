@@ -1,29 +1,28 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 namespace Matricula
 {
    public class Matricula
     {
-        public static char separador = '-';
+        public static char Separador = '-';
 
         public static bool IsValid(string matricula)
         {
-            if (matricula == null || matricula.Count() != 8 || matricula[2] != separador || matricula[5] != separador)
+            if (matricula == null || matricula.Count() != 8 || matricula[2] != Separador || matricula[5] != Separador)
                 return false;
-            var sec = matricula.Split(separador);
+            var sec = matricula.Split(Separador);
             if (sec.Length != 3)
                 return false;
             byte let = 0;
             byte num = 0;
 
-            foreach (string s in sec)
+            foreach (var s in sec)
             {
                 if (s.Length != 2)
                     return false;
-                if (Char.IsLetter(s[0]) || Char.IsLetter(s[1]))
+                if (char.IsLetter(s[0]) || char.IsLetter(s[1]))
                     let++;
-                if (Char.IsDigit(s[0]) || Char.IsDigit(s[1]))
+                if (char.IsDigit(s[0]) || char.IsDigit(s[1]))
                     num++;
             }
 

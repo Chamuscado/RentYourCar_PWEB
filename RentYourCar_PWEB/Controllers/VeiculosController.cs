@@ -143,6 +143,7 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
         public ActionResult Create()
         {
+            ClearDir();
             var combustiveis = db.Combustiveis.ToList();
             var categorias = db.Categorias.ToList();
             var createVeiculo = new CreateVeiculoViewModel()
@@ -150,8 +151,10 @@ namespace RentYourCar_PWEB.Controllers
                 Combustivels = combustiveis,
                 Categorias = categorias
             };
+
             return View(createVeiculo);
         }
+
 
         // POST: Veiculos/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
@@ -167,6 +170,12 @@ namespace RentYourCar_PWEB.Controllers
                 veiculo.Matricula = veiculo.Matricula.ToUpper();
                 db.Veiculos.Add(veiculo);
                 db.SaveChanges();
+
+                var source = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/Temp/");
+                var dest = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/{veiculo.Id}/");
+                CopyFiles(source, dest);
+
+
                 return RedirectToAction("Index");
             }
 
@@ -186,6 +195,7 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize]
         public ActionResult Edit(int? id)
         {
+            ClearDir();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -208,6 +218,9 @@ namespace RentYourCar_PWEB.Controllers
                 Veiculo = veiculo
             };
 
+            var dest = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/Temp/");
+            var source = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/{veiculo.Id}/");
+            CopyFiles(source, dest, false);
 
             return View(createVeiculo);
         }
@@ -229,6 +242,11 @@ namespace RentYourCar_PWEB.Controllers
                     veiculo.Matricula = veiculo.Matricula.ToUpper();
                     db.Entry(veiculo).State = EntityState.Modified;
                     db.SaveChanges();
+
+                    var source = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/Temp/");
+                    var dest = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/{veiculo.Id}/");
+                    CopyFiles(source, dest);
+
                 }
                 catch (Exception e)
                 {
@@ -345,7 +363,7 @@ namespace RentYourCar_PWEB.Controllers
                 var extention = Path.GetExtension(file.FileName);
                 var filenamewithoutextension = Path.GetFileNameWithoutExtension(file.FileName);
                 var relativeDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
-
+                relativeDir = Server.MapPath(relativeDir);
                 if (Directory.Exists(relativeDir))
                     relativeDir += Directory.GetFiles(relativeDir, "*").Length;
                 else
@@ -356,7 +374,8 @@ namespace RentYourCar_PWEB.Controllers
 
                 relativeDir += "-" + fileName;
                 fileNameToReturn = relativeDir;
-                relativeDir = Server.MapPath(relativeDir);
+                
+
                 file.SaveAs(relativeDir);
             }
 
@@ -403,12 +422,48 @@ namespace RentYourCar_PWEB.Controllers
                 var fileList = Directory.GetFiles(absuluteDir, "*");
                 foreach (var file in fileList)
                 {
-                    imageList.Add(file.Replace(intialParh,""));
+                    imageList.Add(file.Replace(intialParh, ""));
                 }
             }
 
 
             return Json(imageList, JsonRequestBehavior.AllowGet);
+        }
+
+        private void CopyFiles(string source, string desti, bool rename = true)
+        {
+            if (!Directory.Exists(desti))
+                Directory.CreateDirectory(desti);
+
+            if (Directory.Exists(source))
+            {
+                var fileListSource = Directory.GetFiles(source, "*");
+                var id = 0;
+                foreach (var file in fileListSource)
+                {
+                    var destpath = "";
+                    if (rename)
+                        destpath = desti + $"/{id++}" + Path.GetExtension(file);
+                    else
+                        destpath = desti + "/" + Path.GetFileName(file);
+                    System.IO.File.Move(file, destpath);
+                }
+            }
+        }
+
+        private void ClearDir()
+        {
+            var absulutDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
+            absulutDir = Server.MapPath(absulutDir);
+
+            if (Directory.Exists(absulutDir))
+            {
+                var di = new DirectoryInfo(absulutDir);
+                foreach (var file in di.GetFiles())
+                {
+                    file.Delete();
+                }
+            }
         }
     }
 }
