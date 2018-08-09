@@ -1,0 +1,154 @@
+﻿@model RentYourCar_PWEB.Models.VeiculosView.ImageViewModel
+<h2>UploadFiles</h2>
+
+<div class="panel panel-body" style="min-height: 256px">
+
+    <div class="col-md-9">
+
+        <div class="col-md-5 thumbnail" id="uploadedImage" style="min-width: 500px">
+
+
+        </div>
+        <br/>
+        <div>
+            <div class="btn btn-primary">
+                <input type="file" id="imageBrowes"/>
+            </div>
+            <hr/>
+
+            <div id="imgPreview" class="thumbnail" style="display: none">
+                <img class="img-responsive" id="targetImg"/>
+                <div class="caption">
+                    <a href="#" onclick="ClearPreview()">
+                        <i class="glyphicon glyphicon-trash"></i>
+                    </a>
+                    <span id="description"></span>
+                </div>
+                <a href="#" class="btn btn-default" onclick="Uploadimage()">Upload</a>
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+
+        $(document).ready(function() {
+
+            ReloadAllImages();
+            $("#imageBrowes").change(function() {
+
+                var file = this.files;
+
+                if (file && file[0]) {
+                    ReadImage(file[0]);
+                }
+            });
+
+        });
+
+
+        var ReadImage = function(file) {
+
+            var reader = new FileReader;
+            var image = new Image;
+
+            reader.readAsDataURL(file);
+            reader.onload = function(file) {
+
+                image.src = file.target.result;
+                image.onload = function() {
+
+                    var height = this.height;
+                    var width = this.width;
+                    var type = file.type;
+                    var size = ~~(file.size / 1024) + "KB";
+
+                    $("#targetImg").attr('src', file.target.result);
+                    $("#description").text("Size:" + size + ", " + height + "X " + width + ", " + type + "");
+                    $("#imgPreview").show();
+
+                }
+
+            }
+
+        }
+
+        var ClearPreview = function() {
+            $("#imageBrowes").val('');
+            $("#description").text('');
+            $("#imgPreview").hide();
+
+        }
+
+        var Uploadimage = function() {
+
+            var file = $("#imageBrowes").get(0).files;
+
+            var data = new FormData;
+            data.append("ImageFile", file[0]);
+
+            $.ajax({
+                type: "Post",
+                url: "/Veiculos/ImageUpload",
+                data: data,
+                contentType: false,
+                processData: false,
+                success: function(response) {
+                    ClearPreview();
+                    ReloadAllImages();
+                }
+
+            });
+        }
+
+
+        function deleteImage(path) {
+            if (confirm("Tem a certeza que pretende apagar a imagem?"))
+                $.ajax({
+                    url: "/Veiculos/DeleteImage",
+                    type: "POST",
+                    data: { 'fileName': path },
+                    success: function(data) {
+                        $("#targetLayer").html('<div class="no-image">No Image</div>');
+                        ReloadAllImages();
+                    },
+                    error: function() {}
+                });
+        }
+
+
+        function ClearImages() {
+            $("#uploadedImage").empty();
+        }
+
+
+        function ReloadAllImages() {
+            ClearImages();
+
+            $.ajax({
+                    contentType: 'application/json; charset=utf-8',
+                    dataType: 'json',
+                    url: "/Veiculos/ReloadImages",
+                    type: "POST",
+                    success: function(response) {
+
+                        $('.roleDD').empty();
+                        for (i = 0; i < response.length; i++) {
+                            $("#uploadedImage")
+                                .append('<img src="' +
+                                    response[i] +
+                                    '" class="img-responsive thumbnail img-wrap" style="max-height: 250px; float: left" onclick="deleteImage(\'' +
+                                    response[i] +
+                                    '\')"/>');
+                        }
+                    }
+                }
+            );
+        }
+    </script>
