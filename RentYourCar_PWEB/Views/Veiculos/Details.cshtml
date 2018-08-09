@@ -10,95 +10,147 @@
 <div>
     <h4>Veiculo</h4>
     <hr/>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Modelo)
-        </dt>
+    <div class="row">
+        <div class="col-lg-6">
+            <dl class="dl-horizontal">
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.Modelo)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Modelo)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Marca)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Modelo)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.Marca)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Marca)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Marca)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.Lutacao)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Lutacao)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.NPortas)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Lutacao)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.NPortas)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Matricula)
-        </dt>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.NPortas)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.Matricula)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.NPortas)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Matricula)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Combustivel)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Matricula)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
+                </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Categoria)
-        </dd>
+                <dd>
+                    @Html.DisplayFor(model => model.Combustivel)
+                </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Categoria_id)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Categoria)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.PrecoDiario)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.PrecoDiario)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.PrecoMensal)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.PrecoMensal)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.Aprovado)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
+                </dt>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
-        </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Aprovado)
+                </dd>
 
-        <dd>
-            @Html.DisplayFor(model => model.Veiculo.CondicoesArrendamento)
-        </dd>
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
+                </dt>
 
-    </dl>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.CondicoesArrendamento)
+                </dd>
+
+            </dl>
+        </div>
+
+        <div class="col-lg-4">
+            <h2>Imagens</h2>
+
+            <div class="panel panel-body" style="min-height: 256px">
+
+                @Html.AntiForgeryToken()
+                <div class="col-md-9">
+
+                    <div class="col-md-5 thumbnail" id="uploadedImage" style="min-width: 500px">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+
 <p>
     @Html.ActionLink("Edit", "Edit", new {id = Model.Veiculo.Id}) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+
+    $(document).ready(function() {
+
+        ReloadAllImages();
+    });
+
+    function ClearImages() {
+        $("#uploadedImage").empty();
+    }
+
+
+    function ReloadAllImages() {
+        ClearImages();
+        var response = @Html.Raw(Json.Encode(Model.imagesPaths));
+        $('.roleDD').empty();
+        for (var i = 0; i < response.length; i++) {
+            $("#uploadedImage")
+                .append('<img src="' +
+                    response[i] +
+                    '" class="img-responsive thumbnail img-wrap" style="max-height: 250px; float: left" onclick="deleteImage(\'' +
+                    response[i] +
+                    '\')"/>');
+        }
+
+
+    }
+</script>

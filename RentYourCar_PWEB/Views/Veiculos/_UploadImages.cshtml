@@ -143,10 +143,10 @@
                         for (i = 0; i < response.length; i++) {
                             $("#uploadedImage")
                                 .append('<img src="' +
-                                    response[i] +
+                                response[i] + "?"+new Date().getTime() +
                                     '" class="img-responsive thumbnail img-wrap" style="max-height: 250px; float: left" onclick="deleteImage(\'' +
                                     response[i] +
-                                    '\')"/>');
+                                '\')" + />');
                         }
                     }
                 }

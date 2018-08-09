@@ -1,4 +1,6 @@
-﻿namespace RentYourCar_PWEB.Models.VeiculosView
+﻿using System.Collections.Generic;
+
+namespace RentYourCar_PWEB.Models.VeiculosView
 {
     public class DetailsVeiculoViewModel
     {
@@ -6,5 +8,6 @@
         public string Combustivel { get; set; }
         public string Categoria { get; set; }
         public string Proprietario { get; set; }
+        public List<string> imagesPaths { get; set; }
     }
 }

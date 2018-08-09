@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data.Entity;
-using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Runtime.Remoting.Contexts;
-using System.Web;
 using System.Web.Mvc;
 using System.Web.WebPages;
 using Microsoft.AspNet.Identity;
@@ -132,7 +128,8 @@ namespace RentYourCar_PWEB.Controllers
                 Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
                 Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
                 Veiculo = veiculo,
-                Proprietario = nomeProprietario
+                Proprietario = nomeProprietario,
+                imagesPaths = LoadImagesDetails(veiculo.UserId, veiculo.Id)
             };
 
 
@@ -245,8 +242,8 @@ namespace RentYourCar_PWEB.Controllers
 
                     var source = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/Temp/");
                     var dest = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/{veiculo.Id}/");
-                    CopyFiles(source, dest);
-
+                    ClearDir(dest);
+                    MoveFiles(source, dest);
                 }
                 catch (Exception e)
                 {
@@ -352,6 +349,7 @@ namespace RentYourCar_PWEB.Controllers
             base.Dispose(disposing);
         }
 
+        #region JsonResult
 
         public JsonResult ImageUpload(ImageViewModel model)
         {
@@ -360,8 +358,6 @@ namespace RentYourCar_PWEB.Controllers
             if (file != null)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var extention = Path.GetExtension(file.FileName);
-                var filenamewithoutextension = Path.GetFileNameWithoutExtension(file.FileName);
                 var relativeDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
                 relativeDir = Server.MapPath(relativeDir);
                 if (Directory.Exists(relativeDir))
@@ -374,7 +370,7 @@ namespace RentYourCar_PWEB.Controllers
 
                 relativeDir += "-" + fileName;
                 fileNameToReturn = relativeDir;
-                
+
 
                 file.SaveAs(relativeDir);
             }
@@ -407,6 +403,7 @@ namespace RentYourCar_PWEB.Controllers
             return Json("", JsonRequestBehavior.AllowGet);
         }
 
+
         public JsonResult ReloadImages()
         {
             var imageList = new List<string>();
@@ -430,7 +427,56 @@ namespace RentYourCar_PWEB.Controllers
             return Json(imageList, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region privateMethods
+
+        private List<string> LoadImagesDetails(string userid, int veiculoId)
+        {
+            var imageList = new List<string>();
+
+            var relativeDir = $"/UploadedFiles/{userid}/{veiculoId}/";
+
+            var absuluteDir = Server.MapPath(relativeDir);
+            absuluteDir = absuluteDir.Replace("\\", "/");
+            var intialParh = absuluteDir.Replace(relativeDir, "");
+
+            if (Directory.Exists(absuluteDir))
+            {
+                var fileList = Directory.GetFiles(absuluteDir, "*");
+                foreach (var file in fileList)
+                {
+                    imageList.Add(file.Replace(intialParh, ""));
+                }
+            }
+
+
+            return imageList;
+        }
+
+
         private void CopyFiles(string source, string desti, bool rename = true)
+        {
+            if (!Directory.Exists(desti))
+                Directory.CreateDirectory(desti);
+
+            if (Directory.Exists(source))
+            {
+                var fileListSource = Directory.GetFiles(source, "*");
+                var id = 0;
+                foreach (var file in fileListSource)
+                {
+                    var destpath = "";
+                    if (rename)
+                        destpath = desti + $"/{id++}" + Path.GetExtension(file);
+                    else
+                        destpath = desti + "/" + Path.GetFileName(file);
+                    System.IO.File.Copy(file, destpath);
+                }
+            }
+        }
+
+        private void MoveFiles(string source, string desti, bool rename = true)
         {
             if (!Directory.Exists(desti))
                 Directory.CreateDirectory(desti);
@@ -451,19 +497,24 @@ namespace RentYourCar_PWEB.Controllers
             }
         }
 
-        private void ClearDir()
+        private void ClearDir(string dir = "")
         {
-            var absulutDir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
-            absulutDir = Server.MapPath(absulutDir);
-
-            if (Directory.Exists(absulutDir))
+            if (dir.IsEmpty())
             {
-                var di = new DirectoryInfo(absulutDir);
+                dir = $"/UploadedFiles/{User.Identity.GetUserId()}/Temp/";
+                dir = Server.MapPath(dir);
+            }
+
+            if (Directory.Exists(dir))
+            {
+                var di = new DirectoryInfo(dir);
                 foreach (var file in di.GetFiles())
                 {
                     file.Delete();
                 }
             }
         }
+
+        #endregion
     }
 }
