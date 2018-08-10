@@ -11,7 +11,7 @@ namespace RentYourCar_PWEB.Models.VeiculosView
                 return ValidationResult.Success;
             else
             {
-                return new ValidationResult("Formatos Primitidos: "+Matricula.Matricula.GetValidMatriculas());
+                return new ValidationResult("Formatos Permitidos: "+Matricula.Matricula.GetValidMatriculas());
             }
         }
     }
