@@ -310,6 +310,7 @@
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
+    <Compile Include="Models\VeiculosView\DateValidationAttribute.cs" />
     <Compile Include="Models\VeiculosView\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
