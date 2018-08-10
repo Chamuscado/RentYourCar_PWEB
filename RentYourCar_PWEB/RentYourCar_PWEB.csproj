@@ -300,6 +300,10 @@
     <Compile Include="Migrations\201808100937426_AdicionarRegiaoVeiculo.Designer.cs">
       <DependentUpon>201808100937426_AdicionarRegiaoVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808101102496_AdicionarDisponibilidadeVeiculo.cs" />
+    <Compile Include="Migrations\201808101102496_AdicionarDisponibilidadeVeiculo.Designer.cs">
+      <DependentUpon>201808101102496_AdicionarDisponibilidadeVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
@@ -649,6 +653,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808100937426_AdicionarRegiaoVeiculo.resx">
       <DependentUpon>201808100937426_AdicionarRegiaoVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808101102496_AdicionarDisponibilidadeVeiculo.resx">
+      <DependentUpon>201808101102496_AdicionarDisponibilidadeVeiculo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

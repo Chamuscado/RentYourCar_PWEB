@@ -16,6 +16,7 @@
             <th>Categoria</th>
             <th>Combustível</th>
             <th>Preço Diário</th>
+            <th>Disponibilidade</th>
         </tr>
     </thead>
     <tbody>
@@ -29,6 +30,7 @@
                 <td>@veiculo.Categoria</td>
                 <td>@veiculo.Combustivel</td>
                 <td>@veiculo.Veiculo.PrecoDiario</td>
+                <td>@veiculo.Veiculo.InicioDisponibilidade.ToShortDateString() até @veiculo.Veiculo.FimDisponibilidade.ToShortDateString()</td>
             </tr>
         }
     </tbody>

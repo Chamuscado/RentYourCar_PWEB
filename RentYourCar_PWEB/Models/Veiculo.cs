@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 using RentYourCar_PWEB.Models.VeiculosView;
@@ -58,6 +59,14 @@ namespace RentYourCar_PWEB.Models
         [StringLength(maximumLength:32, MinimumLength = 2)]
         [Required]
         public string Regiao { get; set; }
+
+        [Required]
+        [Display(Name = "Início", Description = "Data de início do período de disponibilidade do veículo")]
+        public DateTime InicioDisponibilidade { get; set; }
+
+        [Required]
+        [Display(Name = "Fim", Description = "Data de fim do período de disponibilidade do veículo")]
+        public DateTime FimDisponibilidade { get; set; }
 
         public string UserId { get; set; }
 

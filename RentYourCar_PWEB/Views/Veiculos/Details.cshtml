@@ -93,6 +93,20 @@
                 </dd>
 
                 <dt>
+                    Disponível de 
+                </dt>
+                <dd>
+                    @Model.Veiculo.InicioDisponibilidade.ToShortDateString()
+                </dd>
+                
+                <dt>
+                    Até
+                </dt>
+                <dd>
+                    @Model.Veiculo.FimDisponibilidade.ToShortDateString()
+                </dd>
+
+                <dt>
                     @Html.DisplayNameFor(model => model.Veiculo.CondicoesArrendamento)
                 </dt>
 
