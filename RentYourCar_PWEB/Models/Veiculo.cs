@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
@@ -75,5 +76,7 @@ namespace RentYourCar_PWEB.Models
 
 
         //public List<Image> Fotografias { get; set; }
+
+        public ICollection<Aluguer> Alugueres { get; set; }
     }
 }

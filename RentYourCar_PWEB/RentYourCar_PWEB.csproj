@@ -197,6 +197,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AlugueresController.cs" />
     <Compile Include="Controllers\UtilizadoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -304,8 +305,13 @@
     <Compile Include="Migrations\201808101102496_AdicionarDisponibilidadeVeiculo.Designer.cs">
       <DependentUpon>201808101102496_AdicionarDisponibilidadeVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808101541567_CriadoAluguer.cs" />
+    <Compile Include="Migrations\201808101541567_CriadoAluguer.Designer.cs">
+      <DependentUpon>201808101541567_CriadoAluguer.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Aluguer.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
@@ -566,6 +572,7 @@
     <Content Include="Views\Veiculos\ListaTodosVeiculos.cshtml" />
     <Content Include="Views\Veiculos\ListaTodosVeiculosReadOnly.cshtml" />
     <Content Include="Views\Veiculos\_UploadImages.cshtml" />
+    <Content Include="Views\Alugueres\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -658,6 +665,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808101102496_AdicionarDisponibilidadeVeiculo.resx">
       <DependentUpon>201808101102496_AdicionarDisponibilidadeVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808101541567_CriadoAluguer.resx">
+      <DependentUpon>201808101541567_CriadoAluguer.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

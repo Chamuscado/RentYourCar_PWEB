@@ -19,6 +19,8 @@ namespace RentYourCar_PWEB.Models
         [ForeignKey("UserId")]
         public virtual ICollection<Veiculo> Veiculos { get; set; }
 
+        public virtual ICollection<Aluguer> Alugueres { get; set; }
+
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
             // Note the authenticationType must match the one defined in CookieAuthenticationOptions.AuthenticationType

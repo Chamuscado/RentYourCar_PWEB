@@ -1,0 +1,36 @@
+﻿@model IEnumerable<RentYourCar_PWEB.Models.Aluguer>
+@{
+    ViewBag.Title = "Lista de Alugueres";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="page-header">Lista de Alugueres</h2>
+
+@if (!Model.Any())
+{
+    <p>Não existem alugueres.</p>
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Matrícula</th>
+                <th>Proprietário</th>
+                <th>Cliente</th>
+                <th>Período</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Veiculo.Matricula</td>
+                    <td>@item.Veiculo.UserId</td>
+                    <td>@item.Cliente.Nome</td>
+                    <td>@item.Inicio.ToShortDateString() até @item.Fim.ToShortDateString()</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
