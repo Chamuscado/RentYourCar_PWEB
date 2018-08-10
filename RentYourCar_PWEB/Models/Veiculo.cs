@@ -67,7 +67,7 @@ namespace RentYourCar_PWEB.Models
 
         [Required]
         [DateValidationAttribute]
-        [TimePeriodValidationAttribute]
+        [DisponibilidadeValidation]
         [Display(Name = "Fim", Description = "Data de fim do período de disponibilidade do veículo")]
         public DateTime FimDisponibilidade { get; set; }
 

@@ -6,7 +6,7 @@ using System.Web;
 
 namespace RentYourCar_PWEB.Models.VeiculosView
 {
-    public class TimePeriodValidationAttribute : ValidationAttribute
+    public class DisponibilidadeValidationAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

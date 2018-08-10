@@ -317,7 +317,7 @@
     <Compile Include="Models\UsersViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\Veiculo.cs" />
     <Compile Include="Models\VeiculosView\CreateVeiculoViewModel.cs" />
-    <Compile Include="Models\VeiculosView\TimePeriodValidationAttribute.cs" />
+    <Compile Include="Models\VeiculosView\DisponibilidadeValidationAttribute.cs" />
     <Compile Include="Models\VeiculosView\MatriculaValidationAttribute.cs" />
     <Compile Include="Models\VeiculosView\ImageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
