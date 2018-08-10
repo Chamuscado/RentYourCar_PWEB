@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
@@ -14,6 +15,8 @@ namespace RentYourCar_PWEB.Models
         public string Telefone { get; set; }
         public bool Aprovado { get; set; }
         public string RoleName { get; set; }
+
+        [ForeignKey("UserId")]
         public virtual ICollection<Veiculo> Veiculos { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
