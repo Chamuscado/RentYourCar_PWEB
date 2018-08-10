@@ -1,26 +1,16 @@
 ﻿@model RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Detalhes de Veículo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2 class="page-header">@ViewBag.Title</h2>
 
 <div>
-    <h4>Veiculo</h4>
-    <hr/>
     <div class="row">
         <div class="col-lg-6">
             <dl class="dl-horizontal">
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Veiculo.Modelo)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Veiculo.Modelo)
-                </dd>
 
                 <dt>
                     @Html.DisplayNameFor(model => model.Veiculo.Marca)
@@ -28,6 +18,32 @@
 
                 <dd>
                     @Html.DisplayFor(model => model.Veiculo.Marca)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Modelo)
+                </dt>
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Modelo)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Matricula)
+                </dt>
+
+                <dd>
+                    @Html.DisplayFor(model => model.Veiculo.Matricula)
+                </dd>
+
+                <dt>
+                    @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
+                </dt>
+
+                @{
+                    var aprovado = Model.Veiculo.Aprovado ? "Sim" : "Não";
+                }
+                <dd>
+                    @aprovado
                 </dd>
 
                 <dt>
@@ -45,13 +61,7 @@
                 <dd>
                     @Html.DisplayFor(model => model.Veiculo.NPortas)
                 </dd>
-                <dt>
-                    @Html.DisplayNameFor(model => model.Veiculo.Matricula)
-                </dt>
 
-                <dd>
-                    @Html.DisplayFor(model => model.Veiculo.Matricula)
-                </dd>
                 <dt>
                     @Html.DisplayNameFor(model => model.Veiculo.Combustivel_id)
                 </dt>
@@ -76,19 +86,10 @@
                 </dd>
 
                 <dt>
-                    @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
+                    @Html.DisplayNameFor(model => model.Veiculo.Regiao)
                 </dt>
-
                 <dd>
-                    @Html.DisplayFor(model => model.Veiculo.PrecoMensal)
-                </dd>
-
-                <dt>
-                    @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
-                </dt>
-
-                <dd>
-                    @Html.DisplayFor(model => model.Veiculo.Aprovado)
+                    @Html.DisplayFor(model => model.Veiculo.Regiao)
                 </dd>
 
                 <dt>
@@ -119,10 +120,10 @@
 </div>
 
 
-<p>
-    @Html.ActionLink("Edit", "Edit", new {id = Model.Veiculo.Id}) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+@*<p>
+        @Html.ActionLink("Edit", "Edit", new {id = Model.Veiculo.Id}) |
+        @Html.ActionLink("Back to List", "Index")
+    </p>*@
 
 
 <script src="~/Scripts/jquery-3.3.1.min.js"></script>

@@ -36,7 +36,7 @@ namespace RentYourCar_PWEB.Models
         public string Matricula { get; set; }
 
         [Display(Name = "Combustível", Description = "Combustível do veículo")]
-        [Required(ErrorMessage = "Escolha o Combustivel")]
+        [Required(ErrorMessage = "Escolha o Combustível")]
         public byte Combustivel_id { get; set; }
 
         [Display(Name = "Categoria", Description = "Categoria do veículo")]
@@ -47,16 +47,17 @@ namespace RentYourCar_PWEB.Models
         [Required]
         public float PrecoDiario { get; set; }
 
-        [Display(Name = "Preço Mensal", Description = "Valor cobrado por cada mês de utilização do veículo")]
-        [Required]
-        public float PrecoMensal { get; set; }
-
         [Display(Name = "Aprovado", Description = "O veículo deve ser aprovado por um administrador")]
         public bool Aprovado { get; set; } = false;
 
         [Display(Name = "Condições de Arrendamento")]
         [StringLength(maximumLength: 2048, MinimumLength = 0)]
-        public string CondicoesArrendamento { get; set; } // a ser avaliado
+        public string CondicoesArrendamento { get; set; }
+
+        [Display(Name = "Região", Description = "Região em que o veículo está disponível para aluguer")]
+        [StringLength(maximumLength:32, MinimumLength = 2)]
+        [Required]
+        public string Regiao { get; set; }
 
         public string UserId { get; set; }
 

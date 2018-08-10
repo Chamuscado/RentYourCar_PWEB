@@ -35,7 +35,7 @@
                 @Html.DisplayNameFor(model => model.Veiculo.PrecoDiario)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Veiculo.PrecoMensal)
+                @Html.DisplayNameFor(model => model.Veiculo.Regiao)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Veiculo.Aprovado)
@@ -75,9 +75,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Veiculo.PrecoDiario)
                 </td>
+                
                 <td>
-                    @Html.DisplayFor(modelItem => item.Veiculo.PrecoMensal)
+                    @Html.DisplayFor(modelItem => item.Veiculo.Regiao)
                 </td>
+                
                 <td>@aprovado</td>
                 <td>
                     @Html.ActionLink("Editar", "Edit", new { id = item.Veiculo.Id }, new { @class = "btn btn-link" })
