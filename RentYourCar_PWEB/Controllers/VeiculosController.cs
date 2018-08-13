@@ -321,6 +321,17 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("GerirVeiculos");
         }
 
+        [Authorize]
+        public ActionResult RedirectToAlugueres(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            return RedirectToAction("Index2", "Alugueres", new { veiculoId = id });
+        }
+
         // POST: Veiculos/Delete/5
         //[Authorize]
         //[HttpPost, ActionName("Delete")]

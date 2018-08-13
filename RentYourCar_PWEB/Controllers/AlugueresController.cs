@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
@@ -38,10 +35,28 @@ namespace RentYourCar_PWEB.Controllers
         {
             var listaAlugueres = _context.Alugueres.Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
-                .Include(a=>a.Veiculo.User)
+                .Include(a => a.Veiculo.User)
                 .ToList();
 
             return View(listaAlugueres);
+        }
+
+        // GET: Alugueres
+
+        [Authorize]
+        public ActionResult Index2(int? veiculoId)
+        {
+            if (veiculoId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var listaAlugueres = _context.Alugueres.Include(a => a.Cliente)
+                .Include(a => a.Veiculo)
+                .Include(a => a.Veiculo.User).Where(i => i.Veiculo.Id == veiculoId)
+                .ToList();
+
+            return View("Index", listaAlugueres);
         }
 
         [Authorize(Roles = RoleNames.Particular)]
@@ -71,7 +86,7 @@ namespace RentYourCar_PWEB.Controllers
 
             var viewModel = new CreateAluguerViewModel
             {
-                VeiculoId = (int)veiculoId,
+                VeiculoId = (int) veiculoId,
                 Veiculo = veiculo,
                 ClienteId = clienteId,
                 Inicio = DateTime.Today,
@@ -102,10 +117,9 @@ namespace RentYourCar_PWEB.Controllers
             }
 
 
-
             if (!VeiculoDisponivel(veiculo, viewModel.Inicio, viewModel.Fim))
             {
-                ModelState.AddModelError("Fim", "O veículo não está disponível no período indicado.");
+                ModelState.AddModelError("Fim", @"O veículo não está disponível no período indicado.");
 
                 viewModel.Inicio = DateTime.Today;
                 viewModel.Fim = DateTime.Today;
@@ -153,15 +167,15 @@ namespace RentYourCar_PWEB.Controllers
             //    throw;
             //}
 
-            return RedirectToAction("Details", new { id = aluguer.Id });
+            return RedirectToAction("Details", new {id = aluguer.Id});
         }
 
         public ActionResult Details(int id)
         {
             var aluguer = _context.Alugueres.Include(a => a.Veiculo)
                 .Include(v => v.Veiculo.User)
-                .Include(v=>v.Veiculo.Categoria)
-                .Include(v=>v.Veiculo.Combustivel)
+                .Include(v => v.Veiculo.Categoria)
+                .Include(v => v.Veiculo.Combustivel)
                 .Include(a => a.Cliente)
                 .SingleOrDefault(a => a.Id == id);
 
@@ -187,6 +201,7 @@ namespace RentYourCar_PWEB.Controllers
                 Debug.WriteLine("veiculo = null");
                 return false;
             }
+
             //Verificar se o veículo está disponível no período pretendido
             DateTime inicioDisponibilidade = veiculo.InicioDisponibilidade;
             DateTime fimDisponibilidade = veiculo.FimDisponibilidade;

@@ -39,9 +39,10 @@
             </th>
             <th>Editar</th>
             <th>Remover</th>
+            <th>Alugueres</th>
         </tr>
     </thead>
-    
+
     <tbody>
         @foreach (var item in Model)
         {
@@ -69,11 +70,11 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.Veiculo.PrecoDiario)
                 </td>
-                
+
                 <td>
                     @Html.DisplayFor(modelItem => item.Veiculo.Regiao)
                 </td>
-                
+
                 <td>@aprovado</td>
                 <td>
                     @Html.ActionLink("Editar", "Edit", new { id = item.Veiculo.Id }, new { @class = "btn btn-link" })
@@ -84,14 +85,17 @@
                         Remover
                     </button>
                 </td>
+                <td>
+                    @Html.ActionLink("Alugueres", "RedirectToAlugueres", new { id = item.Veiculo.Id }, new { @class = "btn btn-link" })
+                </td>
             </tr>
         }
     </tbody>
-
+    return RedirectToAction("Error","Home", new { error = (new Error("ErrorName","ErrorDescription"))} );
 </table>
 
 <p>
-    @Html.ActionLink("Criar novo", "Create", null, new { @class = "btn btn-primary" })
+    
 </p>
 
 @section scripts
