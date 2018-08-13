@@ -17,13 +17,14 @@
             <th>Combustível</th>
             <th>Preço Diário</th>
             <th>Disponibilidade</th>
+            <th>Alugar</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var veiculo in Model)
         {
             <tr>
-                <td>@Html.ActionLink(veiculo.Proprietario, "Detalhes", "Utilizadores", new {id=veiculo.Veiculo.UserId}, new {@class="btn btn-link"})</td>
+                <td>@Html.ActionLink(veiculo.Proprietario, "Detalhes", "Utilizadores", new { id = veiculo.Veiculo.UserId }, new { @class = "btn btn-link" })</td>
                 <td>@veiculo.Veiculo.Regiao</td>
                 <td>@Html.ActionLink(veiculo.Veiculo.Matricula, "Details", new { id = veiculo.Veiculo.Id }, new { @class = "btn btn-link" })</td>
                 <td>@veiculo.Veiculo.Marca / @veiculo.Veiculo.Modelo</td>
@@ -31,6 +32,7 @@
                 <td>@veiculo.Combustivel</td>
                 <td>@veiculo.Veiculo.PrecoDiario</td>
                 <td>@veiculo.Veiculo.InicioDisponibilidade.ToShortDateString() até @veiculo.Veiculo.FimDisponibilidade.ToShortDateString()</td>
+                <td>@Html.ActionLink("Alugar", "Create", "Alugueres", new { veiculoId = veiculo.Veiculo.Id }, new { @class = "btn btn-link" })</td>
             </tr>
         }
     </tbody>
@@ -40,7 +42,7 @@
 @section scripts
 {
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             var table = $("#listaVeiculos").DataTable({
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ registos por página",

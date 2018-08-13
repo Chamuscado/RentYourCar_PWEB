@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
-using RentYourCar_PWEB.Models.VeiculosView;
+using RentYourCar_PWEB.Models.CustomValidations;
 
 namespace RentYourCar_PWEB.Models
 {
@@ -32,7 +32,7 @@ namespace RentYourCar_PWEB.Models
         public byte NPortas { get; set; }
 
         [Display(Name = "Matrícula", Description = "Matrícula do veículo")]
-        [MatriculaValidationAttribute]
+        [MatriculaValidation]
         // [Required(ErrorMessage = "Insira a Matricula Formato: \"AA-00-00\", \"00-AA-00\" ou \"00-00-AA\" ")]
         [StringLength(maximumLength: 8, MinimumLength = 8)]
         public string Matricula { get; set; }
@@ -41,9 +41,15 @@ namespace RentYourCar_PWEB.Models
         [Required(ErrorMessage = "Escolha o Combustível")]
         public byte Combustivel_id { get; set; }
 
+        [ForeignKey("Combustivel_id")]
+        public Combustivel Combustivel { get; set; }
+
         [Display(Name = "Categoria", Description = "Categoria do veículo")]
         [Required(ErrorMessage = "Escolha a Categoria")]
         public byte Categoria_id { get; set; } //pesado, ligeiro, ligeiro de mecadorias, etc
+
+        [ForeignKey("Categoria_id")]
+        public Categoria Categoria { get; set; }
 
         [Display(Name = "Preço Diário", Description = "Valor cobrado por cada dia de utilização do veículo")]
         [Required]
@@ -62,17 +68,20 @@ namespace RentYourCar_PWEB.Models
         public string Regiao { get; set; }
 
         [Required]
-        [DateValidationAttribute]
+        [DateValidation]
         [Display(Name = "Início", Description = "Data de início do período de disponibilidade do veículo")]
         public DateTime InicioDisponibilidade { get; set; }
 
         [Required]
-        [DateValidationAttribute]
+        [DateValidation]
         [DisponibilidadeValidation]
         [Display(Name = "Fim", Description = "Data de fim do período de disponibilidade do veículo")]
         public DateTime FimDisponibilidade { get; set; }
 
         public string UserId { get; set; }
+
+        [ForeignKey("UserId")]
+        public ApplicationUser User { get; set; }
 
 
         //public List<Image> Fotografias { get; set; }

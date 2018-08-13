@@ -309,6 +309,10 @@
     <Compile Include="Migrations\201808101541567_CriadoAluguer.Designer.cs">
       <DependentUpon>201808101541567_CriadoAluguer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808131614033_CorrecaoFKsVeiculo.cs" />
+    <Compile Include="Migrations\201808131614033_CorrecaoFKsVeiculo.Designer.cs">
+      <DependentUpon>201808131614033_CorrecaoFKsVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
@@ -317,15 +321,16 @@
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
-    <Compile Include="Models\VeiculosView\DateValidationAttribute.cs" />
+    <Compile Include="Models\CustomValidations\DateValidationAttribute.cs" />
+    <Compile Include="Models\CustomValidations\PeriodoAluguerValidationAttribute.cs" />
     <Compile Include="Models\VeiculosView\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
     <Compile Include="Models\UsersViewModels\EditUserViewModel.cs" />
     <Compile Include="Models\Veiculo.cs" />
     <Compile Include="Models\VeiculosView\CreateVeiculoViewModel.cs" />
-    <Compile Include="Models\VeiculosView\DisponibilidadeValidationAttribute.cs" />
-    <Compile Include="Models\VeiculosView\MatriculaValidationAttribute.cs" />
+    <Compile Include="Models\CustomValidations\DisponibilidadeValidationAttribute.cs" />
+    <Compile Include="Models\CustomValidations\MatriculaValidationAttribute.cs" />
     <Compile Include="Models\VeiculosView\ImageViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -575,6 +580,7 @@
     <Content Include="Views\Veiculos\_UploadImages.cshtml" />
     <Content Include="Views\Alugueres\Index.cshtml" />
     <Content Include="Views\Alugueres\Create.cshtml" />
+    <Content Include="Views\Alugueres\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -670,6 +676,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808101541567_CriadoAluguer.resx">
       <DependentUpon>201808101541567_CriadoAluguer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808131614033_CorrecaoFKsVeiculo.resx">
+      <DependentUpon>201808131614033_CorrecaoFKsVeiculo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

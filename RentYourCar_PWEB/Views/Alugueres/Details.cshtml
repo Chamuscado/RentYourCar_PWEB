@@ -1,0 +1,48 @@
+﻿@model RentYourCar_PWEB.Models.Aluguer
+@{
+    ViewBag.Title = "Aluguer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+    <h4>Dados do Veículo</h4>
+        <ul>
+            <li><strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = Model.Veiculo.UserId}, new {@class = "btn btn-link"})</li>
+            <li><strong>@Model.Veiculo.Marca @Model.Veiculo.Modelo </strong>(@Model.Veiculo.NPortas Portas / @Model.Veiculo.Lutacao Lugares)</li>
+            <li><strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new {id = Model.Veiculo.Id}, new {@class = "btn btn-link"})</li>
+            <li><strong>Categoria: </strong>@Model.Veiculo.Categoria.Nome</li>
+            <li><strong>Combustível: </strong>@Model.Veiculo.Combustivel.Nome</li>
+            <li><strong>Região: </strong>@Model.Veiculo.Regiao</li>
+            <li><strong>Preço Diário: </strong>@Model.Veiculo.PrecoDiario €</li>
+            <li>
+                <strong>Disponível de </strong>
+                @Model.Veiculo.InicioDisponibilidade.ToShortDateString()
+                <strong> a </strong>
+                @Model.Veiculo.FimDisponibilidade.ToShortDateString()
+            </li>
+            <li>
+                <strong>Condições de Arrendamento:</strong>
+                <ul>
+                    <li>@Model.Veiculo.CondicoesArrendamento</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+    <div class="col-lg-4">
+        <h4>Dados do Aluguer</h4>
+        <ul>
+            <li><strong>Cliente: </strong>@Html.ActionLink(Model.Cliente.Nome, "Detalhes", "Utilizadores", new { id = Model.ClienteId }, new { @class = "btn btn-link" })</li>
+            <li>
+                <strong>Período de Aluguer:</strong>
+                <ul>
+                    <li><strong>Início: </strong>@Model.Inicio.ToShortDateString()</li>
+                    <li><strong>Fim: </strong>@Model.Fim.ToShortDateString()</li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</div>
+

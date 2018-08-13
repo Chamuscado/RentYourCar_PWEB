@@ -1,4 +1,6 @@
-﻿@model RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel
+﻿@using Microsoft.AspNet.Identity
+@using RentYourCar_PWEB.Models
+@model RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel
 
 @{
     ViewBag.Title = "Detalhes de Veículo";
@@ -93,17 +95,10 @@
                 </dd>
 
                 <dt>
-                    Disponível de 
+                    Disponibilidade
                 </dt>
                 <dd>
-                    @Model.Veiculo.InicioDisponibilidade.ToShortDateString()
-                </dd>
-                
-                <dt>
-                    Até
-                </dt>
-                <dd>
-                    @Model.Veiculo.FimDisponibilidade.ToShortDateString()
+                    De @Model.Veiculo.InicioDisponibilidade.ToShortDateString() até @Model.Veiculo.FimDisponibilidade.ToShortDateString()
                 </dd>
 
                 <dt>
@@ -115,6 +110,25 @@
                 </dd>
 
             </dl>
+            @if (Model.Veiculo.Alugueres.Any())
+            {
+                <div class="alert alert-info">
+                    <strong>Este veículo encontra-se alugado nos seguintes períodos:</strong>
+                    <ul>
+                        @foreach (var item in Model.Veiculo.Alugueres)
+                        {
+                            <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                        }
+                    </ul>
+                </div>
+            }
+
+            @if (!User.Identity.IsAuthenticated
+                 || (User.IsInRole(RoleNames.Particular)
+                     && string.Compare(User.Identity.GetUserId(), Model.Veiculo.UserId, StringComparison.Ordinal) != 0))
+            {
+                @Html.ActionLink("Alugar Veículo", "Create", "Alugueres", new { veiculoId = Model.Veiculo.Id }, new { @class = "btn btn-primary" })
+            }
         </div>
 
         <div class="col-lg-4">

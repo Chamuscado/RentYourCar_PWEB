@@ -16,7 +16,6 @@ namespace RentYourCar_PWEB.Models
         public bool Aprovado { get; set; }
         public string RoleName { get; set; }
 
-        [ForeignKey("UserId")]
         public virtual ICollection<Veiculo> Veiculos { get; set; }
 
         public virtual ICollection<Aluguer> Alugueres { get; set; }

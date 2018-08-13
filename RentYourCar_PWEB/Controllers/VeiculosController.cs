@@ -111,7 +111,7 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            Veiculo veiculo = db.Veiculos.Find(id);
+            Veiculo veiculo = db.Veiculos.Include(v => v.Alugueres).SingleOrDefault(v => v.Id == id);
             if (
                 veiculo == null /*|| string.Compare(veiculo.UserId, User.Identity.GetUserId(), StringComparison.Ordinal) != 0*/
             )
