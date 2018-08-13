@@ -312,6 +312,7 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
+    <Compile Include="Models\AlugueresViewModels\CreateAluguerViewModel.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
@@ -573,6 +574,7 @@
     <Content Include="Views\Veiculos\ListaTodosVeiculosReadOnly.cshtml" />
     <Content Include="Views\Veiculos\_UploadImages.cshtml" />
     <Content Include="Views\Alugueres\Index.cshtml" />
+    <Content Include="Views\Alugueres\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

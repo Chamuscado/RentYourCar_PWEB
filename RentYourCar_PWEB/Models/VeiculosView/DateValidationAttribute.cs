@@ -10,7 +10,7 @@ namespace RentYourCar_PWEB.Models.VeiculosView
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            var date = (DateTime) value;
+            DateTime date = Convert.ToDateTime(value);
 
             if (date >= DateTime.Today)
             {

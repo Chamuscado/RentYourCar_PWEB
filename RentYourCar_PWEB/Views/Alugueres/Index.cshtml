@@ -15,9 +15,8 @@ else
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th>Matrícula</th>
-                <th>Proprietário</th>
                 <th>Cliente</th>
+                <th>Veiculo</th>
                 <th>Período</th>
             </tr>
         </thead>
@@ -25,9 +24,8 @@ else
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.Veiculo.Matricula</td>
-                    <td>@item.Veiculo.UserId</td>
-                    <td>@item.Cliente.Nome</td>
+                    <td>@item.ClienteId</td>
+                    <td>@item.VeiculoId</td>
                     <td>@item.Inicio.ToShortDateString() até @item.Fim.ToShortDateString()</td>
                 </tr>
             }
