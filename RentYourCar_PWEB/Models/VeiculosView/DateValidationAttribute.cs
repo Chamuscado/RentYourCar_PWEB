@@ -10,6 +10,9 @@ namespace RentYourCar_PWEB.Models.VeiculosView
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
+            if(value ==null)
+                return new ValidationResult("A data inválida. (dd/mm/aaaa)");
+
             var date = (DateTime) value;
 
             if (date >= DateTime.Today)
