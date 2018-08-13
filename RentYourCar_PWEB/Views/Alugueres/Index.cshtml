@@ -24,8 +24,8 @@ else
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>@item.ClienteId</td>
-                    <td>@item.VeiculoId</td>
+                    <td>@item.Cliente.Nome</td>
+                    <td>@item.Veiculo.Matricula</td>
                     <td>@item.Inicio.ToShortDateString() até @item.Fim.ToShortDateString()</td>
                 </tr>
             }

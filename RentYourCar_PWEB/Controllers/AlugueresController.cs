@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Index()
         {
-            var listaAlugueres = _context.Alugueres.ToList();
+            var listaAlugueres = _context.Alugueres.Include(a=>a.Cliente).Include(a=>a.Veiculo).ToList();
 
             return View(listaAlugueres);
         }
