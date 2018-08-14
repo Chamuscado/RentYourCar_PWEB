@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
@@ -38,7 +39,18 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Veiculo.User)
                 .ToList();
 
-            return View(listaAlugueres);
+
+            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
+            foreach (var aluguer in listaAlugueres)
+            {
+                listAlugueresViewModel.Add(new AluguerViewModel()
+                {
+                    Aluguer = aluguer,
+                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
+                });
+            }
+
+            return View(listAlugueresViewModel);
         }
 
         // GET: Alugueres
@@ -56,7 +68,17 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Veiculo.User).Where(i => i.Veiculo.Id == veiculoId)
                 .ToList();
 
-            return View("Index", listaAlugueres);
+            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
+            foreach (var aluguer in listaAlugueres)
+            {
+                listAlugueresViewModel.Add(new AluguerViewModel()
+                {
+                    Aluguer = aluguer,
+                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
+                });
+            }
+
+            return View("Index", listAlugueresViewModel);
         }
 
         [Authorize(Roles = RoleNames.Particular)]

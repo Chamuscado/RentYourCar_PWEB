@@ -313,10 +313,28 @@
     <Compile Include="Migrations\201808131614033_CorrecaoFKsVeiculo.Designer.cs">
       <DependentUpon>201808131614033_CorrecaoFKsVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808141047008_AlgueresStateAdd.cs" />
+    <Compile Include="Migrations\201808141047008_AlgueresStateAdd.Designer.cs">
+      <DependentUpon>201808141047008_AlgueresStateAdd.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808141109367_AlgueresStateFK.cs" />
+    <Compile Include="Migrations\201808141109367_AlgueresStateFK.Designer.cs">
+      <DependentUpon>201808141109367_AlgueresStateFK.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808141118417_AlgueresStateFK1.cs" />
+    <Compile Include="Migrations\201808141118417_AlgueresStateFK1.Designer.cs">
+      <DependentUpon>201808141118417_AlgueresStateFK1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201808141120196_AlgueresStatePOP.cs" />
+    <Compile Include="Migrations\201808141120196_AlgueresStatePOP.Designer.cs">
+      <DependentUpon>201808141120196_AlgueresStatePOP.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
+    <Compile Include="Models\AlugueresViewModels\AluguerViewModel.cs" />
     <Compile Include="Models\AlugueresViewModels\CreateAluguerViewModel.cs" />
+    <Compile Include="Models\AluguerState.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
@@ -679,6 +697,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808131614033_CorrecaoFKsVeiculo.resx">
       <DependentUpon>201808131614033_CorrecaoFKsVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808141047008_AlgueresStateAdd.resx">
+      <DependentUpon>201808141047008_AlgueresStateAdd.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808141109367_AlgueresStateFK.resx">
+      <DependentUpon>201808141109367_AlgueresStateFK.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808141118417_AlgueresStateFK1.resx">
+      <DependentUpon>201808141118417_AlgueresStateFK1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808141120196_AlgueresStatePOP.resx">
+      <DependentUpon>201808141120196_AlgueresStatePOP.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
