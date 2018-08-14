@@ -299,6 +299,50 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("AlugueresFornecedor");
         }
 
+
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
+        public ActionResult CancelarAluguer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = _context.Alugueres
+                .Include(a => a.Veiculo)
+                .SingleOrDefault(a => a.Id == id);
+
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            string userId = User.Identity.GetUserId();
+
+            bool userIsClient = string.Compare(aluguer.ClienteId, userId, StringComparison.Ordinal) == 0;
+            bool userIsOwner = string.Compare(aluguer.Veiculo.UserId, userId, StringComparison.Ordinal) == 0;
+
+            //impedir cancelamento por um utilizador que não o fornecedor de serviço ou o cliente
+            //e no caso de o estado ser diferente de "Pendente" ou "Aceite"
+            if ((!userIsOwner && !userIsClient)
+                || (aluguer.AluguerState_id != AluguerState.Pendente
+                    && aluguer.AluguerState_id != AluguerState.Aceite))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            _context.Alugueres.Remove(aluguer);
+
+            _context.SaveChanges();
+
+            if (userIsClient)
+            {
+                return RedirectToAction("AlugueresCliente");
+            }
+
+            return RedirectToAction("AlugueresFornecedor");
+        }
+
         //TODO: ações de remover, editar, aprovar/rejeitar.
         //TODO: associar estado ao aluguer (Pendente, Aceite, Rejeitado, Em Curso, Concluído).
         //TODO: Os estados Em Curso e Concluído devem ser geridos automaticamente pelo sistema.
