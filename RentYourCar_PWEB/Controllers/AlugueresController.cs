@@ -44,7 +44,7 @@ namespace RentYourCar_PWEB.Controllers
         // GET: Alugueres
 
         [Authorize]
-        public ActionResult Index2(int? veiculoId)
+        public ActionResult AlugueresVeiculo(int? veiculoId)
         {
             if (veiculoId == null)
             {
@@ -58,6 +58,37 @@ namespace RentYourCar_PWEB.Controllers
 
             return View("Index", listaAlugueres);
         }
+
+
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
+        public ActionResult AlugueresFornecedor()
+        {
+            var userId = User.Identity.GetUserId();
+            var listaAlugueres = _context.Alugueres
+                .Where(a => string.Compare(a.Veiculo.UserId, userId, StringComparison.Ordinal) == 0)
+                .Include(a => a.Cliente)
+                .Include(a => a.Veiculo)
+                .Include(a => a.Veiculo.User)
+                .ToList();
+
+            return View("Index", listaAlugueres);
+        }
+
+
+        [Authorize(Roles = RoleNames.Particular)]
+        public ActionResult AlugueresCliente()
+        {
+            var userId = User.Identity.GetUserId();
+            var listaAlugueres = _context.Alugueres
+                .Where(a => string.Compare(a.ClienteId, userId, StringComparison.Ordinal) == 0)
+                .Include(a => a.Cliente)
+                .Include(a => a.Veiculo)
+                .Include(a => a.Veiculo.User)
+                .ToList();
+
+            return View("Index", listaAlugueres);
+        }
+
 
         [Authorize(Roles = RoleNames.Particular)]
         public ActionResult Create(int? veiculoId)
@@ -188,7 +219,6 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         //TODO: ações de remover, editar, aprovar/rejeitar.
-        //TODO: listagem de alugueres para cada utilizador, tanto na perspetiva de fornecedor de serviço como na perspetiva de cliente
         //TODO: associar estado ao aluguer (Pendente, Aceite, Rejeitado, Em Curso, Concluído).
         //TODO: Os estados Em Curso e Concluído devem ser geridos automaticamente pelo sistema.
 

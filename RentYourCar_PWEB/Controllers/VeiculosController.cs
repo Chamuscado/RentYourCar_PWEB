@@ -329,7 +329,7 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return RedirectToAction("Index2", "Alugueres", new { veiculoId = id });
+            return RedirectToAction("AlugueresVeiculo", "Alugueres", new { veiculoId = id });
         }
 
         // POST: Veiculos/Delete/5

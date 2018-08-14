@@ -30,12 +30,20 @@
                 <strong> a </strong>
                 @Model.Veiculo.FimDisponibilidade.ToShortDateString()
             </li>
-            <li>
-                <strong>Condições de Arrendamento:</strong>
-                <ul>
-                    <li>@Model.Veiculo.CondicoesArrendamento</li>
-                </ul>
-            </li>
+
+                <li>
+                    <strong>Condições de Arrendamento:</strong>
+                    <ul>
+                        @if (Model.Veiculo.CondicoesArrendamento != null)
+                        {
+                            <li>@Model.Veiculo.CondicoesArrendamento</li>
+                        }
+                        else
+                        {
+                            <li>(Sem condições de arrendamento)</li>
+                        }
+                    </ul>
+                </li>
         </ul>
         
         @if (Model.Veiculo.Alugueres.Any())
