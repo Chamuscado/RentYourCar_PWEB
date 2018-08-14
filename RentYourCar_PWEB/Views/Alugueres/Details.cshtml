@@ -126,8 +126,8 @@
                         "?";
                     if (confirm(confirmMessage)) {
                         $.ajax({
-                            url: "/Aluguer/AprovarAluguer/" + button.attr("AluguerId"),
-                            method: 'POST'
+                            url: "/Alugueres/AprovarAluguer/" + button.attr("AluguerId"),
+                            method: 'GET'
                         });
                     }
                 });
@@ -144,8 +144,8 @@
                         "?";
                     if (confirm(confirmMessage)) {
                         $.ajax({
-                            url: "/Aluguer/CancelarAluguer/" + button.attr("AluguerId"),
-                            method: 'POST'
+                            url: "/Alugueres/CancelarAluguer/" + button.attr("AluguerId"),
+                            method: 'GET'
                         });
                     }
                 });
@@ -162,8 +162,8 @@
                         "?";
                     if (confirm(confirmMessage)) {
                         $.ajax({
-                            url: "/Aluguer/RejeitarAluguer/" + button.attr("AluguerId"),
-                            method: 'POST'
+                            url: "/Alugueres/RejeitarAluguer/" + button.attr("AluguerId"),
+                            method: 'GET'
                         });
                     }
                 });

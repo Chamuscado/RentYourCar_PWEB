@@ -45,8 +45,19 @@
                     </ul>
                 </li>
         </ul>
-        
-        @if (Model.Veiculo.Alugueres.Any())
+        @{
+            bool mostraAlugueres = false;
+            foreach (var item in Model.Veiculo.Alugueres)
+            {
+                if (item.AluguerState_id == AluguerState.Aceite || item.AluguerState_id == AluguerState.EmCurso)
+                {
+                    mostraAlugueres = true;
+                    break;
+                }
+            }
+        }
+
+        @if (mostraAlugueres)
         {
             <div class="alert alert-info">
                 <strong>Este veículo encontra-se alugado nos seguintes períodos:</strong>

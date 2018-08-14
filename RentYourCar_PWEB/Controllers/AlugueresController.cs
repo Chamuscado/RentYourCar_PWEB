@@ -125,7 +125,7 @@ namespace RentYourCar_PWEB.Controllers
 
             var viewModel = new CreateAluguerViewModel
             {
-                VeiculoId = (int) veiculoId,
+                VeiculoId = (int)veiculoId,
                 Veiculo = veiculo,
                 ClienteId = clienteId,
                 Inicio = DateTime.Today,
@@ -182,7 +182,8 @@ namespace RentYourCar_PWEB.Controllers
                 ClienteId = viewModel.ClienteId,
                 Cliente = cliente,
                 Inicio = viewModel.Inicio,
-                Fim = viewModel.Fim
+                Fim = viewModel.Fim,
+                AluguerState_id = AluguerState.Pendente
             };
 
             _context.Alugueres.Add(aluguer);
@@ -206,7 +207,7 @@ namespace RentYourCar_PWEB.Controllers
             //    throw;
             //}
 
-            return RedirectToAction("Details", new {id = aluguer.Id});
+            return RedirectToAction("Details", new { id = aluguer.Id });
         }
 
         public ActionResult Details(int id)
@@ -226,13 +227,87 @@ namespace RentYourCar_PWEB.Controllers
             return View(aluguer);
         }
 
+
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
+        public ActionResult AprovarAluguer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = _context.Alugueres
+                .Include(a => a.Veiculo)
+                .SingleOrDefault(a => a.Id == id);
+
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            string userId = User.Identity.GetUserId();
+
+            //impedir aprovação por um utilizador que não o fornecedor de serviço
+            //e no caso de o estado ser diferente de "Pendente"
+            if (string.Compare(aluguer.Veiculo.UserId, userId, StringComparison.Ordinal) != 0
+                || aluguer.AluguerState_id != AluguerState.Pendente)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            aluguer.AluguerState_id = AluguerState.Aceite;
+
+            _context.SaveChanges();
+
+            RejeitaAlugueres(aluguer, aluguer.VeiculoId);
+
+            return RedirectToAction("AlugueresFornecedor");
+        }
+
+
+        [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
+        public ActionResult RejeitarAluguer(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = _context.Alugueres
+                .Include(a => a.Veiculo)
+                .SingleOrDefault(a => a.Id == id);
+
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            string userId = User.Identity.GetUserId();
+
+            //impedir rejeição por um utilizador que não o fornecedor de serviço
+            //e no caso de o estado ser diferente de "Pendente"
+            if (string.Compare(aluguer.Veiculo.UserId, userId, StringComparison.Ordinal) != 0
+                || aluguer.AluguerState_id != AluguerState.Pendente)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            aluguer.AluguerState_id = AluguerState.Rejeitado;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("AlugueresFornecedor");
+        }
+
         //TODO: ações de remover, editar, aprovar/rejeitar.
         //TODO: associar estado ao aluguer (Pendente, Aceite, Rejeitado, Em Curso, Concluído).
         //TODO: Os estados Em Curso e Concluído devem ser geridos automaticamente pelo sistema.
 
+
+
         #region DateValidations
 
-        private bool VeiculoDisponivel(Veiculo veiculo, DateTime inicioAluguer, DateTime fimAluguer)
+        private bool VeiculoDisponivel(Veiculo veiculo, DateTime inicioAluguer, DateTime fimAluguer, int aluguerId = -1)
         {
             if (veiculo == null)
             {
@@ -252,6 +327,18 @@ namespace RentYourCar_PWEB.Controllers
             var alugueresVeiculo = veiculo.Alugueres;
             foreach (var item in alugueresVeiculo)
             {
+                //Ignorar o item atual, se corresponder ao aluguer que se pretende editar
+                if (aluguerId != -1 && item.Id == aluguerId)
+                {
+                    continue;
+                }
+
+                //Só é preciso verificar os alugueres aceites ou em curso
+                if (item.AluguerState_id != AluguerState.Aceite && item.AluguerState_id != AluguerState.EmCurso)
+                {
+                    continue;
+                }
+
                 //Coincidência num dos extremos do intervalo
                 if (inicioAluguer == item.Inicio || fimAluguer == item.Fim)
                 {
@@ -278,6 +365,62 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             return true;
+        }
+
+        private bool AlugueresSobrepostos(Aluguer aluguer1, Aluguer aluguer2)
+        {
+            //Coincidência num dos extremos do intervalo
+            if (aluguer1.Inicio == aluguer2.Inicio || aluguer1.Fim == aluguer2.Fim)
+            {
+                return true;
+            }
+
+            //Novo aluguer tem início dentro do período de um aluguer mais antigo
+            if (aluguer1.Inicio > aluguer2.Inicio && aluguer1.Inicio < aluguer2.Fim)
+            {
+                return true;
+            }
+
+            //Novo aluguer termina dentro do período de um aluguer mais antigo
+            if (aluguer1.Fim > aluguer2.Inicio && aluguer1.Fim < aluguer2.Fim)
+            {
+                return true;
+            }
+
+            //O período do novo aluguer engloba completamente o período de um aluguer mais antigo
+            if (aluguer1.Inicio < aluguer2.Inicio && aluguer1.Fim > aluguer2.Fim)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        #endregion
+
+
+
+
+        #region ControloAutomatico
+
+        private void RejeitaAlugueres(Aluguer aluguer, int veiculoId)
+        {
+            var veiculo = _context.Veiculos
+                .Include(v => v.Alugueres)
+                .Single(v => v.Id == veiculoId);
+
+            foreach (var item in veiculo.Alugueres)
+            {
+                if (item.AluguerState_id == AluguerState.Pendente)
+                {
+                    if (AlugueresSobrepostos(aluguer, item))
+                    {
+                        item.AluguerState_id = AluguerState.Rejeitado;
+                    }
+                }
+            }
+
+            _context.SaveChanges();
         }
 
         #endregion
