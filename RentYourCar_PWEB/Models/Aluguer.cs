@@ -29,5 +29,9 @@ namespace RentYourCar_PWEB.Models
 
         [Display(Name = "Estado", Description = "O estado em que se encontra o Aluguer")]
         public byte AluguerState_id { get; set; } = AluguerState.Pendente;
+
+        [Display(Name = "Classificação")] public byte Classificacao { get; set; }
+
+        [Display(Name = "Comentarios")] public string Comentarios { get; set; }
     }
 }
