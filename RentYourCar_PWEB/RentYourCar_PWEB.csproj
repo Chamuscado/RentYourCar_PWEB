@@ -599,6 +599,8 @@
     <Content Include="Views\Alugueres\Create.cshtml" />
     <Content Include="Views\Alugueres\Details.cshtml" />
     <Content Include="Views\Alugueres\Edit.cshtml" />
+    <Content Include="Views\Alugueres\_FornecedorDetailsPartial.cshtml" />
+    <Content Include="Views\Alugueres\_ClienteDetailsPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
