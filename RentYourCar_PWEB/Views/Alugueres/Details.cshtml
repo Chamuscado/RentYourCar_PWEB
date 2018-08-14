@@ -1,4 +1,5 @@
-﻿@model RentYourCar_PWEB.Models.Aluguer
+﻿@using RentYourCar_PWEB.Models
+@model RentYourCar_PWEB.Models.Aluguer
 @{
     ViewBag.Title = "Aluguer";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,14 +9,24 @@
 
 <div class="row">
     <div class="col-lg-6">
-    <h4>Dados do Veículo</h4>
+        <h4>Dados do Veículo</h4>
         <ul>
-            <li><strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = Model.Veiculo.UserId}, new {@class = "btn btn-link"})</li>
+            <li>
+                <strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = Model.Veiculo.UserId}, new {@class = "btn btn-link"})
+            </li>
             <li><strong>@Model.Veiculo.Marca @Model.Veiculo.Modelo </strong>(@Model.Veiculo.NPortas Portas / @Model.Veiculo.Lutacao Lugares)</li>
-            <li><strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new {id = Model.Veiculo.Id}, new {@class = "btn btn-link"})</li>
-            <li><strong>Categoria: </strong>@Model.Veiculo.Categoria.Nome</li>
-            <li><strong>Combustível: </strong>@Model.Veiculo.Combustivel.Nome</li>
-            <li><strong>Região: </strong>@Model.Veiculo.Regiao</li>
+            <li>
+                <strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new {id = Model.Veiculo.Id}, new {@class = "btn btn-link"})
+            </li>
+            <li>
+                <strong>Categoria: </strong>@Model.Veiculo.Categoria.Nome
+            </li>
+            <li>
+                <strong>Combustível: </strong>@Model.Veiculo.Combustivel.Nome
+            </li>
+            <li>
+                <strong>Região: </strong>@Model.Veiculo.Regiao
+            </li>
             <li><strong>Preço Diário: </strong>@Model.Veiculo.PrecoDiario €</li>
             <li>
                 <strong>Disponível de </strong>
@@ -41,15 +52,121 @@
     <div class="col-lg-4">
         <h4>Dados do Aluguer</h4>
         <ul>
-            <li><strong>Cliente: </strong>@Html.ActionLink(Model.Cliente.Nome, "Detalhes", "Utilizadores", new { id = Model.ClienteId }, new { @class = "btn btn-link" })</li>
+            <li>
+                <strong>Cliente: </strong>@Html.ActionLink(Model.Cliente.Nome, "Detalhes", "Utilizadores", new {id = Model.ClienteId}, new {@class = "btn btn-link"})
+            </li>
             <li>
                 <strong>Período de Aluguer:</strong>
                 <ul>
-                    <li><strong>Início: </strong>@Model.Inicio.ToShortDateString()</li>
-                    <li><strong>Fim: </strong>@Model.Fim.ToShortDateString()</li>
+                    <li>
+                        <strong>Início: </strong>@Model.Inicio.ToShortDateString()
+                    </li>
+                    <li>
+                        <strong>Fim: </strong>@Model.Fim.ToShortDateString()
+                    </li>
                 </ul>
             </li>
         </ul>
+        <br/>
+
+        @if (@Model.AluguerState_id == AluguerState.Pendente)
+        {
+            <div class="row" id="botoes">
+                <div class="col-lg-4">
+                    <button class="btn-lg btn-success js-aceitar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+                        Aceitar
+                    </button>
+                </div>
+                <div class="col-lg-4">
+                    <button class="btn-lg btn-danger js-recusar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+                        Rejeitar
+                    </button>
+                </div>
+            </div>
+        }
+        else if (@Model.AluguerState_id == AluguerState.Aceite)
+        {
+            <div class="row" id="botoes">
+                <div class="col-lg-4">
+                    <button class="btn-lg btn-danger js-cancelar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+                        Cancelar
+                    </button>
+                </div>
+            </div>
+        }else if (@Model.AluguerState_id == AluguerState.EmCurso)
+        {
+            <div class="row" id="botoes">
+                <div class="col-lg-4">
+                    <button class="btn btn-lg btn-warning disabled">
+                        Em Curso
+                    </button>
+                </div>
+            </div>
+        }
+
     </div>
 </div>
 
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            var botoes = $("#botoes");
+
+            botoes.on("click",
+                ".js-aceitar",
+                function() {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende aprovar o aluguer do veículo de " +
+                        button.attr("DataInicio") +
+                        " a " +
+                        button.attr("DataFim") +
+                        "?";
+                    if (confirm(confirmMessage)) {
+                        $.ajax({
+                            url: "/Aluguer/AprovarAluguer/" + button.attr("AluguerId"),
+                            method: 'POST'
+                        });
+                    }
+                });
+
+            botoes.on("click",
+                ".js-cancelar",
+                function() {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende rejeitar o aluguer do veículo de " +
+                        button.attr("DataInicio") +
+                        " a " +
+                        button.attr("DataFim") +
+                        "?";
+                    if (confirm(confirmMessage)) {
+                        $.ajax({
+                            url: "/Aluguer/CancelarAluguer/" + button.attr("AluguerId"),
+                            method: 'POST'
+                        });
+                    }
+                });
+
+            botoes.on("click",
+                ".js-recusar",
+                function() {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende rejeitar o aluguer do veículo de " +
+                        button.attr("DataInicio") +
+                        " a " +
+                        button.attr("DataFim") +
+                        "?";
+                    if (confirm(confirmMessage)) {
+                        $.ajax({
+                            url: "/Aluguer/RejeitarAluguer/" + button.attr("AluguerId"),
+                            method: 'POST'
+                        });
+                    }
+                });
+        });
+    </script>
+}
