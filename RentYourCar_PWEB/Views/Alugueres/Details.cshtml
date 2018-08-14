@@ -1,4 +1,5 @@
-﻿@using RentYourCar_PWEB.Models
+﻿@using Microsoft.AspNet.Identity
+@using RentYourCar_PWEB.Models
 @model RentYourCar_PWEB.Models.Aluguer
 @{
     ViewBag.Title = "Aluguer";
@@ -66,10 +67,27 @@
                     </li>
                 </ul>
             </li>
+            <li><strong>Estado: </strong>@Model.AluguerState.Nome</li>
         </ul>
         <br/>
+        
+        @{
+            var userId = User.Identity.GetUserId();
+            if (string.Compare(userId, Model.ClienteId, StringComparison.Ordinal) == 0)
+            {
+                <div class="row" id="botoes">
+                    @Html.Partial("_ClienteDetailsPartial", Model)
+                </div>
+            }
+            else if (string.Compare(userId, Model.Veiculo.UserId, StringComparison.Ordinal) == 0)
+            {
+                <div class="row" id="botoes">
+                    @Html.Partial("_FornecedorDetailsPartial", Model)
+                </div>
+            }
+        }
 
-        @if (@Model.AluguerState_id == AluguerState.Pendente)
+        @*@if (@Model.AluguerState_id == AluguerState.Pendente)
         {
             <div class="row" id="botoes">
                 <div class="col-lg-4">
@@ -103,7 +121,7 @@
                     </button>
                 </div>
             </div>
-        }
+        }*@
 
     </div>
 </div>
@@ -138,7 +156,7 @@
                 function() {
                     var button = $(this);
 
-                    var confirmMessage = "Tem a certeza que pretende rejeitar o aluguer do veículo de " +
+                    var confirmMessage = "Tem a certeza que pretende cancelar o aluguer do veículo de " +
                         button.attr("DataInicio") +
                         " a " +
                         button.attr("DataFim") +

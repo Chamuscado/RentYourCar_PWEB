@@ -1,0 +1,32 @@
+﻿@using RentYourCar_PWEB.Models
+@model RentYourCar_PWEB.Models.Aluguer
+
+@if (Model.AluguerState_id == AluguerState.Pendente)
+{
+    <div class="col-lg-4">
+        <button class="btn btn-success js-aceitar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+            Aceitar
+        </button>
+    </div>
+        <div class="col-lg-4">
+            <button class="btn btn-danger js-recusar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+                Rejeitar
+            </button>
+        </div>
+}
+else if (Model.AluguerState_id == AluguerState.Aceite)
+{
+    <div class="col-lg-4">
+        <button class="btn btn-danger js-cancelar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+            Cancelar
+        </button>
+    </div>
+}
+else if (@Model.AluguerState_id == AluguerState.EmCurso)
+{
+    <div class="col-lg-4">
+        <button class="btn btn-warning disabled">
+            Em Curso
+        </button>
+    </div>
+}

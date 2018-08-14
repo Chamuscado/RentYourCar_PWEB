@@ -225,6 +225,7 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(v => v.Veiculo.Categoria)
                 .Include(v => v.Veiculo.Combustivel)
                 .Include(a => a.Cliente)
+                .Include(a=>a.AluguerState)
                 .SingleOrDefault(a => a.Id == id);
 
             if (aluguer == null)
@@ -417,9 +418,6 @@ namespace RentYourCar_PWEB.Controllers
 
             return RedirectToAction("Details", new {id = aluguerInDb.Id});
         }
-
-        //TODO: Editar aluguer (atenção à validação do estado!).
-
 
 
         #region DateValidations
