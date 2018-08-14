@@ -37,20 +37,11 @@ namespace RentYourCar_PWEB.Controllers
             var listaAlugueres = _context.Alugueres.Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
                 .Include(a => a.Veiculo.User)
+                .Include(a => a.AluguerState)
                 .ToList();
 
 
-            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
-            foreach (var aluguer in listaAlugueres)
-            {
-                listAlugueresViewModel.Add(new AluguerViewModel()
-                {
-                    Aluguer = aluguer,
-                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
-                });
-            }
-
-            return View(listAlugueresViewModel);
+            return View(listaAlugueres);
         }
 
         // GET: Alugueres
@@ -65,20 +56,12 @@ namespace RentYourCar_PWEB.Controllers
 
             var listaAlugueres = _context.Alugueres.Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
-                .Include(a => a.Veiculo.User).Where(i => i.Veiculo.Id == veiculoId)
+                .Include(a => a.Veiculo.User)
+                .Include(a => a.AluguerState)
+                .Where(i => i.Veiculo.Id == veiculoId)
                 .ToList();
 
-            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
-            foreach (var aluguer in listaAlugueres)
-            {
-                listAlugueresViewModel.Add(new AluguerViewModel()
-                {
-                    Aluguer = aluguer,
-                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
-                });
-            }
-
-            return View("Index", listAlugueresViewModel);
+            return View("Index", listaAlugueres);
         }
 
 
@@ -91,19 +74,11 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
                 .Include(a => a.Veiculo.User)
+                .Include(a => a.AluguerState)
                 .ToList();
 
-            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
-            foreach (var aluguer in listaAlugueres)
-            {
-                listAlugueresViewModel.Add(new AluguerViewModel()
-                {
-                    Aluguer = aluguer,
-                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
-                });
-            }
 
-            return View("Index", listAlugueresViewModel);
+            return View("Index", listaAlugueres);
         }
 
 
@@ -116,19 +91,10 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
                 .Include(a => a.Veiculo.User)
+                .Include(a => a.AluguerState)
                 .ToList();
 
-            var listAlugueresViewModel = new List<AluguerViewModel>(listaAlugueres.Count);
-            foreach (var aluguer in listaAlugueres)
-            {
-                listAlugueresViewModel.Add(new AluguerViewModel()
-                {
-                    Aluguer = aluguer,
-                    AluguerState = _context.AluguerState.First(c => c.Id == aluguer.AluguerState_id).Nome
-                });
-            }
-
-            return View("Index", listAlugueresViewModel);
+            return View("Index", listaAlugueres);
         }
 
 

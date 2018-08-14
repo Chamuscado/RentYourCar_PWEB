@@ -332,7 +332,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
-    <Compile Include="Models\AlugueresViewModels\AluguerViewModel.cs" />
     <Compile Include="Models\AlugueresViewModels\CreateAluguerViewModel.cs" />
     <Compile Include="Models\AluguerState.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
