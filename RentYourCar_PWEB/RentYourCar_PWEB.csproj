@@ -329,6 +329,10 @@
     <Compile Include="Migrations\201808141120196_AlgueresStatePOP.Designer.cs">
       <DependentUpon>201808141120196_AlgueresStatePOP.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808142218479_Classificaçoes.cs" />
+    <Compile Include="Migrations\201808142218479_Classificaçoes.Designer.cs">
+      <DependentUpon>201808142218479_Classificaçoes.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
@@ -336,6 +340,7 @@
     <Compile Include="Models\AluguerState.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
     <Compile Include="Models\Categoria.cs" />
+    <Compile Include="Models\Classificacao.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\CustomValidations\DateValidationAttribute.cs" />
@@ -709,6 +714,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808141120196_AlgueresStatePOP.resx">
       <DependentUpon>201808141120196_AlgueresStatePOP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808142218479_Classificaçoes.resx">
+      <DependentUpon>201808142218479_Classificaçoes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
