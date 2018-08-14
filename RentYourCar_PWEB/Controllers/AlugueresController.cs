@@ -351,6 +351,73 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("AlugueresFornecedor");
         }
 
+
+        [Authorize(Roles = RoleNames.Particular)]
+        public ActionResult Edit(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = _context.Alugueres
+                .Include(a => a.Veiculo)
+                .Include(a=>a.Veiculo.User)
+                .Include(a=>a.Veiculo.Combustivel)
+                .Include(a=>a.Veiculo.Categoria)
+                .Include(a=>a.Cliente)
+                .Include(a=>a.AluguerState)
+                .SingleOrDefault(a => a.Id == id);
+
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            string userId = User.Identity.GetUserId();
+
+            bool userIsClient = string.Compare(aluguer.ClienteId, userId, StringComparison.Ordinal) == 0;
+
+            //impedir edição por um utilizador que não o cliente
+            //e no caso de o estado ser diferente de "Pendente" ou "Aceite"
+            if (!userIsClient
+                || (aluguer.AluguerState_id != AluguerState.Pendente
+                    && aluguer.AluguerState_id != AluguerState.Aceite))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+            }
+
+            return View(aluguer);
+        }
+
+
+        [HttpPost]
+        [Authorize(Roles = RoleNames.Particular)]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(Aluguer aluguer)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(aluguer);
+            }
+
+            var aluguerInDb = _context.Alugueres.Include(a=>a.Veiculo).Single(a => a.Id == aluguer.Id);
+
+            if (aluguer.Inicio != aluguerInDb.Inicio || aluguer.Fim != aluguerInDb.Fim)
+            {
+                if (VeiculoDisponivel(aluguerInDb.Veiculo, aluguer.Inicio, aluguer.Fim, aluguer.Id))
+                {
+                    aluguerInDb.Inicio = aluguer.Inicio;
+                    aluguerInDb.Fim = aluguer.Fim;
+                    aluguerInDb.AluguerState_id = AluguerState.Pendente;
+
+                    _context.SaveChanges();
+                }
+            }
+
+            return RedirectToAction("Details", new {id = aluguerInDb.Id});
+        }
+
         //TODO: Editar aluguer (atenção à validação do estado!).
 
 

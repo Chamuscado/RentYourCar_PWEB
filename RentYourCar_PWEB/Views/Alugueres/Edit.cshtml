@@ -1,0 +1,113 @@
+﻿@using RentYourCar_PWEB.Models
+@model RentYourCar_PWEB.Models.Aluguer
+@{
+    ViewBag.Title = "Editar Aluguer";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="page-header">@ViewBag.Title</h2>
+
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Descrição do Veículo:</h4>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-lg-6">
+        <ul>
+            <li><strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new { id = Model.Veiculo.UserId }, new { @class = "btn btn-link" })</li>
+            <li><strong>@Model.Veiculo.Marca @Model.Veiculo.Modelo </strong>(@Model.Veiculo.NPortas Portas / @Model.Veiculo.Lutacao Lugares)</li>
+            <li><strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new { id = Model.Veiculo.Id }, new { @class = "btn btn-link" })</li>
+            <li><strong>Categoria: </strong>@Model.Veiculo.Categoria.Nome</li>
+            <li><strong>Combustível: </strong>@Model.Veiculo.Combustivel.Nome</li>
+            <li><strong>Região: </strong>@Model.Veiculo.Regiao</li>
+            <li><strong>Preço Diário: </strong>@Model.Veiculo.PrecoDiario €</li>
+            <li>
+                <strong>Disponível de </strong>
+                @Model.Veiculo.InicioDisponibilidade.ToShortDateString()
+                <strong> a </strong>
+                @Model.Veiculo.FimDisponibilidade.ToShortDateString()
+            </li>
+
+            <li>
+                <strong>Condições de Arrendamento:</strong>
+                <ul>
+                    @if (Model.Veiculo.CondicoesArrendamento != null)
+                    {
+                        <li>@Model.Veiculo.CondicoesArrendamento</li>
+                    }
+                    else
+                    {
+                        <li>(Sem condições de arrendamento)</li>
+                    }
+                </ul>
+            </li>
+        </ul>
+        @{
+            bool mostraAlugueres = false;
+            foreach (var item in Model.Veiculo.Alugueres)
+            {
+                if (item.AluguerState_id == AluguerState.Aceite || item.AluguerState_id == AluguerState.EmCurso)
+                {
+                    mostraAlugueres = true;
+                    break;
+                }
+            }
+        }
+
+        @if (mostraAlugueres)
+        {
+            <div class="alert alert-info">
+                <strong>Este veículo encontra-se alugado nos seguintes períodos:</strong>
+                <ul>
+                    @foreach (var item in Model.Veiculo.Alugueres)
+                    {
+                        if (item.AluguerState_id == AluguerState.Aceite || item.AluguerState_id == AluguerState.EmCurso)
+                        {
+                            <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                        }
+                    }
+                </ul>
+            </div>
+        }
+    </div>
+    <div class="col-lg-4">
+        @using (Html.BeginForm("Edit", "Alugueres"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.VeiculoId)
+                @Html.HiddenFor(model => model.ClienteId)
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Inicio, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Inicio, "{0:dd/MM/yyyy}", new { placeholder = "dd/mm/aaaa", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Inicio, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Fim, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(model => model.Fim, "{0:dd/MM/yyyy}", new { placeholder = "dd/mm/aaaa", @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.Fim, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Concluir" class="btn btn-primary" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+

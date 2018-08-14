@@ -10,7 +10,7 @@
 
 <div class="row">
     <div class="col-lg-6">
-        <h4>Descrição:</h4>
+        <h4>Descrição do Veículo:</h4>
     </div>
 </div>
 
@@ -64,7 +64,10 @@
                 <ul>
                     @foreach (var item in Model.Veiculo.Alugueres)
                     {
-                        <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                        if (item.AluguerState_id == AluguerState.Aceite || item.AluguerState_id == AluguerState.EmCurso)
+                         {
+                             <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                         }
                     }
                 </ul>
             </div>

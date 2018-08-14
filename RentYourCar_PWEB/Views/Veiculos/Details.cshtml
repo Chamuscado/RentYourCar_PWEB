@@ -136,7 +136,10 @@
                     <ul>
                         @foreach (var item in Model.Veiculo.Alugueres)
                         {
-                            <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                            if (item.AluguerState_id == AluguerState.Aceite || item.AluguerState_id == AluguerState.EmCurso)
+                            {
+                                <li>@item.Inicio.ToShortDateString() a @item.Fim.ToShortDateString()</li>
+                            }
                         }
                     </ul>
                 </div>

@@ -91,6 +91,7 @@
                     <button class="btn-lg btn-danger js-cancelar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
                         Cancelar
                     </button>
+                    @Html.ActionLink("Editar", "Edit", new {id=Model.Id}, new {@class="btn btn-primary"})
                 </div>
             </div>
         }else if (@Model.AluguerState_id == AluguerState.EmCurso)
