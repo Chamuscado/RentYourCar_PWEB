@@ -34,6 +34,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Index()
         {
+            AtualizaTodosAlugueres();
+
             var listaAlugueres = _context.Alugueres.Include(a => a.Cliente)
                 .Include(a => a.Veiculo)
                 .Include(a => a.Veiculo.User)
@@ -49,6 +51,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize]
         public ActionResult AlugueresVeiculo(int? veiculoId)
         {
+            AtualizaTodosAlugueres();
+
             if (veiculoId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -68,6 +72,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Particular + ", " + RoleNames.Profissional)]
         public ActionResult AlugueresFornecedor()
         {
+            AtualizaTodosAlugueres();
+
             var userId = User.Identity.GetUserId();
             var listaAlugueres = _context.Alugueres
                 .Where(a => string.Compare(a.Veiculo.UserId, userId, StringComparison.Ordinal) == 0)
@@ -85,6 +91,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Particular)]
         public ActionResult AlugueresCliente()
         {
+            AtualizaTodosAlugueres();
+
             var userId = User.Identity.GetUserId();
             var listaAlugueres = _context.Alugueres
                 .Where(a => string.Compare(a.ClienteId, userId, StringComparison.Ordinal) == 0)
@@ -343,9 +351,7 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("AlugueresFornecedor");
         }
 
-        //TODO: ações de remover, editar, aprovar/rejeitar.
-        //TODO: associar estado ao aluguer (Pendente, Aceite, Rejeitado, Em Curso, Concluído).
-        //TODO: Os estados Em Curso e Concluído devem ser geridos automaticamente pelo sistema.
+        //TODO: Editar aluguer (atenção à validação do estado!).
 
 
 
@@ -419,20 +425,56 @@ namespace RentYourCar_PWEB.Controllers
                 return true;
             }
 
-            //Novo aluguer tem início dentro do período de um aluguer mais antigo
+            //aluguer1 tem início dentro do período do aluguer2
             if (aluguer1.Inicio > aluguer2.Inicio && aluguer1.Inicio < aluguer2.Fim)
             {
                 return true;
             }
 
-            //Novo aluguer termina dentro do período de um aluguer mais antigo
+            //aluguer1 termina dentro do período do aluguer2
             if (aluguer1.Fim > aluguer2.Inicio && aluguer1.Fim < aluguer2.Fim)
             {
                 return true;
             }
 
-            //O período do novo aluguer engloba completamente o período de um aluguer mais antigo
+            //O período do aluguer1 engloba completamente o período do aluguer2
             if (aluguer1.Inicio < aluguer2.Inicio && aluguer1.Fim > aluguer2.Fim)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
+        private bool VerificaAluguerEmCurso(Aluguer aluguer)
+        {
+            var dataAtual = DateTime.Today;
+
+            if (dataAtual >= aluguer.Inicio)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool VerificaAluguerTerminado(Aluguer aluguer)
+        {
+            var dataAtual = DateTime.Today;
+            if (dataAtual > aluguer.Fim)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool VerificaAluguerRejeitado(Aluguer aluguer)
+        {
+            var dataAtual = DateTime.Today;
+
+            if (dataAtual > aluguer.Inicio)
             {
                 return true;
             }
@@ -447,6 +489,7 @@ namespace RentYourCar_PWEB.Controllers
 
         #region ControloAutomatico
 
+        //Rejeitar os alugueres pendentes que estejam sobrepostos com o aluguer recentemente aceite
         private void RejeitaAlugueres(Aluguer aluguer, int veiculoId)
         {
             var veiculo = _context.Veiculos
@@ -460,6 +503,41 @@ namespace RentYourCar_PWEB.Controllers
                     if (AlugueresSobrepostos(aluguer, item))
                     {
                         item.AluguerState_id = AluguerState.Rejeitado;
+                    }
+                }
+            }
+
+            _context.SaveChanges();
+        }
+
+
+        //atualizar automaticamente o estado de todos os alugueres, consoante a data atual
+        private void AtualizaTodosAlugueres()
+        {
+            var alugueres = _context.Alugueres.ToList();
+
+            foreach (var item in alugueres)
+            {
+                // "Aceite -> "EmCurso"
+                if (item.AluguerState_id == AluguerState.Aceite)
+                {
+                    if (VerificaAluguerEmCurso(item))
+                    {
+                        item.AluguerState_id = AluguerState.EmCurso;
+                    }
+                } // "Pendente" -> "Rejeitado"
+                else if (item.AluguerState_id == AluguerState.Pendente)
+                {
+                    if (VerificaAluguerRejeitado(item))
+                    {
+                        item.AluguerState_id = AluguerState.Rejeitado;
+                    }
+                } // "EmCurso" -> "Concluido"
+                else if (item.AluguerState_id == AluguerState.EmCurso)
+                {
+                    if (VerificaAluguerTerminado(item))
+                    {
+                        item.AluguerState_id = AluguerState.Concluído;
                     }
                 }
             }
