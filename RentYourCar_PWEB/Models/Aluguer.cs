@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Web;
 
 namespace RentYourCar_PWEB.Models
 {
@@ -32,6 +29,6 @@ namespace RentYourCar_PWEB.Models
 
         [Display(Name = "Classificação")] public byte Classificacao { get; set; }
 
-        [Display(Name = "Comentarios")] public string Comentarios { get; set; }
+        [Display(Name = "Comentário")] public string Comentario { get; set; }
     }
 }
