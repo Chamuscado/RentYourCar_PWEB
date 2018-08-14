@@ -8,17 +8,18 @@
 
 @if (!Model.Any())
 {
-    <p>Não existem alugueres.</p>
+    <p class="lead">Não existem alugueres para mostrar.</p>
 }
 else
 {
-    <table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover" id="listaAlugueres">
         <thead>
         <tr>
             <th>Veiculo</th>
             <th>Proprietário</th>
             <th>Cliente</th>
             <th>Período</th>
+            <th>Estado</th>
             <th>Ações</th>
             <th>Estado</th>
         </tr>
@@ -37,4 +38,28 @@ else
         }
         </tbody>
     </table>
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#listaAlugueres").DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registos por página",
+                    "zeroRecords": "Não foram encontrados registos",
+                    "info": "A mostrar a página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Não existem registos disponíveis",
+                    "infoFiltered": "(filtrado de _MAX_ registos no total)",
+                    "search": "Pesquisar: ",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Última",
+                        "next": "Próxima",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+        });
+    </script>
 }

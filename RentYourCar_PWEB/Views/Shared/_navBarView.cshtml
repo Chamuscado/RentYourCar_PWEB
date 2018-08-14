@@ -43,7 +43,7 @@
                             <span class="caret"></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Alugueres (em construção)</a></li>
+                            <li>@Html.ActionLink("Meus Alugueres", "AlugueresCliente", "Alugueres")</li>
                             <li><a href="#">Minhas Avaliações (em construção)</a></li>
                         </ul>
                     </li>
@@ -58,7 +58,7 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Gerir Veículos", "Index", "Veiculos")</li>
-                            <li><a href="#">Gerir Alugueres (em construção)</a></li>
+                            <li>@Html.ActionLink("Gerir Alugueres", "AlugueresFornecedor", "Alugueres")</li>
                             <li><a href="#">Minhas Avaliações (em construção)</a></li>
                             <li><a href="#">Avaliações dos meus Veículos (em construção)</a></li>
                         </ul>

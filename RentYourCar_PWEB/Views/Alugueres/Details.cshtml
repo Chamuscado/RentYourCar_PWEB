@@ -26,7 +26,14 @@
             <li>
                 <strong>Condições de Arrendamento:</strong>
                 <ul>
-                    <li>@Model.Veiculo.CondicoesArrendamento</li>
+                    @if (Model.Veiculo.CondicoesArrendamento != null)
+                    {
+                        <li>@Model.Veiculo.CondicoesArrendamento</li>
+                    }
+                    else
+                    {
+                        <li>(Sem condições de arrendamento)</li>
+                    }
                 </ul>
             </li>
         </ul>
