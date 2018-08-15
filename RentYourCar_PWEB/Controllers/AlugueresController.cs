@@ -419,6 +419,25 @@ namespace RentYourCar_PWEB.Controllers
             return RedirectToAction("Details", new {id = aluguerInDb.Id});
         }
 
+        [Authorize(Roles = RoleNames.Admin)]
+        public ActionResult Delete(int id)
+        {
+            var aluguer = _context.Alugueres
+                .Include(a => a.Veiculo)
+                .SingleOrDefault(a => a.Id == id);
+
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            _context.Alugueres.Remove(aluguer);
+
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
+        }
+
 
         #region DateValidations
 

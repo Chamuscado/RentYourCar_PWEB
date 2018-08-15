@@ -85,43 +85,17 @@
                     @Html.Partial("_FornecedorDetailsPartial", Model)
                 </div>
             }
+            else if (User.IsInRole(RoleNames.Admin))
+            {
+                <div class="row" id="botoes">
+                    <div class="col-lg-4">
+                        <button class="btn btn-danger js-eliminar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
+                            Eliminar
+                        </button>
+                    </div>
+                </div>
+            }
         }
-
-        @*@if (@Model.AluguerState_id == AluguerState.Pendente)
-        {
-            <div class="row" id="botoes">
-                <div class="col-lg-4">
-                    <button class="btn-lg btn-success js-aceitar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
-                        Aceitar
-                    </button>
-                </div>
-                <div class="col-lg-4">
-                    <button class="btn-lg btn-danger js-recusar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
-                        Rejeitar
-                    </button>
-                </div>
-            </div>
-        }
-        else if (@Model.AluguerState_id == AluguerState.Aceite)
-        {
-            <div class="row" id="botoes">
-                <div class="col-lg-4">
-                    <button class="btn-lg btn-danger js-cancelar" AluguerId="@Model.Id" DataInicio="@Model.Inicio.ToShortDateString()" DataFim="@Model.Fim.ToShortDateString()">
-                        Cancelar
-                    </button>
-                    @Html.ActionLink("Editar", "Edit", new {id=Model.Id}, new {@class="btn btn-primary"})
-                </div>
-            </div>
-        }else if (@Model.AluguerState_id == AluguerState.EmCurso)
-        {
-            <div class="row" id="botoes">
-                <div class="col-lg-4">
-                    <button class="btn btn-lg btn-warning disabled">
-                        Em Curso
-                    </button>
-                </div>
-            </div>
-        }*@
 
     </div>
 </div>
@@ -177,6 +151,22 @@
                         "?";
                     if (confirm(confirmMessage)) {
                         var url = '@Url.Action("RejeitarAluguer", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("AluguerId"));
+                    }
+                });
+
+            botoes.on("click",
+                ".js-eliminar",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende cancelar o aluguer do veículo de " +
+                        button.attr("DataInicio") +
+                        " a " +
+                        button.attr("DataFim") +
+                        "?";
+                    if (confirm(confirmMessage)) {
+                        var url = '@Url.Action("Delete", new { id = "__id__" })';
                         window.location.href = url.replace("__id__", button.attr("AluguerId"));
                     }
                 });

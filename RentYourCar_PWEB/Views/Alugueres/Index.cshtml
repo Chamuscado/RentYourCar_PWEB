@@ -1,4 +1,5 @@
-﻿@model IEnumerable<RentYourCar_PWEB.Models.Aluguer>
+﻿@using RentYourCar_PWEB.Models
+@model IEnumerable<RentYourCar_PWEB.Models.Aluguer>
 @{
     ViewBag.Title = "Lista de Alugueres";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -20,7 +21,11 @@ else
             <th>Cliente</th>
             <th>Período</th>
             <th>Estado</th>
-            <th>Ações</th>
+            <th>Detalhes</th>
+            @if (User.IsInRole(RoleNames.Admin))
+            {
+                <th>Eliminar</th>
+            }
         </tr>
         </thead>
         <tbody>
@@ -33,7 +38,14 @@ else
                 <td>@item.Inicio.ToShortDateString() até @item.Fim.ToShortDateString()</td>
                 <td> @Html.DisplayFor(modelItem => item.AluguerState.Nome)</td>
                 <td>@Html.ActionLink("Detalhes","Details", new {id=item.Id}, new {@class="btn btn-link"})</td>
-
+                @if (User.IsInRole(RoleNames.Admin))
+                {
+                    <td>
+                        <button class="btn btn-link js-eliminar" aluguer-id="@item.Id" data-inicio="@item.Inicio.ToShortDateString()" data-fim="@item.Fim.ToShortDateString()">
+                            Eliminar
+                        </button>
+                    </td>
+                }
             </tr>
         }
         </tbody>
@@ -60,6 +72,28 @@ else
                     }
                 }
             });
+
+            table.on("click",
+                ".js-eliminar",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende eliminar o aluguer do veículo de " +
+                        button.attr("data-inicio") +
+                        " a " +
+                        button.attr("data-fim") +
+                        "?";
+                    if (confirm(confirmMessage)) {
+                        $.ajax({
+                            url: "/Alugueres/Delete/" + button.attr("aluguer-id"),
+                            method: 'GET',
+                            success: function () {
+                                //console.log("Aluguer removido");
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
         });
     </script>
 }
