@@ -144,10 +144,8 @@
                         button.attr("DataFim") +
                         "?";
                     if (confirm(confirmMessage)) {
-                        $.ajax({
-                            url: "/Alugueres/AprovarAluguer/" + button.attr("AluguerId"),
-                            method: 'GET'
-                        });
+                        var url = '@Url.Action("AprovarAluguer", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("AluguerId"));
                     }
                 });
 
@@ -162,10 +160,8 @@
                         button.attr("DataFim") +
                         "?";
                     if (confirm(confirmMessage)) {
-                        $.ajax({
-                            url: "/Alugueres/CancelarAluguer/" + button.attr("AluguerId"),
-                            method: 'GET'
-                        });
+                        var url = '@Url.Action("CancelarAluguer", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("AluguerId"));
                     }
                 });
 
@@ -180,10 +176,8 @@
                         button.attr("DataFim") +
                         "?";
                     if (confirm(confirmMessage)) {
-                        $.ajax({
-                            url: "/Alugueres/RejeitarAluguer/" + button.attr("AluguerId"),
-                            method: 'GET'
-                        });
+                        var url = '@Url.Action("RejeitarAluguer", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("AluguerId"));
                     }
                 });
         });
