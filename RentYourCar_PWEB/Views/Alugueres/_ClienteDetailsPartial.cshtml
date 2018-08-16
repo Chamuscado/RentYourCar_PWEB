@@ -29,3 +29,18 @@ else if (@Model.AluguerState_id == AluguerState.EmCurso)
         </button>
     </div>
 }
+else if (Model.AluguerState_id == AluguerState.Concluído
+         && (DateTime.Today - Model.Fim).TotalDays <= 30)
+{
+    if (Model.AvaliacaoVeiculo == null)
+     {
+         <div class="col-md-4">
+             @Html.ActionLink("Avaliar Veículo", "Create", "AvaliacaoVeiculoes", new {id = Model.VeiculoId}, new {@class = "btn btn-info"})
+         </div>
+     }
+
+    @*TODO: Substituir pela ação Create em AvalicoesFornecedores*@
+    <div class="col-md-4">
+        @Html.ActionLink("Avaliar Fornecedor", "Detalhes", "Utilizadores", new { id = Model.Veiculo.UserId }, new { @class = "btn btn-primary" })
+    </div>
+}
