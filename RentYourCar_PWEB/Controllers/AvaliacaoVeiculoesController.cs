@@ -155,19 +155,22 @@ namespace RentYourCar_PWEB.Controllers
                 return HttpNotFound();
             }
 
-            return View(avaliacaoVeiculo);
+            db.AvaliacoesVeiculos.Remove(avaliacaoVeiculo);
+            db.SaveChanges();
+
+            return RedirectToAction("Details", "Alugueres", new {id = id});
         }
 
         // POST: AvaliacaoVeiculoes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            AvaliacaoVeiculo avaliacaoVeiculo = db.AvaliacoesVeiculos.Find(id);
-            db.AvaliacoesVeiculos.Remove(avaliacaoVeiculo);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        //[HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult DeleteConfirmed(int id)
+        //{
+        //    AvaliacaoVeiculo avaliacaoVeiculo = db.AvaliacoesVeiculos.Find(id);
+        //    db.AvaliacoesVeiculos.Remove(avaliacaoVeiculo);
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
 
         protected override void Dispose(bool disposing)
         {

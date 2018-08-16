@@ -176,6 +176,21 @@
                         window.location.href = url.replace("__id__", button.attr("AluguerId"));
                     }
                 });
+
+            var avVeiculo = $("#avVeiculo");
+
+            avVeiculo.on("click",
+                ".js-aval-veiculo",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende eliminar a avaliação do veículo?";
+
+                    if (confirm(confirmMessage)) {
+                        var url = '@Url.Action("Delete", "AvaliacaoVeiculoes", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("id-aval-veiculo"));
+                    }
+                });
         });
     </script>
 }

@@ -5,7 +5,7 @@
 <div class="row col-lg-12">
     <h4>Avaliação do Veículo</h4>
 
-    <div class="well">
+    <div class="well" id="avVeiculo">
         <div class="row">
             <div class="col-lg-2">
                 <p><strong>Apresentação: </strong>@Model.AvaliacaoVeiculo.Apresentacao</p>
@@ -26,7 +26,7 @@
         {
             <p>
                 @Html.ActionLink("Editar", "Edit", "AvaliacaoVeiculoes", new { id = Model.Id }, new { @class = "btn btn-link" })
-                | @Html.ActionLink("Eliminar", "Delete", "AvaliacaoVeiculoes", new { id = Model.Id }, new { @class = "btn btn-link" })
+                | <button class="btn btn-link js-aval-veiculo" id-aval-veiculo="@Model.Id">Eliminar</button>
             </p>
         }
     </div>
