@@ -6,7 +6,8 @@
     .slider {
         -webkit-appearance: none;
         width: 100%;
-        height: 25px;
+        height: 5px;
+        border-radius: 5px;
         background: #d3d3d3;
         outline: none;
         opacity: 0.7;
@@ -20,35 +21,40 @@
 
         .slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 25px;
-            height: 25px;
-            background: #4CAF50;
+            width: 20px;
+            height: 20px;
+            background: #033c73;
             cursor: pointer;
+            border-radius: 50%;
         }
 
         .slider::-moz-range-thumb {
-            width: 25px;
-            height: 25px;
-            background: #4CAF50;
+            width: 20px;
+            height: 20px;
+            background: #033c73;
             cursor: pointer;
+            border-radius: 50%;
         }
+
+    span {
+        margin-left: 5px;
+    }
 </style>
 
 @model RentYourCar_PWEB.Models.AvaliacaoVeiculo
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Editar Avaliação de Veículo";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<h2 class="page-header">@ViewBag.Title</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.AluguerId)
 

@@ -26,7 +26,8 @@ textarea {
 /* Override ao estilo dos botões dentro das células da tabela */
 /* Override ao estilo dos botões dentro de uma lista */
 td>.btn.btn-link,
-li .btn.btn-link {
+li .btn.btn-link
+p>.btn.btn-link {
     padding: 0px;
 }
 
