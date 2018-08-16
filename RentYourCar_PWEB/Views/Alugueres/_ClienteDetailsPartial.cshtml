@@ -35,7 +35,7 @@ else if (Model.AluguerState_id == AluguerState.Concluído
     if (Model.AvaliacaoVeiculo == null)
      {
          <div class="col-md-4">
-             @Html.ActionLink("Avaliar Veículo", "Create", "AvaliacaoVeiculoes", new {id = Model.VeiculoId}, new {@class = "btn btn-info"})
+             @Html.ActionLink("Avaliar Veículo", "Create", "AvaliacaoVeiculoes", new { aluguerId = Model.Id}, new {@class = "btn btn-info"})
          </div>
      }
 

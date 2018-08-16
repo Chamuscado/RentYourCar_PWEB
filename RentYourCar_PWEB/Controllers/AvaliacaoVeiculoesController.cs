@@ -20,13 +20,6 @@ namespace RentYourCar_PWEB.Controllers
             return View(avaliacoesVeiculos.ToList());
         }
 
-        // GET: AvaliacaoVeiculoes/Create
-        public ActionResult Create()
-        {
-            ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId");
-            return View();
-        }
-
         [Authorize]
         public ActionResult ClassificacaoAluguer(int? aluguerId)
         {
@@ -35,7 +28,10 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var listaClassificaoes = db.AvaliacoesVeiculos.Include(a => a.Aluguer).Where(i => i.AluguerId == aluguerId)
+            var listaClassificaoes = db.AvaliacoesVeiculos
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
+                .Where(i => i.AluguerId == aluguerId)
                 .ToList();
 
             return View("Index", listaClassificaoes);
@@ -51,15 +47,19 @@ namespace RentYourCar_PWEB.Controllers
             var aluguer = db.Alugueres.Include(a => a.AluguerState)
                 .Include(a => a.Veiculo)
                 .Include(a => a.AvaliacaoVeiculo)
+                .Include(a => a.Veiculo)
                 .SingleOrDefault(a => a.Id == aluguerId);
             if (aluguer == null)
             {
                 return HttpNotFound();
             }
 
+
             if (aluguer.AvaliacaoVeiculo != null)
                 return Edit(aluguer.AvaliacaoVeiculo);
 
+            if (aluguer.Fim < DateTime.Today.AddMonths(-1) && aluguer.Fim > DateTime.Today)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
 
             return View(new AvaliacaoVeiculo() {Aluguer = aluguer, AluguerId = aluguer.Id});
         }
@@ -76,8 +76,14 @@ namespace RentYourCar_PWEB.Controllers
             {
                 db.AvaliacoesVeiculos.Add(avaliacaoVeiculo);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details","Alugueres",new{id=avaliacaoVeiculo.AluguerId});
             }
+
+            avaliacaoVeiculo.Aluguer = db.Alugueres.Include(a => a.AluguerState)
+                .Include(a => a.Veiculo)
+                .Include(a => a.AvaliacaoVeiculo)
+                .Include(a => a.Veiculo)
+                .SingleOrDefault(a => a.Id == avaliacaoVeiculo.AluguerId);
 
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoVeiculo.AluguerId);
             return View(avaliacaoVeiculo);
@@ -92,6 +98,7 @@ namespace RentYourCar_PWEB.Controllers
             }
 
             var avaliacao = db.AvaliacoesVeiculos.Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
                 .SingleOrDefault(a => a.AluguerId == id);
 
             if (avaliacao == null)
@@ -101,10 +108,10 @@ namespace RentYourCar_PWEB.Controllers
 
             var clienteId = User.Identity.GetUserId();
 
-            if (avaliacao.Aluguer.Fim > DateTime.Today.AddMonths(-1) && avaliacao.Aluguer.Fim < DateTime.Today)
+            if (avaliacao.Aluguer.Fim < DateTime.Today.AddMonths(-1) && avaliacao.Aluguer.Fim > DateTime.Today)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
 
-            if (string.Compare(clienteId, avaliacao.Aluguer.ClienteId, StringComparison.Ordinal) == 0)
+            if (string.Compare(clienteId, avaliacao.Aluguer.ClienteId, StringComparison.Ordinal) != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Operação não autorizada.");
             }
@@ -127,7 +134,7 @@ namespace RentYourCar_PWEB.Controllers
             {
                 db.Entry(avaliacaoVeiculo).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Alugueres", new { id = avaliacaoVeiculo.AluguerId });
             }
 
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoVeiculo.AluguerId);

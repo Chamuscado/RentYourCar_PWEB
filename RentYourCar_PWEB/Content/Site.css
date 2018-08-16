@@ -33,16 +33,3 @@ li .btn.btn-link {
 h2 {
     margin-bottom: 20px;
 }
-
-.img-wrap {
-    position: relative;
-
-}
-
-.img-wrap .close {
-    position: absolute;
-    top: 2px;
-    right: 2px;
-    z-index: 100;
-
-}
