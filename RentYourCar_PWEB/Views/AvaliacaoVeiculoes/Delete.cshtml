@@ -1,0 +1,65 @@
+﻿@model RentYourCar_PWEB.Models.AvaliacaoVeiculo
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>AvaliacaoVeiculo</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Aluguer.ClienteId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Aluguer.ClienteId)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Comentario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Comentario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Limpeza)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Limpeza)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Consumo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Consumo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apresentacao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apresentacao)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
