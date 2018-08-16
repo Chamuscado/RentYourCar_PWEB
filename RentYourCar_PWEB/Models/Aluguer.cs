@@ -27,10 +27,5 @@ namespace RentYourCar_PWEB.Models
         [Display(Name = "Estado", Description = "O estado em que se encontra o Aluguer")]
         public byte AluguerState_id { get; set; } = AluguerState.Pendente;
 
-        public Classificacao ClassificacaoVeiculo { get; set; }
-
-        public Classificacao ClassificacaoCliente { get; set; }
-
-        public Classificacao ClassificacaoDono { get; set; }
     }
 }
