@@ -337,12 +337,17 @@
     <Compile Include="Migrations\201808160932086_RemoverClasseClassificacao.Designer.cs">
       <DependentUpon>201808160932086_RemoverClasseClassificacao.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808160943291_CriadaAvaliacaoVeiculo.cs" />
+    <Compile Include="Migrations\201808160943291_CriadaAvaliacaoVeiculo.Designer.cs">
+      <DependentUpon>201808160943291_CriadaAvaliacaoVeiculo.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
     <Compile Include="Models\AlugueresViewModels\CreateAluguerViewModel.cs" />
     <Compile Include="Models\AluguerState.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\AvaliacaoVeiculo.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -725,6 +730,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808160932086_RemoverClasseClassificacao.resx">
       <DependentUpon>201808160932086_RemoverClasseClassificacao.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808160943291_CriadaAvaliacaoVeiculo.resx">
+      <DependentUpon>201808160943291_CriadaAvaliacaoVeiculo.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
