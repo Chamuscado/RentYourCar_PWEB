@@ -116,7 +116,7 @@
                     <dd>(Sem condições de arrendamento)</dd>
                 }
 
-                </dl>
+            </dl>
             
             @{
                 bool mostraAlugueres = false;
@@ -168,6 +168,8 @@
         </div>
     </div>
 </div>
+
+@Html.Partial("_AvaliacoesPartial", Model.Avaliacoes)
 
 
 @*<p>

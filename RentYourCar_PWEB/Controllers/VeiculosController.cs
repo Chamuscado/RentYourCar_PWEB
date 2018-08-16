@@ -123,13 +123,20 @@ namespace RentYourCar_PWEB.Controllers
                 string.Compare(veiculo.UserId, u.Id, StringComparison.Ordinal) == 0);
             var nomeProprietario = proprietario == null ? "(sem proprietário)" : proprietario.Nome;
 
+            var avaliacoes = db.AvaliacoesVeiculos
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Cliente)
+                .Where(a => a.Aluguer.VeiculoId == id)
+                .ToList();
+
             var detailsVeiculo = new DetailsVeiculoViewModel()
             {
                 Categoria = db.Categorias.First(c => c.Id == veiculo.Categoria_id).Nome,
                 Combustivel = db.Combustiveis.First(c => c.Id == veiculo.Combustivel_id).Nome,
                 Veiculo = veiculo,
                 Proprietario = nomeProprietario,
-                imagesPaths = LoadImagesDetails(veiculo.UserId, veiculo.Id)
+                imagesPaths = LoadImagesDetails(veiculo.UserId, veiculo.Id),
+                Avaliacoes = avaliacoes
             };
 
 

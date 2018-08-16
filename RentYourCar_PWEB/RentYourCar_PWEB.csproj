@@ -619,6 +619,8 @@
     <Content Include="Views\AvaliacaoVeiculoes\Delete.cshtml" />
     <Content Include="Views\AvaliacaoVeiculoes\Edit.cshtml" />
     <Content Include="Views\AvaliacaoVeiculoes\Index.cshtml" />
+    <Content Include="Views\Alugueres\_AvaliacaoVeiculoPartial.cshtml" />
+    <Content Include="Views\Veiculos\_AvaliacoesPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

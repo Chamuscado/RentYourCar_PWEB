@@ -32,11 +32,13 @@ else
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.ActionLink(item.Veiculo.Matricula, "Details", "Veiculos", new {id = item.VeiculoId}, new {@class = "btn btn-link"})</td>
+                <td>@item.Veiculo.Marca @item.Veiculo.Modelo<br/>
+                    [ @Html.ActionLink(item.Veiculo.Matricula, "Details", "Veiculos", new { id = item.VeiculoId }, new { @class = "btn btn-link" }) ]
+                </td>
                 <td>@Html.ActionLink(item.Veiculo.User.Nome, "Detalhes", "Utilizadores", new { id = item.Veiculo.UserId }, new { @class = "btn btn-link" })</td>
                 <td>@Html.ActionLink(item.Cliente.Nome, "Detalhes", "Utilizadores", new { id = item.ClienteId }, new { @class = "btn btn-link" })</td>
                 <td>@item.Inicio.ToShortDateString() até @item.Fim.ToShortDateString()</td>
-                <td> @Html.DisplayFor(modelItem => item.AluguerState.Nome)</td>
+                <td>@Html.DisplayFor(modelItem => item.AluguerState.Nome)</td>
                 <td>@Html.ActionLink("Detalhes","Details", new {id=item.Id}, new {@class="btn btn-link"})</td>
                 @if (User.IsInRole(RoleNames.Admin))
                 {

@@ -9,5 +9,6 @@ namespace RentYourCar_PWEB.Models.VeiculosView
         public string Categoria { get; set; }
         public string Proprietario { get; set; }
         public List<string> imagesPaths { get; set; }
+        public List<AvaliacaoVeiculo> Avaliacoes { get; set; }
     }
 }

@@ -1,0 +1,48 @@
+﻿@using Microsoft.AspNet.Identity
+@model IEnumerable<RentYourCar_PWEB.Models.AvaliacaoVeiculo>
+<br /><br />
+
+<div class="row col-lg-12">
+    <h3>Avaliações do Veículo</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="well col-lg-12">
+            <p>Este veículo ainda não foi avaliado.</p>
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="well">
+                <div class="row col-lg-12">
+                    <p>
+                        <strong>Cliente: </strong>
+                        @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new { id = item.Aluguer.ClienteId }, new { @class = "btn btn-link" })
+                    </p>
+                </div>
+                <div class="row col-lg-12">
+                    <p>Aluguer de @item.Aluguer.Inicio.ToShortDateString() a @item.Aluguer.Fim.ToShortDateString()</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <p><strong>Apresentação: </strong>@item.Apresentacao</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><strong>Limpeza: </strong>@item.Limpeza</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><strong>Consumo: </strong>@item.Consumo</p>
+                    </div>
+                </div>
+
+                <div class="row col-lg-12">
+                    <p>@item.Comentario</p>
+                </div>
+            </div>
+
+            <br />
+        }
+    }
+</div>
