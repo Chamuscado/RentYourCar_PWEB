@@ -1,7 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
 
 namespace RentYourCar_PWEB.Controllers
@@ -33,9 +35,33 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var listaClassificaoes = db.AvaliacoesVeiculos.Where(i => i.AluguerId == aluguerId).ToList();
+            var listaClassificaoes = db.AvaliacoesVeiculos.Include(a => a.Aluguer).Where(i => i.AluguerId == aluguerId)
+                .ToList();
 
-            return View("Index",listaClassificaoes);
+            return View("Index", listaClassificaoes);
+        }
+
+        public ActionResult Create(int? aluguerId)
+        {
+            if (aluguerId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = db.Alugueres.Include(a => a.AluguerState)
+                .Include(a => a.Veiculo)
+                .Include(a => a.AvaliacaoVeiculo)
+                .SingleOrDefault(a => a.Id == aluguerId);
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+            if (aluguer.AvaliacaoVeiculo != null)
+                return Edit(aluguer.AvaliacaoVeiculo);
+
+
+            return View(new AvaliacaoVeiculo() {Aluguer = aluguer, AluguerId = aluguer.Id});
         }
 
         // POST: AvaliacaoVeiculoes/Create
@@ -65,14 +91,28 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            AvaliacaoVeiculo avaliacaoVeiculo = db.AvaliacoesVeiculos.Find(id);
-            if (avaliacaoVeiculo == null)
+            var avaliacao = db.AvaliacoesVeiculos.Include(a => a.Aluguer)
+                .SingleOrDefault(a => a.AluguerId == id);
+
+            if (avaliacao == null)
             {
                 return HttpNotFound();
             }
 
-            ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoVeiculo.AluguerId);
-            return View(avaliacaoVeiculo);
+            var clienteId = User.Identity.GetUserId();
+
+            if (avaliacao.Aluguer.Fim > DateTime.Today.AddMonths(-1) && avaliacao.Aluguer.Fim < DateTime.Today)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
+
+            if (string.Compare(clienteId, avaliacao.Aluguer.ClienteId, StringComparison.Ordinal) == 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Operação não autorizada.");
+            }
+
+
+            ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacao.AluguerId);
+
+            return View(avaliacao);
         }
 
         // POST: AvaliacaoVeiculoes/Edit/5
