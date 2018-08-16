@@ -225,7 +225,8 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(v => v.Veiculo.Categoria)
                 .Include(v => v.Veiculo.Combustivel)
                 .Include(a => a.Cliente)
-                .Include(a=>a.AluguerState)
+                .Include(a => a.AluguerState)
+                .Include(a => a.AvaliacaoVeiculo)
                 .SingleOrDefault(a => a.Id == id);
 
             if (aluguer == null)
@@ -363,11 +364,11 @@ namespace RentYourCar_PWEB.Controllers
 
             var aluguer = _context.Alugueres
                 .Include(a => a.Veiculo)
-                .Include(a=>a.Veiculo.User)
-                .Include(a=>a.Veiculo.Combustivel)
-                .Include(a=>a.Veiculo.Categoria)
-                .Include(a=>a.Cliente)
-                .Include(a=>a.AluguerState)
+                .Include(a => a.Veiculo.User)
+                .Include(a => a.Veiculo.Combustivel)
+                .Include(a => a.Veiculo.Categoria)
+                .Include(a => a.Cliente)
+                .Include(a => a.AluguerState)
                 .SingleOrDefault(a => a.Id == id);
 
             if (aluguer == null)
@@ -402,7 +403,7 @@ namespace RentYourCar_PWEB.Controllers
                 return View(aluguer);
             }
 
-            var aluguerInDb = _context.Alugueres.Include(a=>a.Veiculo).Single(a => a.Id == aluguer.Id);
+            var aluguerInDb = _context.Alugueres.Include(a => a.Veiculo).Single(a => a.Id == aluguer.Id);
 
             if (aluguer.Inicio != aluguerInDb.Inicio || aluguer.Fim != aluguerInDb.Fim)
             {
@@ -416,7 +417,7 @@ namespace RentYourCar_PWEB.Controllers
                 }
             }
 
-            return RedirectToAction("Details", new {id = aluguerInDb.Id});
+            return RedirectToAction("Details", new { id = aluguerInDb.Id });
         }
 
         [Authorize(Roles = RoleNames.Admin)]

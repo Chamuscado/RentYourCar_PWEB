@@ -30,3 +30,11 @@ else if (@Model.AluguerState_id == AluguerState.EmCurso)
         </button>
     </div>
 }
+else if (Model.AluguerState_id == AluguerState.Concluído
+    && (DateTime.Today - Model.Fim).TotalDays <= 30)
+{@*TODO: substituir pela ação Create em AvaliacoesClientes*@
+    @*TODO: verificar se AvaliacaoFornecedor == null no Model*@
+    <div class="col-lg-4">
+        @Html.ActionLink("Avaliar Cliente", "Detalhes", "Utilizadores", new {id=Model.ClienteId}, new {@class = "btn btn-primary"})
+    </div>
+}

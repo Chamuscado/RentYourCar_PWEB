@@ -11,6 +11,20 @@
 <div>
     <h4>Altere as definições da sua conta.</h4>
     <dl class="dl-horizontal">
+        @if (!User.IsInRole(RoleNames.Admin))
+        {
+            <dt>O Meu Pefil:</dt>
+            <dd>
+                [ @Html.ActionLink("Ver Perfil", "Detalhes", "Utilizadores", new { id = User.Identity.GetUserId() }, null) ]
+            </dd>
+        }
+        @if (!User.IsInRole(RoleNames.Admin))
+        {
+            <dt>Editar Pefil:</dt>
+            <dd>
+                [ @Html.ActionLink("Editar Informações", "Editar", "Utilizadores", new {id = User.Identity.GetUserId()}, null) ]
+            </dd>
+        }
         <dt>Password:</dt>
         <dd>
             [
@@ -24,14 +38,7 @@
             }
             ]
         </dd>
-        
-        @if (!User.IsInRole(RoleNames.Admin))
-        {
-            <dt>Detalhes:</dt>
-            <dd>
-                [ @Html.ActionLink("Editar Informações", "Editar", "Utilizadores", new {id = User.Identity.GetUserId()}, null) ]
-            </dd>
-        }
+
         @*<dt>External Logins:</dt>
             <dd>
                 @Model.Logins.Count [
