@@ -16,25 +16,26 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Index()
         {
-            var avaliacoesVeiculos = db.AvaliacoesVeiculos.Include(a => a.Aluguer);
+            var avaliacoesVeiculos = db.AvaliacoesVeiculos
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
+                .Include(a => a.Aluguer.Cliente);
             return View(avaliacoesVeiculos.ToList());
         }
 
-        [Authorize]
-        public ActionResult ClassificacaoAluguer(int? aluguerId)
+        [Authorize(Roles = RoleNames.Particular)]
+        public ActionResult MinhasAvaliacoes() //Retorna avaliações de veículos feitas pelo utilizador
         {
-            if (aluguerId == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
+            var userId = User.Identity.GetUserId();
 
-            var listaClassificaoes = db.AvaliacoesVeiculos
+            var listaAvaliacoes = db.AvaliacoesVeiculos
                 .Include(a => a.Aluguer)
                 .Include(a => a.Aluguer.Veiculo)
-                .Where(i => i.AluguerId == aluguerId)
+                .Include(a => a.Aluguer.Cliente)
+                .Where(a => string.Compare(userId, a.Aluguer.ClienteId, StringComparison.Ordinal) == 0)
                 .ToList();
 
-            return View("Index", listaClassificaoes);
+            return View("Index", listaAvaliacoes);
         }
 
         public ActionResult Create(int? aluguerId)
@@ -61,7 +62,7 @@ namespace RentYourCar_PWEB.Controllers
             if (aluguer.Fim < DateTime.Today.AddMonths(-1) && aluguer.Fim > DateTime.Today)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
 
-            return View(new AvaliacaoVeiculo() {Aluguer = aluguer, AluguerId = aluguer.Id});
+            return View(new AvaliacaoVeiculo() { Aluguer = aluguer, AluguerId = aluguer.Id });
         }
 
         // POST: AvaliacaoVeiculoes/Create
@@ -76,7 +77,7 @@ namespace RentYourCar_PWEB.Controllers
             {
                 db.AvaliacoesVeiculos.Add(avaliacaoVeiculo);
                 db.SaveChanges();
-                return RedirectToAction("Details","Alugueres",new{id=avaliacaoVeiculo.AluguerId});
+                return RedirectToAction("Details", "Alugueres", new { id = avaliacaoVeiculo.AluguerId });
             }
 
             avaliacaoVeiculo.Aluguer = db.Alugueres.Include(a => a.AluguerState)
@@ -158,7 +159,7 @@ namespace RentYourCar_PWEB.Controllers
             db.AvaliacoesVeiculos.Remove(avaliacaoVeiculo);
             db.SaveChanges();
 
-            return RedirectToAction("Details", "Alugueres", new {id = id});
+            return RedirectToAction("Details", "Alugueres", new { id = id });
         }
 
         // POST: AvaliacaoVeiculoes/Delete/5
