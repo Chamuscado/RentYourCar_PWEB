@@ -366,6 +366,7 @@
     <Compile Include="Models\ApplicationDbContext.cs" />
     <Compile Include="Models\CustomValidations\DateValidationAttribute.cs" />
     <Compile Include="Models\CustomValidations\PeriodoAluguerValidationAttribute.cs" />
+    <Compile Include="Models\UsersViewModels\UserDetailsViewModel.cs" />
     <Compile Include="Models\VeiculosView\DetailsVeiculoViewModel.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\RoleNames.cs" />
@@ -644,6 +645,8 @@
     <Content Include="Views\AvaliacaoClientes\Delete.cshtml" />
     <Content Include="Views\AvaliacaoClientes\Edit.cshtml" />
     <Content Include="Views\AvaliacaoClientes\Index.cshtml" />
+    <Content Include="Views\Alugueres\_AvaliacaoFornecedorPartial.cshtml" />
+    <Content Include="Views\Alugueres\_AvaliacaoClientePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

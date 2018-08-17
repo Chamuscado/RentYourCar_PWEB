@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -72,6 +73,14 @@ namespace RentYourCar_PWEB.Controllers
             {
                 return HttpNotFound("O utilizador não foi encontrado");
             }
+
+            var avaliacoesFornecedor = _context.AvaliacoesFornecedores
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Cliente)
+                .Include(a => a.Aluguer.Veiculo)
+                .Where(a => string.Compare(id, a.Aluguer.Veiculo.UserId, StringComparison.Ordinal) == 0)
+                .ToList();
+
             return View(user);
         }
 

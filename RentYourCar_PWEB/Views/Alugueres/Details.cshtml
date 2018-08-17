@@ -104,6 +104,16 @@
 {
     @Html.Partial("_AvaliacaoVeiculoPartial", Model)
 }
+
+@if (Model.AvaliacaoFornecedor != null)
+{
+    @Html.Partial("_AvaliacaoFornecedorPartial", Model)
+}
+
+@if (Model.AvaliacaoCliente != null)
+{
+    @Html.Partial("_AvaliacaoClientePartial", Model)
+}
     
 
 
@@ -177,8 +187,8 @@
                     }
                 });
 
-            var avVeiculo = $("#avVeiculo");
 
+            var avVeiculo = $("#avVeiculo");
             avVeiculo.on("click",
                 ".js-aval-veiculo",
                 function () {
@@ -189,6 +199,36 @@
                     if (confirm(confirmMessage)) {
                         var url = '@Url.Action("Delete", "AvaliacoesVeiculos", new { id = "__id__" })';
                         window.location.href = url.replace("__id__", button.attr("id-aval-veiculo"));
+                    }
+                });
+
+
+            var avFornecedor = $("#avFornecedor");
+            avFornecedor.on("click",
+                ".js-aval-fornecedor",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende eliminar a avaliação do fornecedor?";
+
+                    if (confirm(confirmMessage)) {
+                        var url = '@Url.Action("Delete", "AvaliacaoFornecedors", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("id-aval-fornecedor"));
+                    }
+                });
+
+
+            var avCliente = $("#avCliente");
+            avCliente.on("click",
+                ".js-aval-cliente",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende eliminar a avaliação do cliente?";
+
+                    if (confirm(confirmMessage)) {
+                        var url = '@Url.Action("Delete", "AvaliacaoClientes", new { id = "__id__" })';
+                        window.location.href = url.replace("__id__", button.attr("id-aval-cliente"));
                     }
                 });
         });

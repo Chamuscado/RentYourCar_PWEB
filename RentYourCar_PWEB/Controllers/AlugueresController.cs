@@ -229,6 +229,8 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Cliente)
                 .Include(a => a.AluguerState)
                 .Include(a => a.AvaliacaoVeiculo)
+                .Include(a => a.AvaliacaoFornecedor)
+                .Include(a => a.AvaliacaoCliente)
                 .SingleOrDefault(a => a.Id == id);
 
             if (aluguer == null)

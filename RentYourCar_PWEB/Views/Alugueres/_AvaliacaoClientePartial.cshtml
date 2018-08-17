@@ -1,0 +1,36 @@
+﻿@using Microsoft.AspNet.Identity
+@model RentYourCar_PWEB.Models.Aluguer
+
+<br/>
+<div class="row col-lg-12">
+    <h4>Avaliação do Cliente</h4>
+
+    <div class="well" id="avCliente">
+        <div class="row">
+            <div class="col-lg-2">
+                <p><strong>Limpeza: </strong>@Model.AvaliacaoCliente.Limpeza</p>
+            </div>
+            <div class="col-lg-2">
+                <p><strong>Cuidado: </strong>@Model.AvaliacaoCliente.Cuidado</p>
+            </div>
+            <div class="col-lg-2">
+                <p><strong>Pontualidade: </strong>@Model.AvaliacaoCliente.Pontualidade</p>
+            </div>
+            <div class="col-lg-2">
+                <p><strong>Pagamento: </strong>@Model.AvaliacaoCliente.Pagamento</p>
+            </div>
+        </div>
+
+        <div class="row col-lg-12">
+            <p>@Model.AvaliacaoCliente.Comentario</p>
+        </div>
+        @if (string.Compare(User.Identity.GetUserId(), Model.Veiculo.UserId, StringComparison.Ordinal) == 0
+             && (DateTime.Today - Model.Fim).TotalDays <= 30)
+        {
+            <p>
+                @Html.ActionLink("Editar", "Edit", "AvaliacaoClientes", new { id = Model.Id }, new { @class = "btn btn-link" })
+                | <button class="btn btn-link js-aval-cliente" id-aval-cliente="@Model.Id">Eliminar</button>
+            </p>
+        }
+    </div>
+</div>
