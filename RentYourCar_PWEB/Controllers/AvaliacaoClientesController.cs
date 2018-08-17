@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using RentYourCar_PWEB.Models;
 
 namespace RentYourCar_PWEB.Controllers
@@ -15,17 +13,58 @@ namespace RentYourCar_PWEB.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: AvaliacaoClientes
+        [Authorize(Roles = RoleNames.Admin)]
         public ActionResult Index()
         {
-            var avaliacoesClientes = db.AvaliacoesClientes.Include(a => a.Aluguer);
+            var avaliacoesClientes = db.AvaliacoesClientes
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
+                .Include(a => a.Aluguer.Cliente);
             return View(avaliacoesClientes.ToList());
         }
 
-        // GET: AvaliacaoClientes/Create
-        public ActionResult Create()
+        [Authorize(Roles = RoleNames.Particular)]
+        public ActionResult MinhasAvaliacoes() //Retorna avaliações de veículos feitas pelo utilizador
         {
-            ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId");
-            return View();
+            var userId = User.Identity.GetUserId();
+
+            var listaAvaliacoes = db.AvaliacoesClientes
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
+                .Include(a => a.Aluguer.Cliente)
+                .Where(a => string.Compare(userId, a.Aluguer.Veiculo.UserId, StringComparison.Ordinal) == 0)
+                .ToList();
+
+            return View("Index", listaAvaliacoes);
+        }
+
+        // GET: AvaliacaoClientes/Create
+        [Authorize(Roles = RoleNames.Particular)]
+        public ActionResult Create(int? aluguerId)
+        {
+            if (aluguerId == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var aluguer = db.Alugueres.Include(a => a.AluguerState)
+                .Include(a => a.Veiculo)
+                .Include(a => a.AvaliacaoVeiculo)
+                .SingleOrDefault(a => a.Id == aluguerId);
+            if (aluguer == null)
+            {
+                return HttpNotFound();
+            }
+
+
+            if (aluguer.AvaliacaoCliente != null)
+                return Edit(aluguer.AvaliacaoCliente);
+
+            if (aluguer.Fim < DateTime.Today.AddMonths(-1) && aluguer.Fim > DateTime.Today)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
+
+            return View(new AvaliacaoCliente() { Aluguer = aluguer, AluguerId = aluguer.Id });
+
         }
 
         // POST: AvaliacaoClientes/Create
@@ -33,14 +72,20 @@ namespace RentYourCar_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "AluguerId,Comentario,Limpeza,Cuidado,Pontualidade,Pagamento")] AvaliacaoCliente avaliacaoCliente)
+        public ActionResult Create([Bind(Include = "AluguerId,Comentario,Limpeza,Cuidado,Pontualidade,Pagamento")]
+            AvaliacaoCliente avaliacaoCliente)
         {
             if (ModelState.IsValid)
             {
                 db.AvaliacoesClientes.Add(avaliacaoCliente);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Alugueres", new { id = avaliacaoCliente.AluguerId });
             }
+
+            avaliacaoCliente.Aluguer = db.Alugueres.Include(a => a.AluguerState)
+                .Include(a => a.Veiculo)
+                .Include(a => a.AvaliacaoVeiculo)
+                .SingleOrDefault(a => a.Id == avaliacaoCliente.AluguerId);
 
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoCliente.AluguerId);
             return View(avaliacaoCliente);
@@ -53,11 +98,27 @@ namespace RentYourCar_PWEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            AvaliacaoCliente avaliacaoCliente = db.AvaliacoesClientes.Find(id);
+
+            var avaliacaoCliente = db.AvaliacoesClientes
+                .Include(a => a.Aluguer)
+                .Include(a => a.Aluguer.Veiculo)
+                .SingleOrDefault(a => a.AluguerId == id);
+            
             if (avaliacaoCliente == null)
             {
                 return HttpNotFound();
             }
+
+            var clienteId = User.Identity.GetUserId();
+
+            if (avaliacaoCliente.Aluguer.Fim < DateTime.Today.AddMonths(-1) && avaliacaoCliente.Aluguer.Fim > DateTime.Today)
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
+
+            if (string.Compare(clienteId, avaliacaoCliente.Aluguer.ClienteId, StringComparison.Ordinal) != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Operação não autorizada.");
+            }
+
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoCliente.AluguerId);
             return View(avaliacaoCliente);
         }
@@ -67,14 +128,16 @@ namespace RentYourCar_PWEB.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "AluguerId,Comentario,Limpeza,Cuidado,Pontualidade,Pagamento")] AvaliacaoCliente avaliacaoCliente)
+        public ActionResult Edit([Bind(Include = "AluguerId,Comentario,Limpeza,Cuidado,Pontualidade,Pagamento")]
+            AvaliacaoCliente avaliacaoCliente)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(avaliacaoCliente).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", "Alugueres", new { id = avaliacaoCliente.AluguerId });
             }
+
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoCliente.AluguerId);
             return View(avaliacaoCliente);
         }
@@ -86,31 +149,27 @@ namespace RentYourCar_PWEB.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             AvaliacaoCliente avaliacaoCliente = db.AvaliacoesClientes.Find(id);
             if (avaliacaoCliente == null)
             {
                 return HttpNotFound();
             }
-            return View(avaliacaoCliente);
-        }
 
-        // POST: AvaliacaoClientes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
-        {
-            AvaliacaoCliente avaliacaoCliente = db.AvaliacoesClientes.Find(id);
             db.AvaliacoesClientes.Remove(avaliacaoCliente);
             db.SaveChanges();
-            return RedirectToAction("Index");
+
+            return RedirectToAction("Details", "Alugueres", new { id });
         }
 
+      
         protected override void Dispose(bool disposing)
         {
             if (disposing)
             {
                 db.Dispose();
             }
+
             base.Dispose(disposing);
         }
     }

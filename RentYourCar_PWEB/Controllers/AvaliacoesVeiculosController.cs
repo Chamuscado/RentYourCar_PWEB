@@ -38,6 +38,7 @@ namespace RentYourCar_PWEB.Controllers
             return View("Index", listaAvaliacoes);
         }
 
+        [Authorize(Roles = RoleNames.Particular)]
         public ActionResult Create(int? aluguerId)
         {
             if (aluguerId == null)
@@ -48,7 +49,6 @@ namespace RentYourCar_PWEB.Controllers
             var aluguer = db.Alugueres.Include(a => a.AluguerState)
                 .Include(a => a.Veiculo)
                 .Include(a => a.AvaliacaoVeiculo)
-                .Include(a => a.Veiculo)
                 .SingleOrDefault(a => a.Id == aluguerId);
             if (aluguer == null)
             {
@@ -83,7 +83,6 @@ namespace RentYourCar_PWEB.Controllers
             avaliacaoVeiculo.Aluguer = db.Alugueres.Include(a => a.AluguerState)
                 .Include(a => a.Veiculo)
                 .Include(a => a.AvaliacaoVeiculo)
-                .Include(a => a.Veiculo)
                 .SingleOrDefault(a => a.Id == avaliacaoVeiculo.AluguerId);
 
             ViewBag.AluguerId = new SelectList(db.Alugueres, "Id", "ClienteId", avaliacaoVeiculo.AluguerId);
@@ -159,7 +158,7 @@ namespace RentYourCar_PWEB.Controllers
             db.AvaliacoesVeiculos.Remove(avaliacaoVeiculo);
             db.SaveChanges();
 
-            return RedirectToAction("Details", "Alugueres", new { id = id });
+            return RedirectToAction("Details", "Alugueres", new {id });
         }
 
         // POST: AvaliacaoVeiculoes/Delete/5
