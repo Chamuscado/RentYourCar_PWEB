@@ -1,1 +1,57 @@
-﻿
+﻿@model IEnumerable<RentYourCar_PWEB.Models.AvaliacaoCliente>
+<br />
+
+<div class="row col-lg-12">
+    <h3>Avaliações do Cliente</h3>
+
+    @if (!Model.Any())
+    {
+        <div class="well col-lg-12">
+            <p>Este utilizador ainda não foi avaliado enquanto Cliente.</p>
+        </div>
+    }
+    else
+    {
+        foreach (var item in Model)
+        {
+            <div class="well">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <p>
+                            <strong>Fornecedor: </strong>
+                            @Html.ActionLink(item.Aluguer.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = item.Aluguer.Veiculo.UserId}, null)
+                        </p>
+                    </div>
+                    <div class="col-lg-4">
+                        <p>
+                            <strong>Veículo: </strong> @item.Aluguer.Veiculo.Marca @item.Aluguer.Veiculo.Modelo
+                            [@Html.ActionLink(item.Aluguer.Veiculo.Matricula, "Details", "Veiculos", new {id = item.Aluguer.VeiculoId}, null)]
+                        </p>
+                    </div>
+                </div>
+                <div class="row col-lg-12">
+                    <p>Aluguer de @item.Aluguer.Inicio.ToShortDateString() a @item.Aluguer.Fim.ToShortDateString()</p>
+                </div>
+                <div class="row">
+                    <div class="col-lg-2">
+                        <p><strong>Limpeza: </strong>@item.Limpeza</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><strong>Cuidado: </strong>@item.Cuidado</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><strong>Pontualidade: </strong>@item.Pontualidade</p>
+                    </div>
+                    <div class="col-lg-2">
+                        <p><strong>Pagamento: </strong>@item.Pagamento</p>
+                    </div>
+                </div>
+
+                <div class="row col-lg-12">
+                    <p>@item.Comentario</p>
+                </div>
+            </div>
+
+        }
+    }
+</div>
