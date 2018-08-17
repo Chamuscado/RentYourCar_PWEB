@@ -81,7 +81,25 @@ namespace RentYourCar_PWEB.Controllers
                 .Where(a => string.Compare(id, a.Aluguer.Veiculo.UserId, StringComparison.Ordinal) == 0)
                 .ToList();
 
-            return View(user);
+            List<AvaliacaoCliente> avaliacoesCliente = null;
+            if (string.Compare(user.RoleName, RoleNames.Particular, StringComparison.Ordinal) == 0)
+            {
+                avaliacoesCliente = _context.AvaliacoesClientes
+                    .Include(a => a.Aluguer)
+                    .Include(a => a.Aluguer.Veiculo)
+                    .Include(a => a.Aluguer.Veiculo.User)
+                    .Where(a => string.Compare(id, a.Aluguer.ClienteId, StringComparison.Ordinal) == 0)
+                    .ToList();
+            }
+
+            var viewModel = new UserDetailsViewModel
+            {
+                User = user,
+                AvaliacoesFornecedor = avaliacoesFornecedor,
+                AvaliacoesCliente = avaliacoesCliente
+            };
+
+            return View(viewModel);
         }
 
 

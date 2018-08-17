@@ -1,29 +1,29 @@
 ﻿@using Microsoft.AspNet.Identity
-@model RentYourCar_PWEB.Models.ApplicationUser
+@model RentYourCar_PWEB.Models.UsersViewModels.UserDetailsViewModel
 @{
     ViewBag.Title = "Detalhes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2 class="page-header">@Model.Nome</h2>
+<h2 class="page-header">@Model.User.Nome</h2>
 
 <div class="row">
     <div class="col-lg-6">
-        <p class="lead">Utilizador @Model.RoleName</p>
+        <p class="lead">Utilizador @Model.User.RoleName</p>
 
         <h3>Contactos</h3>
         <ul>
-            <li><strong>Email: </strong><a href="mailto:@Model.Email">@Model.Email</a></li>
-            <li><strong>Telefone: </strong>@Model.Telefone</li>
-            <li><strong>Morada: </strong>@Model.Morada</li>
+            <li><strong>Email: </strong><a href="mailto:@Model.User.Email">@Model.User.Email</a></li>
+            <li><strong>Telefone: </strong>@Model.User.Telefone</li>
+            <li><strong>Morada: </strong>@Model.User.Morada</li>
         </ul>
     </div>
 
-    @if (string.Compare(User.Identity.GetUserId(), Model.Id, StringComparison.Ordinal) != 0)
+    @if (string.Compare(User.Identity.GetUserId(), Model.User.Id, StringComparison.Ordinal) != 0)
     {
         <div class="col-lg-6">
             <div class="well">
-                <form class="form-horizontal" id="contact-user" name="contact-user" action="mailto:@Model.Email" method="post">
+                <form class="form-horizontal" id="contact-user" name="contact-user" action="mailto:@Model.User.Email" method="post">
                     <fieldset>
                         <legend>Envie uma mensagem a este utilizador</legend>
                         <div class="form-group">
@@ -57,5 +57,16 @@
 
     }
 </div>
+
+<div class="row">
+    @Html.Partial("_AvaliacoesFornecedorPartial", Model.AvaliacoesFornecedor)
+</div>
+
+@if (Model.AvaliacoesCliente != null)
+{
+    <div class="row">
+        @Html.Partial("_AvaliacoesClientePartial", Model.AvaliacoesCliente)
+    </div>
+}
 
 @*TODO: inserir área onde as avaliações são visíveis*@

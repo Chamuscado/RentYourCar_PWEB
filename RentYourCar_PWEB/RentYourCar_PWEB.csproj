@@ -647,6 +647,8 @@
     <Content Include="Views\AvaliacaoClientes\Index.cshtml" />
     <Content Include="Views\Alugueres\_AvaliacaoFornecedorPartial.cshtml" />
     <Content Include="Views\Alugueres\_AvaliacaoClientePartial.cshtml" />
+    <Content Include="Views\Utilizadores\_AvaliacoesFornecedorPartial.cshtml" />
+    <Content Include="Views\Utilizadores\_AvaliacoesClientePartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
