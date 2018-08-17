@@ -34,7 +34,7 @@ else if (Model.AluguerState_id == AluguerState.Concluído
     && (DateTime.Today - Model.Fim).TotalDays <= 30
     && Model.AvaliacaoCliente == null)
 {
-    <div class="col-lg-4">
-        @Html.ActionLink("Avaliar Cliente", "Create", "AvaliacaoClientes", new {id=Model.Id}, new {@class = "btn btn-primary"})
+    <div class="col-lg-4">vef
+        @Html.ActionLink("Avaliar Cliente", "Create", "AvaliacaoClientes", new { aluguerId = Model.Id}, new {@class = "btn btn-primary"})
     </div>
 }

@@ -42,7 +42,7 @@ else if (Model.AluguerState_id == AluguerState.Concluído
     if (Model.AvaliacaoFornecedor == null)
     {
         <div class="col-md-4">
-            @Html.ActionLink("Avaliar Fornecedor", "Create", "AvaliacaoFornecedors", new {id = Model.Id}, new {@class = "btn btn-primary"})
+            @Html.ActionLink("Avaliar Fornecedor", "Create", "AvaliacaoFornecedors", new { aluguerId = Model.Id}, new {@class = "btn btn-primary"})
         </div>
     }
 }
