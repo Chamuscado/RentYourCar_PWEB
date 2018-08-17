@@ -198,6 +198,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AlugueresController.cs" />
+    <Compile Include="Controllers\AvaliacaoClientesController.cs" />
+    <Compile Include="Controllers\AvaliacaoFornecedorsController.cs" />
     <Compile Include="Controllers\AvaliacoesVeiculosController.cs" />
     <Compile Include="Controllers\UtilizadoresController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -634,6 +636,14 @@
     <Content Include="Views\AvaliacoesVeiculos\Index.cshtml" />
     <Content Include="Views\Alugueres\_AvaliacaoVeiculoPartial.cshtml" />
     <Content Include="Views\Veiculos\_AvaliacoesPartial.cshtml" />
+    <Content Include="Views\AvaliacaoFornecedors\Create.cshtml" />
+    <Content Include="Views\AvaliacaoFornecedors\Delete.cshtml" />
+    <Content Include="Views\AvaliacaoFornecedors\Edit.cshtml" />
+    <Content Include="Views\AvaliacaoFornecedors\Index.cshtml" />
+    <Content Include="Views\AvaliacaoClientes\Create.cshtml" />
+    <Content Include="Views\AvaliacaoClientes\Delete.cshtml" />
+    <Content Include="Views\AvaliacaoClientes\Edit.cshtml" />
+    <Content Include="Views\AvaliacaoClientes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

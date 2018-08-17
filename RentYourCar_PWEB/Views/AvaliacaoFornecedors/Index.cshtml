@@ -1,0 +1,52 @@
+﻿@model IEnumerable<RentYourCar_PWEB.Models.AvaliacaoFornecedor>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Aluguer.ClienteId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comentario)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Simpatia)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Rapidez)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Aluguer.ClienteId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Comentario)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Simpatia)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Rapidez)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.AluguerId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.AluguerId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.AluguerId })
+        </td>
+    </tr>
+}
+
+</table>
