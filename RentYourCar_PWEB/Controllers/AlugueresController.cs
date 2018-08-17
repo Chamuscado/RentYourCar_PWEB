@@ -109,6 +109,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Particular)]
         public ActionResult Create(int? veiculoId)
         {
+            AtualizaTodosAlugueres();
+
             if (veiculoId == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -357,6 +359,8 @@ namespace RentYourCar_PWEB.Controllers
         [Authorize(Roles = RoleNames.Particular)]
         public ActionResult Edit(int? id)
         {
+            AtualizaTodosAlugueres();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

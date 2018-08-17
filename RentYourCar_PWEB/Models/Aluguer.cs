@@ -29,5 +29,7 @@ namespace RentYourCar_PWEB.Models
 
 
         public AvaliacaoVeiculo AvaliacaoVeiculo { get; set; }
+
+        public AvaliacaoFornecedor AvaliacaoFornecedor { get; set; }
     }
 }

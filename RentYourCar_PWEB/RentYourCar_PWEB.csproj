@@ -342,12 +342,17 @@
     <Compile Include="Migrations\201808160943291_CriadaAvaliacaoVeiculo.Designer.cs">
       <DependentUpon>201808160943291_CriadaAvaliacaoVeiculo.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201808170927446_CriadaAvaliacaoFornecedor.cs" />
+    <Compile Include="Migrations\201808170927446_CriadaAvaliacaoFornecedor.Designer.cs">
+      <DependentUpon>201808170927446_CriadaAvaliacaoFornecedor.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Aluguer.cs" />
     <Compile Include="Models\AlugueresViewModels\CreateAluguerViewModel.cs" />
     <Compile Include="Models\AluguerState.cs" />
     <Compile Include="Models\ApplicationUser.cs" />
+    <Compile Include="Models\AvaliacaoFornecedor.cs" />
     <Compile Include="Models\AvaliacaoVeiculo.cs" />
     <Compile Include="Models\Categoria.cs" />
     <Compile Include="Models\Combustivel.cs" />
@@ -743,6 +748,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201808160943291_CriadaAvaliacaoVeiculo.resx">
       <DependentUpon>201808160943291_CriadaAvaliacaoVeiculo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201808170927446_CriadaAvaliacaoFornecedor.resx">
+      <DependentUpon>201808170927446_CriadaAvaliacaoFornecedor.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

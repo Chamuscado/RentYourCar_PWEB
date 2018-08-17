@@ -11,6 +11,7 @@ namespace RentYourCar_PWEB.Models
         public DbSet<Aluguer> Alugueres { get; set; }
         public DbSet<AluguerState> AluguerState { get; set; }
         public DbSet<AvaliacaoVeiculo> AvaliacoesVeiculos  { get; set; }
+        public DbSet<AvaliacaoFornecedor> AvaliacoesFornecedores { get; set; }
 
         public ApplicationDbContext() : base("DefaultConnection", throwIfV1Schema: false)
         {
