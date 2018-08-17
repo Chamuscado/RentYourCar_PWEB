@@ -1,52 +1,116 @@
-﻿@model IEnumerable<RentYourCar_PWEB.Models.AvaliacaoFornecedor>
+﻿@using RentYourCar_PWEB.Models
+@model IEnumerable<RentYourCar_PWEB.Models.AvaliacaoFornecedor>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Avaliações de Fornecedores";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2 class="page-header">@ViewBag.Title</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Aluguer.ClienteId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Comentario)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Simpatia)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Rapidez)
-        </th>
-        <th></th>
-    </tr>
+@if (!Model.Any())
+{
+    <p>Não existem avaliações de fornecedores para mostrar</p>
+}
+else
+{
+    <table class="table table-bordered table-hover" id="listaAvalFornecedores">
+        <thead>
+            <tr>
+                <th>Fornecedor</th>
+                <th>Cliente</th>
+                <th>Aluguer</th>
+                <th>Avaliação</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Aluguer.ClienteId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Comentario)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Simpatia)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Rapidez)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.AluguerId }) |
-            @Html.ActionLink("Details", "Details", new { id=item.AluguerId }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.AluguerId })
-        </td>
-    </tr>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.ActionLink(item.Aluguer.Veiculo.User.Nome, "Detalhes", "Utilizadores", new { id = item.Aluguer.Veiculo.UserId }, new { @class = "btn btn-link" })
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new {id = item.Aluguer.ClienteId}, new {@class = "btn btn-link"})
+                    </td>
+                    <td>
+                        De @item.Aluguer.Inicio.ToShortDateString()
+                        a @item.Aluguer.Fim.ToShortDateString()<br/>
+                        [@Html.ActionLink("Ver", "Details", "Alugueres", new {id = item.AluguerId}, new {@class = "btn btn-link"})]
+                    </td>
+                    <td>
+                        <strong>Rapidez: </strong>@item.Rapidez. <strong>Simpatia: </strong>@item.Simpatia.
+                        <strong>Comentário: </strong>@item.Comentario
+                    </td>
+                    @if (User.IsInRole(RoleNames.Admin))
+                    {
+                        <td><button class="btn btn-link js-eliminar" aval-id="@item.AluguerId">Eliminar</button></td>
+                    }
+                    else
+                    {
+                        if ((DateTime.Today - item.Aluguer.Fim).TotalDays <= 30)
+                        {
+                            <td>
+                                @Html.ActionLink("Editar", "Edit", new {id = item.AluguerId}, new {@class = "btn btn-link"}) |
+                                <button class="btn btn-link js-eliminar" aval-id="@item.AluguerId">Eliminar</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                <button class="btn btn-link disabled">Editar</button> |
+                                <button class="btn btn-link disabled">Eliminar</button>
+                            </td>
+                        }
+                    }
+
+                </tr>
+            }
+        </tbody>
+
+    </table>
 }
 
-</table>
+@section scripts
+{
+    <script>
+        $(document).ready(function () {
+            var table = $("#listaAvalFornecedores").DataTable({
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registos por página",
+                    "zeroRecords": "Não foram encontrados registos",
+                    "info": "A mostrar a página _PAGE_ de _PAGES_",
+                    "infoEmpty": "Não existem registos disponíveis",
+                    "infoFiltered": "(filtrado de _MAX_ registos no total)",
+                    "search": "Pesquisar: ",
+                    "paginate": {
+                        "first": "Primeira",
+                        "last": "Última",
+                        "next": "Próxima",
+                        "previous": "Anterior"
+                    }
+                }
+            });
+
+            table.on("click",
+                ".js-eliminar",
+                function () {
+                    var button = $(this);
+
+                    var confirmMessage = "Tem a certeza que pretende eliminar a avaliação do fornecedor?";
+                    if (confirm(confirmMessage)) {
+                        $.ajax({
+                            url: "/AvaliacaoFornecedors/Delete/" + button.attr("aval-id"),
+                            method: 'GET',
+                            success: function () {
+                                //console.log("Avaliação removida");
+                                table.row(button.parents("tr")).remove().draw();
+                            }
+                        });
+                    }
+                });
+        });
+    </script>
+}

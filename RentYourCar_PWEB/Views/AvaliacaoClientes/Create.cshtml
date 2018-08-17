@@ -1,25 +1,95 @@
-﻿@model RentYourCar_PWEB.Models.AvaliacaoCliente
+﻿<style>
+    .slidecontainer {
+        width: 100%;
+    }
+
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 5px;
+        border-radius: 5px;
+        background: #d3d3d3;
+        outline: none;
+        opacity: 0.7;
+        -webkit-transition: .2s;
+        transition: opacity .2s;
+    }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #033c73;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: #033c73;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+
+    span {
+        margin-left: 5px;
+    }
+</style>
+
+@model RentYourCar_PWEB.Models.AvaliacaoCliente
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Avaliar Cliente";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Create</h2>
+<h2 class="page-header">Avaliar o cliente @Model.Aluguer.Cliente.Nome</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>AvaliacaoCliente</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
         <div class="form-group">
-            @Html.LabelFor(model => model.AluguerId, "AluguerId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Limpeza, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.DropDownList("AluguerId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.AluguerId, "", new { @class = "text-danger" })
+                @Html.EditorFor(model => model.Limpeza, new { htmlAttributes = new { @class = "slider", Type = "range", min = "1", max = "5", id = "LimpezaSlider" } })
+                <span class="control-label h3" id="LimpezaValue"></span>
+                @Html.ValidationMessageFor(model => model.Limpeza, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Cuidado, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Cuidado, new { htmlAttributes = new { @class = "slider", Type = "range", min = "1", max = "5", id = "CuidadoSlider" } })
+                <span class="control-label h3" id="CuidadoValue"></span>
+                @Html.ValidationMessageFor(model => model.Cuidado, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pontualidade, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pontualidade, new { htmlAttributes = new { @class = "slider", Type = "range", min = "1", max = "5", id = "PontualidadeSlider" } })
+                <span class="control-label h3" id="PontualidadeValue"></span>
+                @Html.ValidationMessageFor(model => model.Pontualidade, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Pagamento, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.Pagamento, new { htmlAttributes = new { @class = "slider", Type = "range", min = "1", max = "5", id = "PagamentoSlider" } })
+                <span class="control-label h3" id="PagamentoValue"></span>
+                @Html.ValidationMessageFor(model => model.Pagamento, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -32,45 +102,51 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Limpeza, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Limpeza, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Limpeza, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Cuidado, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Cuidado, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Cuidado, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pontualidade, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pontualidade, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Pontualidade, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Pagamento, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Pagamento, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Pagamento, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Avaliar" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
+@section Scripts {
+
+    <script>
+        var slider0 = document.getElementById("LimpezaSlider");
+        var output0 = document.getElementById("LimpezaValue");
+        output0.innerHTML = slider0.value;
+
+        slider0.oninput = function () {
+            output0.innerHTML = this.value;
+        }
+    </script>
+    <script>
+        var slider1 = document.getElementById("CuidadoSlider");
+        var output1 = document.getElementById("CuidadoValue");
+        output1.innerHTML = slider1.value;
+
+        slider1.oninput = function () {
+            output1.innerHTML = this.value;
+        }
+    </script>
+    <script>
+        var slider2 = document.getElementById("PontualidadeSlider");
+        var output2 = document.getElementById("PontualidadeValue");
+        output2.innerHTML = slider2.value;
+
+        slider2.oninput = function () {
+            output2.innerHTML = this.value;
+        }
+    </script>
+
+    <script>
+        var slider3 = document.getElementById("PagamentoSlider");
+        var output3 = document.getElementById("PagamentoValue");
+        output3.innerHTML = slider3.value;
+
+        slider3.oninput = function () {
+            output3.innerHTML = this.value;
+        }
+    </script>
+}
+

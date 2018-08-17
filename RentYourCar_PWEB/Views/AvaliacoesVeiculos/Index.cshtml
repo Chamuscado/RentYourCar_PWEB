@@ -7,8 +7,14 @@
 }
 
 <h2 class="page-header">@ViewBag.Title</h2>
-<table class="table table-bordered table-hover" id="listaAvalVeiculos">
-    <thead>
+@if (!Model.Any())
+{
+    <p>Não existem avaliações de veículos para mostrar</p>
+}
+else
+{
+    <table class="table table-bordered table-hover" id="listaAvalVeiculos">
+        <thead>
         <tr>
             <th>Veículo</th>
             <th>Cliente</th>
@@ -16,23 +22,23 @@
             <th>Avaliação</th>
             <th>Ações</th>
         </tr>
-    </thead>
+        </thead>
 
-    <tbody>
+        <tbody>
         @foreach (var item in Model)
         {
             <tr>
                 <td>
-                    @item.Aluguer.Veiculo.Marca @item.Aluguer.Veiculo.Modelo<br />
-                    [@Html.ActionLink(item.Aluguer.Veiculo.Matricula, "Details", "Veiculos", new { id = item.Aluguer.VeiculoId }, new { @class = "btn btn-link" })]
+                    @item.Aluguer.Veiculo.Marca @item.Aluguer.Veiculo.Modelo<br/>
+                    [@Html.ActionLink(item.Aluguer.Veiculo.Matricula, "Details", "Veiculos", new {id = item.Aluguer.VeiculoId}, new {@class = "btn btn-link"})]
                 </td>
                 <td>
-                    @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new { id = item.Aluguer.ClienteId }, new { @class = "btn btn-link" })
+                    @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new {id = item.Aluguer.ClienteId}, new {@class = "btn btn-link"})
                 </td>
                 <td>
                     De @item.Aluguer.Inicio.ToShortDateString()
-                    a @item.Aluguer.Fim.ToShortDateString()<br />
-                    [@Html.ActionLink("Ver", "Details", "Alugueres", new { id = item.AluguerId }, new { @class = "btn btn-link" })]
+                    a @item.Aluguer.Fim.ToShortDateString()<br/>
+                    [@Html.ActionLink("Ver", "Details", "Alugueres", new {id = item.AluguerId}, new {@class = "btn btn-link"})]
                 </td>
                 <td>
                     <strong>Apresentação: </strong>@item.Apresentacao. <strong>Limpeza: </strong>@item.Limpeza.
@@ -47,7 +53,7 @@
                     if ((DateTime.Today - item.Aluguer.Fim).TotalDays <= 30)
                     {
                         <td>
-                            @Html.ActionLink("Editar", "Edit", new { id = item.AluguerId }, new { @class = "btn btn-link" }) |
+                            @Html.ActionLink("Editar", "Edit", new {id = item.AluguerId}, new {@class = "btn btn-link"}) |
                             <button class="btn btn-link js-eliminar" aval-id="@item.AluguerId">Eliminar</button>
                         </td>
                     }
@@ -62,9 +68,10 @@
 
             </tr>
         }
-    </tbody>
+        </tbody>
 
-</table>
+    </table>
+}
 
 @section scripts
 {
