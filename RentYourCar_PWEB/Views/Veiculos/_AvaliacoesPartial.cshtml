@@ -19,7 +19,7 @@
                 <div class="row col-lg-12">
                     <p>
                         <strong>Cliente: </strong>
-                        @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new { id = item.Aluguer.ClienteId }, new { @class = "btn btn-link" })
+                        @Html.ActionLink(item.Aluguer.Cliente.Nome, "Detalhes", "Utilizadores", new { id = item.Aluguer.ClienteId }, null)
                     </p>
                 </div>
                 <div class="row col-lg-12">
@@ -41,8 +41,7 @@
                     <p>@item.Comentario</p>
                 </div>
             </div>
-
-            <br />
+            
         }
     }
 </div>

@@ -13,11 +13,11 @@
         <h4>Dados do Veículo</h4>
         <ul>
             <li>
-                <strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = Model.Veiculo.UserId}, new {@class = "btn btn-link"})
+                <strong>Proprietário: </strong>@Html.ActionLink(Model.Veiculo.User.Nome, "Detalhes", "Utilizadores", new {id = Model.Veiculo.UserId}, null)
             </li>
             <li><strong>@Model.Veiculo.Marca @Model.Veiculo.Modelo </strong>(@Model.Veiculo.NPortas Portas / @Model.Veiculo.Lutacao Lugares)</li>
             <li>
-                <strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new {id = Model.Veiculo.Id}, new {@class = "btn btn-link"})
+                <strong>Matrícula: </strong>@Html.ActionLink(Model.Veiculo.Matricula, "Details", "Veiculos", new {id = Model.Veiculo.Id}, null)
             </li>
             <li>
                 <strong>Categoria: </strong>@Model.Veiculo.Categoria.Nome
@@ -54,7 +54,7 @@
         <h4>Dados do Aluguer</h4>
         <ul>
             <li>
-                <strong>Cliente: </strong>@Html.ActionLink(Model.Cliente.Nome, "Detalhes", "Utilizadores", new {id = Model.ClienteId}, new {@class = "btn btn-link"})
+                <strong>Cliente: </strong>@Html.ActionLink(Model.Cliente.Nome, "Detalhes", "Utilizadores", new {id = Model.ClienteId}, null)
             </li>
             <li>
                 <strong>Período de Aluguer:</strong>
