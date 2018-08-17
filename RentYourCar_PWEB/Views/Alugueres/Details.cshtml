@@ -187,7 +187,7 @@
                     var confirmMessage = "Tem a certeza que pretende eliminar a avaliação do veículo?";
 
                     if (confirm(confirmMessage)) {
-                        var url = '@Url.Action("Delete", "AvaliacaoVeiculoes", new { id = "__id__" })';
+                        var url = '@Url.Action("Delete", "AvaliacoesVeiculos", new { id = "__id__" })';
                         window.location.href = url.replace("__id__", button.attr("id-aval-veiculo"));
                     }
                 });

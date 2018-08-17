@@ -8,7 +8,7 @@ using RentYourCar_PWEB.Models;
 
 namespace RentYourCar_PWEB.Controllers
 {
-    public class AvaliacaoVeiculoesController : Controller
+    public class AvaliacoesVeiculosController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 

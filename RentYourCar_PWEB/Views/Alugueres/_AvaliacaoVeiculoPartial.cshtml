@@ -25,7 +25,7 @@
                                                                          && (DateTime.Today - Model.Fim).TotalDays <= 30)
         {
             <p>
-                @Html.ActionLink("Editar", "Edit", "AvaliacaoVeiculoes", new { id = Model.Id }, new { @class = "btn btn-link" })
+                @Html.ActionLink("Editar", "Edit", "AvaliacoesVeiculos", new { id = Model.Id }, new { @class = "btn btn-link" })
                 | <button class="btn btn-link js-aval-veiculo" id-aval-veiculo="@Model.Id">Eliminar</button>
             </p>
         }
