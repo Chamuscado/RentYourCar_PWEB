@@ -1,0 +1,270 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
+  <Class Name="RentYourCar_PWEB.Models.AlugueresViewModels.CreateAluguerViewModel">
+    <Position X="6.75" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAABAAAAAAIAAAAAAAAAEAAIAAAAA=</HashCode>
+      <FileName>Models\AlugueresViewModels\CreateAluguerViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.CustomValidations.DateValidationAttribute">
+    <Position X="20.75" Y="6" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomValidations\DateValidationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.CustomValidations.DisponibilidadeValidationAttribute">
+    <Position X="20.75" Y="3" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomValidations\DisponibilidadeValidationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.CustomValidations.MatriculaValidationAttribute">
+    <Position X="20.75" Y="1.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomValidations\MatriculaValidationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.CustomValidations.PeriodoAluguerValidationAttribute">
+    <Position X="20.75" Y="4.5" Width="5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\CustomValidations\PeriodoAluguerValidationAttribute.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.UsersViewModels.EditUserViewModel">
+    <Position X="29.25" Y="12" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgCAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\UsersViewModels\EditUserViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.UsersViewModels.UserDetailsViewModel">
+    <Position X="31.75" Y="10.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAABAAAgAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\UsersViewModels\UserDetailsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.VeiculosView.CreateVeiculoViewModel">
+    <Position X="4" Y="10" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\VeiculosView\CreateVeiculoViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.VeiculosView.DetailsVeiculoViewModel">
+    <Position X="0.5" Y="12.75" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AACAAAAAAAAAAAAgAgAAAAAAAAAAAEQAAAEAAAAAAAA=</HashCode>
+      <FileName>Models\VeiculosView\DetailsVeiculoViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.VeiculosView.ImageViewModel">
+    <Position X="4" Y="11.75" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\VeiculosView\ImageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ExternalLoginConfirmationViewModel">
+    <Position X="22.25" Y="17.25" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ExternalLoginListViewModel">
+    <Position X="22.5" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.SendCodeViewModel">
+    <Position X="25.75" Y="13.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAIAAAAgAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.VerifyCodeViewModel">
+    <Position X="28" Y="14.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAEAAAAAAAgAAAAAAAAAAAAAAIAAAAgAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ForgotViewModel">
+    <Position X="31.25" Y="12.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.LoginViewModel">
+    <Position X="33.25" Y="12.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAACAAAAAAAgAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.RegisterViewModel">
+    <Position X="33.25" Y="15.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgCAAAAAAAAAAAAAAAAAAAAgCAAAAAAEAIAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ResetPasswordViewModel">
+    <Position X="33.25" Y="13.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAgAAAAAAAAAAACAAAAAAAAIAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ForgotPasswordViewModel">
+    <Position X="30.5" Y="14.25" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\AccountViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.Aluguer">
+    <Position X="0.5" Y="0.5" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAgAAAAQCIABCAAAAAIAAAAAAgAAEAAIACAAA=</HashCode>
+      <FileName>Models\Aluguer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.AluguerState">
+    <Position X="4.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>IAACAAAQABAAAAAAAEAAAgAAAAAAAAAQAAAAAAEAAAA=</HashCode>
+      <FileName>Models\AluguerState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ApplicationDbContext">
+    <Position X="9.75" Y="11.75" Width="4.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAIAhhAAAAAAgAAAAAAAAAAAAEEAAAAAAAAAAAQA=</HashCode>
+      <FileName>Models\ApplicationDbContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ApplicationUser">
+    <Position X="9.75" Y="8.25" Width="6" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAjAAAAAAgAAAAAAAAAAAAAAAAAAgAEAEAAAA=</HashCode>
+      <FileName>Models\ApplicationUser.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.AvaliacaoCliente">
+    <Position X="17.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>QAAAAAAAAAAEAAAAQAAAAAAAACAAAAAAAAAgCCAAAAA=</HashCode>
+      <FileName>Models\AvaliacaoCliente.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.AvaliacaoFornecedor">
+    <Position X="15" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAAAAAAQAAAAAAAACAQAAAAAAAAACAAAAA=</HashCode>
+      <FileName>Models\AvaliacaoFornecedor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.AvaliacaoVeiculo">
+    <Position X="12.25" Y="1.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAIAAACAAAQAAAAAAAACAAAAAAAAAACCAAAAA=</HashCode>
+      <FileName>Models\AvaliacaoVeiculo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.Categoria">
+    <Position X="4" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Categoria.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.Combustivel">
+    <Position X="6.25" Y="8" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\Combustivel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.IndexViewModel">
+    <Position X="28" Y="16.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAQAAAAAAAAAAAAAAQAAAEAEA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ManageLoginsViewModel">
+    <Position X="23.5" Y="12.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.FactorViewModel">
+    <Position X="21.5" Y="13" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.SetPasswordViewModel">
+    <Position X="22.5" Y="15.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ChangePasswordViewModel">
+    <Position X="25.25" Y="17" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAEAAAAAAAAAAAAAAIAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.AddPhoneNumberViewModel">
+    <Position X="30.75" Y="17" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.VerifyPhoneNumberViewModel">
+    <Position X="30" Y="15.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAgQAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.ConfigureTwoFactorViewModel">
+    <Position X="25.25" Y="15.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAEAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ManageViewModels.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.RoleNames">
+    <Position X="8.75" Y="4.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAABAAIAA=</HashCode>
+      <FileName>Models\RoleNames.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="RentYourCar_PWEB.Models.Veiculo">
+    <Position X="0.5" Y="8" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AACDABAAFAAABAAgCBAAAAgABABQAAAgAAgAAAAAAAA=</HashCode>
+      <FileName>Models\Veiculo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
