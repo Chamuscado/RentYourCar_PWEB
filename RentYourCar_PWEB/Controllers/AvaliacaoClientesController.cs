@@ -19,11 +19,12 @@ namespace RentYourCar_PWEB.Controllers
             var avaliacoesClientes = db.AvaliacoesClientes
                 .Include(a => a.Aluguer)
                 .Include(a => a.Aluguer.Veiculo)
-                .Include(a => a.Aluguer.Cliente);
+                .Include(a => a.Aluguer.Cliente)
+                .Include(a=>a.Aluguer.Veiculo.User);
             return View(avaliacoesClientes.ToList());
         }
 
-        [Authorize(Roles = RoleNames.Particular)]
+        [Authorize(Roles = RoleNames.Particular + "," + RoleNames.Profissional)]
         public ActionResult MinhasAvaliacoes() //Retorna avaliações de veículos feitas pelo utilizador
         {
             var userId = User.Identity.GetUserId();
@@ -32,6 +33,7 @@ namespace RentYourCar_PWEB.Controllers
                 .Include(a => a.Aluguer)
                 .Include(a => a.Aluguer.Veiculo)
                 .Include(a => a.Aluguer.Cliente)
+                .Include(a=>a.Aluguer.Veiculo.User)
                 .Where(a => string.Compare(userId, a.Aluguer.Veiculo.UserId, StringComparison.Ordinal) == 0)
                 .ToList();
 
@@ -39,7 +41,7 @@ namespace RentYourCar_PWEB.Controllers
         }
 
         // GET: AvaliacaoClientes/Create
-        [Authorize(Roles = RoleNames.Particular)]
+        [Authorize(Roles = RoleNames.Particular + "," + RoleNames.Profissional)]
         public ActionResult Create(int? aluguerId)
         {
             if (aluguerId == null)
@@ -49,7 +51,7 @@ namespace RentYourCar_PWEB.Controllers
 
             var aluguer = db.Alugueres.Include(a => a.AluguerState)
                 .Include(a => a.Veiculo)
-                .Include(a => a.AvaliacaoVeiculo)
+                .Include(a => a.Cliente)
                 .SingleOrDefault(a => a.Id == aluguerId);
             if (aluguer == null)
             {
@@ -109,12 +111,12 @@ namespace RentYourCar_PWEB.Controllers
                 return HttpNotFound();
             }
 
-            var clienteId = User.Identity.GetUserId();
+            var userId = User.Identity.GetUserId();
 
             if (avaliacaoCliente.Aluguer.Fim < DateTime.Today.AddMonths(-1) && avaliacaoCliente.Aluguer.Fim > DateTime.Today)
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Já não é possivel altera a Avaliação");
 
-            if (string.Compare(clienteId, avaliacaoCliente.Aluguer.ClienteId, StringComparison.Ordinal) != 0)
+            if (string.Compare(userId, avaliacaoCliente.Aluguer.Veiculo.UserId, StringComparison.Ordinal) != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.Forbidden, "Operação não autorizada.");
             }

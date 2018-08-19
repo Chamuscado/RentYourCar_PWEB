@@ -32,6 +32,8 @@
                             <li>@Html.ActionLink("Gerir Veículos", "GerirVeiculos", "Veiculos")</li>
                             <li>@Html.ActionLink("Gerir Alugueres", "Index", "Alugueres")</li>
                             <li>@Html.ActionLink("Gerir Avaliações de Veículos", "Index", "AvaliacoesVeiculos")</li>
+                            <li>@Html.ActionLink("Gerir Avaliações de Fornecedores", "Index", "AvaliacaoFornecedors")</li>
+                            <li>@Html.ActionLink("Gerir Avaliações de Clientes", "Index", "AvaliacaoClientes")</li>
                         </ul>
                     </li>
                 }
@@ -46,6 +48,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Meus Alugueres", "AlugueresCliente", "Alugueres")</li>
                             <li>@Html.ActionLink("Minhas Avaliações de Veículos", "MinhasAvaliacoes", "AvaliacoesVeiculos")</li>
+                            <li>@Html.ActionLink("Minhas Avaliações de Fornecedores", "MinhasAvaliacoes", "AvaliacaoFornecedors")</li>
                         </ul>
                     </li>
                 }
@@ -60,8 +63,7 @@
                         <ul class="dropdown-menu" role="menu">
                             <li>@Html.ActionLink("Gerir Veículos", "Index", "Veiculos")</li>
                             <li>@Html.ActionLink("Gerir Alugueres", "AlugueresFornecedor", "Alugueres")</li>
-                            <li><a href="#">Minhas Avaliações (em construção)</a></li>
-                            <li><a href="#">Avaliações dos meus Veículos (em construção)</a></li>
+                            <li>@Html.ActionLink("Minhas Avaliações de Clientes", "MinhasAvaliacoes", "AvaliacaoClientes")</li>
                         </ul>
                     </li>
                 }
