@@ -248,7 +248,7 @@ namespace RentYourCar_PWEB.Controllers
                     db.SaveChanges();
 
                     var source = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/Temp/");
-                    var dest = Server.MapPath($"/UploadedFiles/{User.Identity.GetUserId()}/{veiculo.Id}/");
+                    var dest = Server.MapPath($"/UploadedFiles/{veiculo.UserId}/{veiculo.Id}/");
                     ClearDir(dest);
                     MoveFiles(source, dest);
                 }
@@ -336,7 +336,7 @@ namespace RentYourCar_PWEB.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            return RedirectToAction("AlugueresVeiculo", "Alugueres", new { veiculoId = id });
+            return RedirectToAction("AlugueresVeiculo", "Alugueres", new {veiculoId = id});
         }
 
         // POST: Veiculos/Delete/5
